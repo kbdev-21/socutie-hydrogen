@@ -59,8 +59,8 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
-    <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
+    <div className="mt-28 flex flex-col items-center">
+      {/*<FeaturedCollection collection={data.featuredCollection} />*/}
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
@@ -94,8 +94,8 @@ function RecommendedProducts({
   products: Promise<RecommendedProductsQuery | null>;
 }) {
   return (
-    <div className="recommended-products">
-      <h2>Recommended Products</h2>
+    <div className="recommended-products mx-6 lg:mx-20 max-w-[1536px] flex flex-col items-center">
+      <div className={"text-3xl font-bold mb-6"}>Best Sellers</div>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (

@@ -6,6 +6,7 @@ import type {
   RecommendedProductFragment,
 } from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
+import {formatVnd} from '~/utils/stringUtils';
 
 export function ProductItem({
   product,
@@ -28,17 +29,16 @@ export function ProductItem({
     >
       {image && (
         <Image
+          src={image.url}
           alt={image.altText || product.title}
-          aspectRatio="1/1"
-          data={image}
+          aspectRatio="3/4"
           loading={loading}
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
-      <h4>{product.title}</h4>
-      <small>
-        <Money data={product.priceRange.minVariantPrice} />
-      </small>
+      <div className={"font-semibold text-base mt-4"}>{product.title}</div>
+      <div className={"text-base font-normal text-light-text2"}>{formatVnd(product.priceRange.minVariantPrice.amount)}₫</div>
+      {/*<Money data={product.priceRange.minVariantPrice}/>*/}
     </Link>
   );
 }

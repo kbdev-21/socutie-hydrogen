@@ -1,6 +1,6 @@
 import {Suspense} from 'react';
 import {Await, NavLink} from 'react-router';
-import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
+import type {FooterQuery, HeaderQuery} from '../../../storefrontapi.generated';
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;

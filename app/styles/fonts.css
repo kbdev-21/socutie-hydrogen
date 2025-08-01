@@ -1,0 +1,26 @@
+/* Pacifico Regular */
+@font-face {
+    font-family: 'Pacifico';
+    src: url('/fonts/pacifico/Pacifico-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Open Sans Variable - Normal */
+@font-face {
+    font-family: 'Open Sans';
+    src: url('/fonts/open-sans/OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 300 800; /* adjust if needed */
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Open Sans Variable - Italic */
+@font-face {
+    font-family: 'Open Sans';
+    src: url('/fonts/open-sans/OpenSans-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 300 800;
+    font-style: italic;
+    font-display: swap;
+}
