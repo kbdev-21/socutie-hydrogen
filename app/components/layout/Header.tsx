@@ -7,7 +7,7 @@ import {
 } from '@shopify/hydrogen';
 import type {HeaderQuery, CartApiQueryFragment} from '../../../storefrontapi.generated';
 import {useAside} from '~/components/Aside';
-import {Search, ShoppingCart, UserRound} from 'lucide-react';
+import {Handbag, Instagram, Menu, Search, ShoppingCart, UserRound} from 'lucide-react';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -30,7 +30,7 @@ export function Header({
   return (
     <div className="">
       {/* mobile */}
-      <div className={"flex lg:hidden w-full p-6 fixed top-0 z-10 bg-light-bg1 border-b border-b-light-bg2"}>
+      <div className={"flex lg:hidden w-full h-20 px-6 fixed top-0 z-10 bg-light-bg1 border-b border-b-light-bg2"}>
         <div className={"flex items-center justify-between relative w-full"}>
           <HeaderMenuMobileToggle />
           <Logo className={"absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"}/>
@@ -39,7 +39,7 @@ export function Header({
       </div>
 
       {/* not-mobile */}
-      <div className={"hidden lg:flex py-6 px-20 items-center justify-center w-full fixed top-0 z-10 bg-light-bg1 border-b border-b-light-bg2"}>
+      <div className={"hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-10 bg-light-bg1 border-b border-b-light-bg2"}>
         <div className={"flex items-center justify-between w-full max-w-[1536px]"}>
           <div>
             <Logo/>
@@ -65,7 +65,7 @@ export function Header({
 export function Logo({className = ""}) {
   return (
     <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-      <div className={`font-title font-medium text-3xl ${className}`}>SoCutie</div>
+      <div className={`font-title font-medium text-5xl ${className}`}>SoCutie</div>
     </NavLink>
   )
 }
@@ -157,13 +157,22 @@ function HeaderCtas({
   return (
     <nav className="flex gap-6" role="navigation">
       <SearchToggle />
-      <NavLink className={"hidden md:flex"} prefetch="intent" to="/account" style={activeLinkStyle}>
-        <Suspense fallback="Sign in">
-          <Await resolve={isLoggedIn} errorElement="Sign in">
-            <UserRound className={"transition-colors duration-200 hover:text-light-main"}/>
-          </Await>
-        </Suspense>
-      </NavLink>
+      <a
+        className={"hidden md:flex"}
+        href={"https://www.instagram.com/socutie.sg"}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Instagram className={"transition-colors duration-200 hover:text-light-main"}/>
+      </a>
+
+      {/*<NavLink className={"hidden md:flex"} prefetch="intent" to="/account" style={activeLinkStyle}>*/}
+      {/*  <Suspense fallback="Sign in">*/}
+      {/*    <Await resolve={isLoggedIn} errorElement="Sign in">*/}
+      {/*      <UserRound className={"transition-colors duration-200 hover:text-light-main"}/>*/}
+      {/*    </Await>*/}
+      {/*  </Suspense>*/}
+      {/*</NavLink>*/}
       <CartToggle cart={cart} />
     </nav>
   );
@@ -176,7 +185,7 @@ function HeaderMenuMobileToggle() {
       className=""
       onClick={() => open('mobile')}
     >
-      <h3>☰</h3>
+      <Menu />
     </button>
   );
 }

@@ -8,6 +8,7 @@ import type {
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
 import {BEST_SELLERS_PRODUCTS_QUERY} from '~/custom-queries/customQueries';
+import {HeroBanner} from '~/components/custom/HeroBanner';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -68,7 +69,8 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
-    <div className="mt-28 flex flex-col items-center">
+    <div className="flex flex-col items-center">
+      <HeroBanner/>
       {/*<FeaturedCollection collection={data.featuredCollection} />*/}
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
@@ -103,8 +105,8 @@ function RecommendedProducts({
   products: Promise<RecommendedProductsQuery | null>;
 }) {
   return (
-    <div className="mx-6 lg:mx-20 max-w-[1536px] flex flex-col items-center">
-      <div className={"text-3xl font-bold mb-6"}>Best Sellers</div>
+    <div className="mt-10 mx-6 lg:mx-20 max-w-[1536px] flex flex-col items-center">
+      <div className={"text-3xl font-bold mb-8"}>Best Sellers</div>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (

@@ -8,11 +8,11 @@ const config: Config = {
     extend: {
       fontFamily: {
         main: ["Open Sans", "sans-serif"],
-        title: ["Pacifico", "serif"]
+        title: ["Rouge Script", "serif"] //title: ["Pacifico", "serif"]
       },
       colors: {
         light: {
-          main: "#e9c307",
+          main: "#e6d57f",
           text1: "#000000",
           text2: "#333333",
           bg1: "#ffffff",
@@ -20,7 +20,7 @@ const config: Config = {
           bg3: "#cccccc"
         },
         dark: {
-          main: "#e9c307",
+          main: "#e6d57f",
           text1: "#ffffff",
           bg1: "#000000"
         },
