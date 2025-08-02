@@ -3,6 +3,7 @@ import {useLoaderData, type MetaFunction} from 'react-router';
 import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductItem} from '~/components/ProductItem';
+import {ALL_PRODUCTS_QUERY} from "~/custom-queries/customQueries";
 
 export const meta: MetaFunction<typeof loader> = () => {
   return [{title: `Hydrogen | Products`}];
@@ -29,7 +30,7 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
   });
 
   const [{products}] = await Promise.all([
-    storefront.query(CATALOG_QUERY, {
+    storefront.query(ALL_PRODUCTS_QUERY, {
       variables: {...paginationVariables},
     }),
     // Add other queries here, so that they are loaded in parallel
@@ -83,6 +84,15 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
       url
       width
       height
+    }
+    images(first:10) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
     }
     priceRange {
       minVariantPrice {

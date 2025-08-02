@@ -7,6 +7,7 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
+import {BEST_SELLERS_PRODUCTS_QUERY} from '~/custom-queries/customQueries';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -43,8 +44,16 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
+  // const recommendedProducts = context.storefront
+  //   .query(RECOMMENDED_PRODUCTS_QUERY)
+  //   .catch((error) => {
+  //     // Log query errors, but don't throw them so the page can still render
+  //     console.error(error);
+  //     return null;
+  //   });
+
   const recommendedProducts = context.storefront
-    .query(RECOMMENDED_PRODUCTS_QUERY)
+    .query(BEST_SELLERS_PRODUCTS_QUERY)
     .catch((error) => {
       // Log query errors, but don't throw them so the page can still render
       console.error(error);
@@ -94,12 +103,12 @@ function RecommendedProducts({
   products: Promise<RecommendedProductsQuery | null>;
 }) {
   return (
-    <div className="recommended-products mx-6 lg:mx-20 max-w-[1536px] flex flex-col items-center">
+    <div className="mx-6 lg:mx-20 max-w-[1536px] flex flex-col items-center">
       <div className={"text-3xl font-bold mb-6"}>Best Sellers</div>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
-            <div className="recommended-products-grid">
+            <div className="grid gap-10 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {response
                 ? response.products.nodes.map((product) => (
                     <ProductItem key={product.id} product={product} />
@@ -154,6 +163,15 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
       altText
       width
       height
+    }
+    images(first:10) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
     }
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
