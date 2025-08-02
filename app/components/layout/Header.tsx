@@ -65,10 +65,11 @@ export function Header({
 export function Logo({className = ""}) {
   return (
     <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-      <div className={`font-title font-medium text-5xl ${className}`}>SoCutie</div>
+      <div className={`font-logo font-medium text-5xl ${className}`}>SoCutie</div>
     </NavLink>
   )
 }
+
 
 const CUSTOM_MENU = {
   items: [
@@ -76,7 +77,7 @@ const CUSTOM_MENU = {
       id: 'all_products',
       resourceId: null,
       tags: [],
-      title: 'Sản Phẩm',
+      title: 'SẢN PHẨM',
       type: 'HTTP',
       url: '/collections/all',
       items: [],
@@ -85,7 +86,7 @@ const CUSTOM_MENU = {
       id: 'all_collections',
       resourceId: null,
       tags: [],
-      title: 'Bộ Sưu Tập',
+      title: 'BỘ SƯU TẬP',
       type: 'HTTP',
       url: '/collections',
       items: [],
@@ -94,14 +95,13 @@ const CUSTOM_MENU = {
       id: 'about',
       resourceId: 'gid://shopify/Page/92591030328',
       tags: [],
-      title: 'Giới Thiệu',
+      title: 'GIỚI THIỆU',
       type: 'PAGE',
       url: '/pages/about',
       items: [],
     },
   ],
 };
-
 export function HeaderMenu({
   menu,
   primaryDomainUrl,
@@ -117,7 +117,7 @@ export function HeaderMenu({
 
   return (
     <>
-      <nav className={`flex gap-10 ${viewport === 'mobile' ? "flex-col" : ""}`}>
+      <nav className={`flex gap-12 ${viewport === 'mobile' ? "flex-col" : ""}`}>
         {/* (menu || CUSTOM_MENU).items.map((item) => */}
         {(CUSTOM_MENU).items.map((item) => {
           if (!item.url) return null;
@@ -138,8 +138,11 @@ export function HeaderMenu({
               style={activeLinkStyle}
               to={url}
             >
-              <div className="text-base font-semibold transition-colors duration-200 hover:text-light-main">
+              <div className="relative group text-base font-normal tracking-wide transition-colors duration-200 hover:text-light-main">
                 {item.title}
+                <span
+                  className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"
+                ></span>
               </div>
             </NavLink>
           );
@@ -155,7 +158,7 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="flex gap-6" role="navigation">
+    <nav className="flex gap-8" role="navigation">
       <SearchToggle />
       <a
         className={"hidden md:flex"}
@@ -163,7 +166,12 @@ function HeaderCtas({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Instagram className={"transition-colors duration-200 hover:text-light-main"}/>
+        <div className="relative group">
+          <Instagram className="transition-colors duration-200 hover:text-light-main" />
+          <span
+            className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"
+          ></span>
+        </div>
       </a>
 
       {/*<NavLink className={"hidden md:flex"} prefetch="intent" to="/account" style={activeLinkStyle}>*/}
@@ -194,7 +202,12 @@ function SearchToggle() {
   const {open} = useAside();
   return (
     <button className="" onClick={() => open('search')}>
-      <Search className={"transition-colors duration-200 hover:text-light-main"}/>
+      <div className="relative group">
+        <Search className="transition-colors duration-200 hover:text-light-main" />
+        <span
+          className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"
+        ></span>
+      </div>
     </button>
   );
 }
@@ -218,7 +231,12 @@ function CartBadge({count}: {count: number | null}) {
       }}
     >
       <div className={"relative"}>
-        <ShoppingCart className={"transition-colors duration-200 hover:text-light-main"}/>
+        <div className="relative group">
+          <ShoppingCart className="transition-colors duration-200 hover:text-light-main" />
+          <span
+            className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"
+          ></span>
+        </div>
         {count === null ? <span>&nbsp;</span> : (
           <div className={"absolute -top-1 -right-2 bg-light-main text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center"}>{count}</div>
         )}

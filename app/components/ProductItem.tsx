@@ -37,21 +37,30 @@ export function ProductItem({
     >
       <div className={"relative"}>
         <Image
-          src={isHovering ? hoverImgUrl : initImgUrl}
+          src={initImgUrl}
           alt={product.title}
-          className={"w-full h-auto aspect-[3/4] object-cover"}
+          className={`w-full h-auto aspect-[3/4] object-cover transition-opacity duration-300 ${isHovering ? 'opacity-0' : 'opacity-100'}`}
           loading={loading}
           sizes="(min-width: 45em) 400px, 100vw"
         />
+
+        <Image
+          src={hoverImgUrl}
+          alt={product.title}
+          className={`absolute top-0 left-0 w-full h-auto aspect-[3/4] object-cover transition-opacity duration-300 ease-in-out ${isHovering ? 'opacity-100' : 'opacity-0'}`}
+          loading={loading}
+          sizes="(min-width: 45em) 400px, 100vw"
+        />
+
         <div className="absolute p-2 inset-0 flex items-end justify-end ">
-          <div className={`flex justify-center items-center w-8 h-8 bg-light-main text-light-text2 transition-all duration-400 ${isHovering ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
+          <div className={`flex justify-center items-center w-8 h-8 bg-light-main text-light-text2 transition-all duration-300 z-10 ease-in-out ${isHovering ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
             <Search size={20} />
           </div>
         </div>
       </div>
-      <div className={"pt-4 flex flex-col items-center justify-center"}>
-        <div className={"font-semibold text-base"}>{product.title}</div>
-        <div className={"text-base font-normal text-light-text2"}>{formatVnd(product.priceRange.minVariantPrice.amount)}₫</div>
+      <div className={"pt-3 flex flex-col justify-center"}>
+        <div className={"font-medium text-xl font-title mb-1"}>{product.title}</div>
+        <div className={"text-sm font-normal text-light-text1"}>{formatVnd(product.priceRange.minVariantPrice.amount)}₫</div>
         {/*<Money data={product.priceRange.minVariantPrice}/>*/}
       </div>
     </Link>

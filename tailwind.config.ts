@@ -7,8 +7,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        main: ["Open Sans", "sans-serif"],
-        title: ["Rouge Script", "serif"] //title: ["Pacifico", "serif"]
+        main: ["Source Sans 3", "sans-serif"],
+        logo: ["Rouge Script", "serif"],
+        title: ["Tinos", "serif"]
       },
       colors: {
         light: {

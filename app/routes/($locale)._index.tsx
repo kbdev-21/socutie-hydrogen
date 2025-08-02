@@ -106,7 +106,7 @@ function RecommendedProducts({
 }) {
   return (
     <div className="mt-10 mx-6 lg:mx-20 max-w-[1536px] flex flex-col items-center">
-      <div className={"text-3xl font-bold mb-8"}>Best Sellers</div>
+      <div className={"text-4xl font-title font-medium mb-8"}>Our Best Sellers</div>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (

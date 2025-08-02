@@ -161,7 +161,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <Meta />
         <Links />
       </head>
-      <body className={'font-main antialiased'}>
+      <body className={'font-main subpixel-antialiased'}>
         {data ? (
           <Analytics.Provider
             cart={data.cart}
