@@ -15,7 +15,7 @@ const config: Config = {
         light: {
           main: "#e6d57f",
           text1: "#000000",
-          text2: "#333333",
+          text2: "#666666",
           bg1: "#ffffff",
           bg2: "#e6e6e6",
           bg3: "#cccccc"

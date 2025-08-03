@@ -53,7 +53,7 @@ export function ProductItem({
         />
 
         <div className="absolute p-2 inset-0 flex items-end justify-end ">
-          <div className={`flex justify-center items-center w-8 h-8 bg-light-main text-light-text2 transition-all duration-300 z-10 ease-in-out ${isHovering ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
+          <div className={`flex justify-center items-center w-8 h-8 bg-light-main text-light-text1 transition-all duration-300 z-10 ease-in-out ${isHovering ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
             <Search size={20} />
           </div>
         </div>

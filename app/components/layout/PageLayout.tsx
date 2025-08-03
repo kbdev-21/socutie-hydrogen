@@ -7,7 +7,7 @@ import type {
 } from '../../../storefrontapi.generated';
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/layout/Footer';
-import {Header, HeaderMenu} from '~/components/layout/Header';
+import {Header, HeaderMenu, HeaderMenuMobile} from '~/components/layout/Header';
 import {CartMain} from '~/components/CartMain';
 import {
   SEARCH_ENDPOINT,
@@ -162,7 +162,7 @@ function MobileMenuAside({
     header.menu &&
     header.shop.primaryDomain?.url && (
       <Aside type="mobile" heading="MENU">
-        <HeaderMenu
+        <HeaderMenuMobile
           menu={header.menu}
           viewport="mobile"
           primaryDomainUrl={header.shop.primaryDomain.url}

@@ -1,5 +1,5 @@
 import {Suspense} from 'react';
-import {Await, NavLink, useAsyncValue} from 'react-router';
+import {Await, Link, NavLink, useAsyncValue} from 'react-router';
 import {
   type CartViewPayload,
   useAnalytics,
@@ -7,7 +7,15 @@ import {
 } from '@shopify/hydrogen';
 import type {HeaderQuery, CartApiQueryFragment} from '../../../storefrontapi.generated';
 import {useAside} from '~/components/Aside';
-import {Handbag, Instagram, Menu, Search, ShoppingCart, UserRound} from 'lucide-react';
+import {
+  ChevronDown,
+  Handbag,
+  Instagram,
+  Menu,
+  Search,
+  ShoppingCart,
+  UserRound,
+} from 'lucide-react';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -26,6 +34,7 @@ export function Header({
 }: HeaderProps) {
   /* shopify nav */
   const {shop, menu} = header;
+  console.log(menu);
 
   return (
     <div className="">
@@ -40,11 +49,11 @@ export function Header({
 
       {/* not-mobile */}
       <div className={"hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-10 bg-light-bg1 border-b border-b-light-bg2"}>
-        <div className={"flex items-center justify-between w-full max-w-[1536px]"}>
+        <div className={"flex items-center justify-between w-full max-w-[1536px] h-full"}>
           <div>
             <Logo/>
           </div>
-          <div>
+          <div className={'h-full flex items-center justify-center'}>
             <HeaderMenu
               menu={menu}
               viewport="desktop"
@@ -102,12 +111,13 @@ const CUSTOM_MENU = {
     },
   ],
 };
+
 export function HeaderMenu({
-  menu,
-  primaryDomainUrl,
-  viewport,
-  publicStoreDomain,
-}: {
+                             menu,
+                             primaryDomainUrl,
+                             viewport,
+                             publicStoreDomain,
+                           }: {
   menu: HeaderProps['header']['menu'];
   primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
   viewport: Viewport;
@@ -116,42 +126,111 @@ export function HeaderMenu({
   const {close} = useAside();
 
   return (
-    <>
-      <nav className={`flex gap-12 ${viewport === 'mobile' ? "flex-col" : ""}`}>
-        {/* (menu || CUSTOM_MENU).items.map((item) => */}
-        {(CUSTOM_MENU).items.map((item) => {
-          if (!item.url) return null;
+    <nav className={`h-full flex gap-12 items-center`}>
+      {(menu || CUSTOM_MENU).items.map((item) => {
+        if (!item.url) return null;
 
-          // if the url is internal, we strip the domain
-          const url =
-            item.url.includes('myshopify.com') ||
-            item.url.includes(publicStoreDomain) ||
-            item.url.includes(primaryDomainUrl)
-              ? new URL(item.url).pathname
-              : item.url;
-          return (
+        const url =
+          item.url.includes('myshopify.com') ||
+          item.url.includes(publicStoreDomain) ||
+          item.url.includes(primaryDomainUrl)
+            ? new URL(item.url).pathname
+            : item.url;
+
+        const hasDropdown = item.items && item.items.length > 0;
+
+        return (
+          <div key={item.id} className="relative group h-full flex items-center">
             <NavLink
-              end
-              key={item.id}
+              to={url}
               onClick={close}
               prefetch="intent"
-              style={activeLinkStyle}
-              to={url}
+              className="h-full flex items-center text-base font-normal tracking-wide transition-colors duration-200 group-hover:text-light-main"
             >
-              <div className="relative group text-base font-normal tracking-wide transition-colors duration-200 hover:text-light-main">
-                {item.title}
-                <span
-                  className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"
-                ></span>
-              </div>
+              {item.title.toUpperCase()}
+              <span className="absolute left-0 bottom-6 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"></span>
             </NavLink>
-          );
-        })}
-      </nav>
-    </>
 
+            {hasDropdown && (
+              <div className={`
+                absolute left-0 top-20 w-48 bg-light-bg1 
+                transition-opacity duration-300
+                opacity-0 group-hover:opacity-100 
+                pointer-events-none group-hover:pointer-events-auto 
+                z-50 py-4 border border-light-bg2
+              `}>
+                {item.items.map((subItem) => {
+                  const subUrl = subItem.url
+                    ? subItem.url.includes('myshopify.com') ||
+                    subItem.url.includes(publicStoreDomain) ||
+                    subItem.url.includes(primaryDomainUrl)
+                      ? new URL(subItem.url).pathname
+                      : subItem.url
+                    : '#';
+                  return (
+                    <Link
+                      key={subItem.id}
+                      to={subUrl}
+                      className="block px-4 py-2 text-sm text-light-text1 transition-colors duration-300 hover:text-light-text2"
+                    >
+                      {subItem.title}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </nav>
   );
 }
+
+export function HeaderMenuMobile({
+                             menu,
+                             primaryDomainUrl,
+                             viewport,
+                             publicStoreDomain,
+                           }: {
+  menu: HeaderProps['header']['menu'];
+  primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
+  viewport: Viewport;
+  publicStoreDomain: HeaderProps['publicStoreDomain'];
+}) {
+  const {close} = useAside();
+
+  return (
+    <nav className={`h-full flex gap-10 flex-col`}>
+      {(menu || CUSTOM_MENU).items.map((item) => {
+        if (!item.url) return null;
+
+        const url =
+          item.url.includes('myshopify.com') ||
+          item.url.includes(publicStoreDomain) ||
+          item.url.includes(primaryDomainUrl)
+            ? new URL(item.url).pathname
+            : item.url;
+
+        const hasDropdown = item.items && item.items.length > 0;
+
+        return (
+          <div key={item.id} className="relative group">
+            <NavLink
+              to={url}
+              onClick={close}
+              prefetch="intent"
+              className="text-base font-normal tracking-wide transition-colors duration-200 group-hover:text-light-main"
+            >
+              {item.title.toUpperCase()}
+              <span className="absolute left-0 -bottom-2 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"></span>
+            </NavLink>
+          </div>
+        );
+      })}
+    </nav>
+  );
+}
+
 
 function HeaderCtas({
   isLoggedIn,
@@ -311,6 +390,7 @@ function activeLinkStyle({
   isPending: boolean;
 }) {
   return {
-    color: isPending ? 'grey' : 'black',
+    //color: isPending ? 'grey' : 'black',
+    color: 'text-light-text1'
   };
 }
