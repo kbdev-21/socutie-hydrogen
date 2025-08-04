@@ -70,7 +70,7 @@ export function ProductItem({
       </div>
 
       <div className={"pt-3 flex flex-col justify-center items-center"}>
-        <div className={"font-medium text-xl font-title mb-1"}>{product.title}</div>
+        <div className={"font-normal text-base font-title mb-1"}>{product.title}</div>
 
         <div className={"text-sm font-normal text-light-text2"}>{formatVnd(product.priceRange.minVariantPrice.amount)}₫</div>
         {/*<Money data={product.priceRange.minVariantPrice}/>*/}
@@ -84,7 +84,7 @@ export function ProductItem({
 
   function ColorOptions() {
     return colorHexs.length >= 1 ? (
-      <div className={"flex gap-1 mt-2"}>
+      <div className={"flex gap-1 mt-3"}>
         {colorHexs.map((color, index) => (
           <div key={index} className={`h-[18px] w-[18px] rounded-full border border-light-bg2`} style={{ backgroundColor: color }}>
           </div>

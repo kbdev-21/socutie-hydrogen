@@ -107,7 +107,7 @@ function RecommendedProducts({
 }) {
   return (
     <div className="mt-10 mx-6 lg:mx-20 max-w-[1536px] flex flex-col items-center">
-      <div className={"text-4xl font-title font-medium mb-8"}>Our Best Sellers</div>
+      <div className={"text-3xl font-title font-medium mb-8"}>Our Best Sellers</div>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
@@ -121,6 +121,7 @@ function RecommendedProducts({
           )}
         </Await>
       </Suspense>
+      <button className={"text-sm font-normal text-light-bg1 font-main my-12 bg-light-main py-4 px-8 transition-all duration-300 hover:scale-105"}>XEM THÊM</button>
       <br />
     </div>
   );
