@@ -2,7 +2,8 @@ import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, Link, type MetaFunction} from 'react-router';
 import {Suspense} from 'react';
 import {Image, Money} from '@shopify/hydrogen';
-import type {
+import {
+  BestSellersProductsQuery,
   FeaturedCollectionFragment,
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
@@ -102,7 +103,7 @@ function FeaturedCollection({
 function RecommendedProducts({
   products,
 }: {
-  products: Promise<RecommendedProductsQuery | null>;
+  products: Promise<BestSellersProductsQuery | null>;
 }) {
   return (
     <div className="mt-10 mx-6 lg:mx-20 max-w-[1536px] flex flex-col items-center">

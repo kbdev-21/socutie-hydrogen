@@ -34,12 +34,11 @@ export function Header({
 }: HeaderProps) {
   /* shopify nav */
   const {shop, menu} = header;
-  console.log(menu);
 
   return (
     <div className="">
       {/* mobile */}
-      <div className={"flex lg:hidden w-full h-20 px-6 fixed top-0 z-10 bg-light-bg1 border-b border-b-light-bg2"}>
+      <div className={"flex lg:hidden w-full h-20 px-6 fixed top-0 z-40 bg-light-bg1 border-b border-b-light-bg2"}>
         <div className={"flex items-center justify-between relative w-full"}>
           <HeaderMenuMobileToggle />
           <Logo className={"absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"}/>
@@ -48,7 +47,7 @@ export function Header({
       </div>
 
       {/* not-mobile */}
-      <div className={"hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-10 bg-light-bg1 border-b border-b-light-bg2"}>
+      <div className={"hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-40 bg-light-bg1 border-b border-b-light-bg2"}>
         <div className={"flex items-center justify-between w-full max-w-[1536px] h-full"}>
           <div>
             <Logo/>
@@ -145,17 +144,17 @@ export function HeaderMenu({
               to={url}
               onClick={close}
               prefetch="intent"
-              className="h-full flex items-center text-base font-normal tracking-wide transition-colors duration-200 group-hover:text-light-main"
+              className="h-full flex items-center text-base font-normal tracking-wide transition-colors duration-300 ease-in-out group-hover:text-light-main"
             >
               {item.title.toUpperCase()}
-              <span className="absolute left-0 bottom-6 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"></span>
+              <span className="absolute left-0 bottom-6 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
             </NavLink>
 
             {hasDropdown && (
               <div className={`
                 absolute left-0 top-20 w-48 bg-light-bg1 
-                transition-opacity duration-300
-                opacity-0 group-hover:opacity-100 
+                transition-opacity duration-300 ease-in-out
+                opacity-0 group-hover:opacity-100
                 pointer-events-none group-hover:pointer-events-auto 
                 z-50 py-4 border border-light-bg2
               `}>
@@ -171,7 +170,7 @@ export function HeaderMenu({
                     <Link
                       key={subItem.id}
                       to={subUrl}
-                      className="block px-4 py-2 text-sm text-light-text1 transition-colors duration-300 hover:text-light-text2"
+                      className="block px-4 py-2 text-sm text-light-text1 transition-colors duration-300 hover:text-light-main"
                     >
                       {subItem.title}
                     </Link>
@@ -219,10 +218,10 @@ export function HeaderMenuMobile({
               to={url}
               onClick={close}
               prefetch="intent"
-              className="text-base font-normal tracking-wide transition-colors duration-200 group-hover:text-light-main"
+              className="text-base font-normal tracking-wide transition-colors duration-150 ease-in-out group-hover:text-light-main"
             >
               {item.title.toUpperCase()}
-              <span className="absolute left-0 -bottom-2 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"></span>
+              <span className="absolute left-0 -bottom-2 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 ease-in-out group-hover:scale-x-100"></span>
             </NavLink>
           </div>
         );
@@ -237,7 +236,7 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="flex gap-8" role="navigation">
+    <nav className="flex gap-7" role="navigation">
       <SearchToggle />
       <a
         className={"hidden md:flex"}
@@ -246,9 +245,9 @@ function HeaderCtas({
         rel="noopener noreferrer"
       >
         <div className="relative group">
-          <Instagram className="transition-colors duration-200 hover:text-light-main" />
+          <Instagram className="transition-colors duration-150 ease-in-out hover:text-light-main" />
           <span
-            className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"
+            className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-300 ease-in-out group-hover:scale-x-100"
           ></span>
         </div>
       </a>
@@ -282,9 +281,9 @@ function SearchToggle() {
   return (
     <button className="" onClick={() => open('search')}>
       <div className="relative group">
-        <Search className="transition-colors duration-200 hover:text-light-main" />
+        <Search className="transition-colors duration-150 ease-in-out hover:text-light-main" />
         <span
-          className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"
+          className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-300 ease-in-out group-hover:scale-x-100"
         ></span>
       </div>
     </button>
@@ -311,9 +310,9 @@ function CartBadge({count}: {count: number | null}) {
     >
       <div className={"relative"}>
         <div className="relative group">
-          <ShoppingCart className="transition-colors duration-200 hover:text-light-main" />
+          <ShoppingCart className="transition-colors duration-150 ease-in-out hover:text-light-main" />
           <span
-            className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 group-hover:scale-x-100"
+            className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-300 ease-in-out group-hover:scale-x-100"
           ></span>
         </div>
         {count === null ? <span>&nbsp;</span> : (

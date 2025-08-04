@@ -3,20 +3,19 @@ export const PRODUCT_SUMMARY_FRAGMENT = `#graphql
     id
     title
     handle
+    options {
+      name
+      optionValues {
+        name
+      }
+    }
     priceRange {
       minVariantPrice {
         amount
         currencyCode
       }
     }
-    featuredImage {
-      id
-      url
-      altText
-      width
-      height
-    }
-    images(first:10) {
+    images(first:2) {
       nodes {
         id
         url

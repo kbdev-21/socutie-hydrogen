@@ -1,7 +1,7 @@
 /* Tinos Regular */
 @font-face {
     font-family: 'Tinos';
-    src: url('/fonts/tinos/Tinos-Regular.ttf') format('truetype');
+    src: url('/fonts/tinos/Tinos-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -10,53 +10,17 @@
 /* Rouge Script Regular */
 @font-face {
     font-family: 'Rouge Script';
-    src: url('/fonts/rouge/RougeScript-Regular.ttf') format('truetype');
+    src: url('/fonts/rouge/RougeScript-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
-}
-
-/* Pacifico Regular */
-@font-face {
-    font-family: 'Pacifico';
-    src: url('/fonts/pacifico/Pacifico-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* Open Sans Variable - Normal */
-@font-face {
-    font-family: 'Open Sans';
-    src: url('/fonts/open-sans/OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
-    font-weight: 300 800; /* adjust if needed */
-    font-style: normal;
-    font-display: swap;
-}
-
-/* Open Sans Variable - Italic */
-@font-face {
-    font-family: 'Open Sans';
-    src: url('/fonts/open-sans/OpenSans-Italic-VariableFont_wdth,wght.ttf') format('truetype');
-    font-weight: 300 800;
-    font-style: italic;
     font-display: swap;
 }
 
 /* Source Sans 3 Variable - Normal */
 @font-face {
     font-family: 'Source Sans 3';
-    src: url('/fonts/source-sans/SourceSans3-VariableFont_wght.ttf') format('truetype');
+    src: url('/fonts/source-sans/SourceSans3-VariableFont_wght.woff2') format('woff2');
     font-weight: 200 900; /* adjust if needed */
     font-style: normal;
-    font-display: swap;
-}
-
-/* Source Sans 3 Variable - Italic */
-@font-face {
-    font-family: 'Source Sans 3';
-    src: url('/fonts/source-sans/SourceSans3-Italic-VariableFont_wght.ttf') format('truetype');
-    font-weight: 200 900;
-    font-style: italic;
     font-display: swap;
 }
