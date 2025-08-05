@@ -62,7 +62,6 @@ export function Aside({
         onClick={close}
         className="cursor-default bg-transparent border-none text-transparent h-full left-0 absolute top-0 w-[100%]"
       >
-        wtf is this man
       </button>
       <aside className={""}>
         <header>

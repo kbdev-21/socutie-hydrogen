@@ -86,7 +86,10 @@ export function ProductItem({
     return colorHexs.length >= 1 ? (
       <div className={"flex gap-1 mt-3"}>
         {colorHexs.map((color, index) => (
-          <div key={index} className={`h-[18px] w-[18px] rounded-full border border-light-bg2`} style={{ backgroundColor: color }}>
+          <div
+            key={index}
+            className={`h-[18px] w-[18px] rounded-full border border-light-bg2`}
+            style={{ backgroundColor: color }}>
           </div>
         ))}
       </div>
