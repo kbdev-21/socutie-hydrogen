@@ -125,7 +125,7 @@ export function HeaderMenu({
   const {close} = useAside();
 
   return (
-    <nav className={`h-full flex gap-12 items-center`}>
+    <nav className={`h-full flex gap-[3vw] items-center`}>
       {(menu || CUSTOM_MENU).items.map((item) => {
         if (!item.url) return null;
 
@@ -236,7 +236,7 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="flex gap-7" role="navigation">
+    <nav className="flex gap-4 md:gap-6" role="navigation">
       <SearchToggle />
       <a
         className={"hidden md:flex"}
