@@ -48,7 +48,7 @@ export function Header({
 
       {/* not-mobile */}
       <div className={"hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-40 bg-light-bg1 border-b border-b-light-bg2"}>
-        <div className={"flex items-center justify-between w-full max-w-[1536px] h-full"}>
+        <div className={"flex items-center justify-between w-full max-w-[1440px] h-full"}>
           <div>
             <Logo/>
           </div>
@@ -73,7 +73,7 @@ export function Header({
 export function Logo({className = ""}) {
   return (
     <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-      <div className={`font-logo font-medium text-5xl ${className}`}>SoCutie</div>
+      <div className={`font-logo font-medium text-[40px] ${className}`}>SoCutie</div>
     </NavLink>
   )
 }

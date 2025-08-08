@@ -13,7 +13,8 @@ const config: Config = {
       },
       colors: {
         light: {
-          main: "#F891A5", //e6d57f: beige
+          main: "#f7879e", //e6d57f: beige
+          main2: "#fab7c5",
           text1: "#000000",
           text2: "#4d4d4d",
           bg1: "#ffffff",

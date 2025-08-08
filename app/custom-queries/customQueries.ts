@@ -1,4 +1,4 @@
-import {PRODUCT_SUMMARY_FRAGMENT} from '~/custom-queries/customFragments';
+import {MENU_FRAGMENT, PRODUCT_SUMMARY_FRAGMENT} from '~/custom-queries/customFragments';
 
 export const BEST_SELLERS_PRODUCTS_QUERY = `#graphql
   query BestSellersProducts ($country: CountryCode, $language: LanguageCode)
@@ -36,7 +36,7 @@ export const ALL_PRODUCTS_QUERY = `#graphql
   ${PRODUCT_SUMMARY_FRAGMENT}
 ` as const;
 
-export const COLLECTION_WITH_PRODUCTS = `#graphql
+export const COLLECTION_WITH_PRODUCTS_QUERY = `#graphql
   query CollectionWithProducts(
     $handle: String!
     $country: CountryCode
@@ -65,6 +65,100 @@ export const COLLECTION_WITH_PRODUCTS = `#graphql
           hasNextPage
           endCursor
           startCursor
+        }
+      }
+    }
+  }
+  ${PRODUCT_SUMMARY_FRAGMENT}
+` as const;
+
+
+export const HEADER_QUERY = `#graphql
+  fragment Shop on Shop {
+    id
+    name
+    description
+    primaryDomain {
+      url
+    }
+    brand {
+      logo {
+        image {
+          url
+        }
+      }
+    }
+  }
+  query Header(
+    $country: CountryCode
+    $headerMenuHandle: String!
+    $language: LanguageCode
+  ) @inContext(language: $language, country: $country) {
+    shop {
+      ...Shop
+    }
+    menu(handle: $headerMenuHandle) {
+      ...Menu
+    }
+  }
+  ${MENU_FRAGMENT}
+` as const;
+
+export const FOOTER_QUERY = `#graphql
+  query Footer(
+    $country: CountryCode
+    $footerMenuHandle: String!
+    $language: LanguageCode
+  ) @inContext(language: $language, country: $country) {
+    menu(handle: $footerMenuHandle) {
+      ...Menu
+    }
+  }
+  ${MENU_FRAGMENT}
+` as const;
+
+export const MENU_QUERY = `#graphql
+  query MenuQuery(
+    $handle: String!
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    menu(handle: $handle) {
+      ...Menu
+    }
+  }
+
+  ${MENU_FRAGMENT}
+` as const;
+
+export const HOMEPAGE_COLLECTIONS_MENU_QUERY = `#graphql
+  query HomepageCollectionsMenu(
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    menu(handle: "home") {
+      id
+      items {
+        id
+        type
+        resource {
+          ... on Collection {
+            id
+            handle
+            title
+            description
+            image {
+              id
+              url
+              width
+              height
+            }
+            products(first: 10) {
+              nodes {
+                ...ProductSummary
+              }
+            }
+          }
         }
       }
     }

@@ -102,44 +102,50 @@ export default function Product() {
   const {title, descriptionHtml} = product;
 
   return (
-    <div className="product">
-      <ProductImage image={selectedVariant?.image} />
-      <div className="product-main">
-        <h1>{title}</h1>
-        <ProductPrice
-          price={selectedVariant?.price}
-          compareAtPrice={selectedVariant?.compareAtPrice}
+    <div className={"mt-10 flex flex-col items-center lg:px-20"}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 max-w-[1440px] w-full">
+        <ProductImage image={selectedVariant?.image} images={product.images.nodes} />
+        <div className="product-form px-6 lg:px-0">
+          <h1>{title} qwefqwef</h1>
+          <ProductPrice
+            price={selectedVariant?.price}
+            compareAtPrice={selectedVariant?.compareAtPrice}
+          />
+          <br />
+          <ProductForm
+            productOptions={productOptions}
+            selectedVariant={selectedVariant}
+          />
+          <br />
+          <br />
+          <p>
+            <strong>Description</strong>
+          </p>
+          <br />
+          <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
+          <br />
+        </div>
+        <Analytics.ProductView
+          data={{
+            products: [
+              {
+                id: product.id,
+                title: product.title,
+                price: selectedVariant?.price.amount || '0',
+                vendor: product.vendor,
+                variantId: selectedVariant?.id || '',
+                variantTitle: selectedVariant?.title || '',
+                quantity: 1,
+              },
+            ],
+          }}
         />
-        <br />
-        <ProductForm
-          productOptions={productOptions}
-          selectedVariant={selectedVariant}
-        />
-        <br />
-        <br />
-        <p>
-          <strong>Description</strong>
-        </p>
-        <br />
-        <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-        <br />
       </div>
-      <Analytics.ProductView
-        data={{
-          products: [
-            {
-              id: product.id,
-              title: product.title,
-              price: selectedVariant?.price.amount || '0',
-              vendor: product.vendor,
-              variantId: selectedVariant?.id || '',
-              variantTitle: selectedVariant?.title || '',
-              quantity: 1,
-            },
-          ],
-        }}
-      />
+      <div className={"flex w-full max-w-[1440px] px-6 lg:px-0"}>
+        Co The Ban Se Thich
+      </div>
     </div>
+
   );
 }
 
@@ -184,6 +190,15 @@ const PRODUCT_FRAGMENT = `#graphql
   fragment Product on Product {
     id
     title
+    images(first:20) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
+    }
     vendor
     handle
     descriptionHtml

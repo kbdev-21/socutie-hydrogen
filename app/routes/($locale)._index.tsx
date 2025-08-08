@@ -4,11 +4,11 @@ import {Suspense} from 'react';
 import {Image, Money} from '@shopify/hydrogen';
 import {
   BestSellersProductsQuery,
-  FeaturedCollectionFragment,
+  FeaturedCollectionFragment, ProductSummaryFragment,
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
-import {BEST_SELLERS_PRODUCTS_QUERY} from '~/custom-queries/customQueries';
+import {BEST_SELLERS_PRODUCTS_QUERY, HOMEPAGE_COLLECTIONS_MENU_QUERY} from '~/custom-queries/customQueries';
 import {HeroBanner} from '~/components/custom/HeroBanner';
 
 export const meta: MetaFunction = () => {
@@ -30,13 +30,19 @@ export async function loader(args: LoaderFunctionArgs) {
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
 async function loadCriticalData({context}: LoaderFunctionArgs) {
-  const [{collections}] = await Promise.all([
-    context.storefront.query(FEATURED_COLLECTION_QUERY),
+  const [{menu}] = await Promise.all([
+    //context.storefront.query(FEATURED_COLLECTION_QUERY),
     // Add other queries here, so that they are loaded in parallel
+
+    context.storefront.query(HOMEPAGE_COLLECTIONS_MENU_QUERY)
   ]);
 
+  const collections = menu?.items
+    .filter((item) => item.type === 'COLLECTION' && item.resource)
+    .map((item) => item.resource);
+
   return {
-    featuredCollection: collections.nodes[0],
+    homepageCollections: collections ?? [],
   };
 }
 
@@ -72,57 +78,51 @@ export default function Homepage() {
   return (
     <div className="flex flex-col items-center">
       <HeroBanner/>
+      <div className={"h-16"}></div>
+      {data.homepageCollections.length > 0 &&
+        data.homepageCollections.map((collection, index) => (
+          <div key={collection!.id}>
+            <CollectionAndProductsDisplay
+              title={collection!.title}
+              description={collection!.description}
+              handle={collection!.handle}
+              products={collection!.products.nodes}
+            />
+            {index < data.homepageCollections.length - 1 && (
+              <div className="mt-16 mb-16 border-t border-light-bg2" />
+            )}
+          </div>
+        ))}
       {/*<FeaturedCollection collection={data.featuredCollection} />*/}
-      <RecommendedProducts products={data.recommendedProducts} />
+      {/*<RecommendedProducts products={data.recommendedProducts} />*/}
     </div>
   );
 }
 
-function FeaturedCollection({
-  collection,
+function CollectionAndProductsDisplay({
+  title,
+  description,
+  handle,
+  products
 }: {
-  collection: FeaturedCollectionFragment;
+  title: string;
+  description: string;
+  handle: string;
+  products: ProductSummaryFragment[];
 }) {
-  if (!collection) return null;
-  const image = collection?.image;
+  const url = `/collections/${handle}`;
   return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
-        </div>
-      )}
-      <h1>{collection.title}</h1>
-    </Link>
-  );
-}
-
-function RecommendedProducts({
-  products,
-}: {
-  products: Promise<BestSellersProductsQuery | null>;
-}) {
-  return (
-    <div className="mt-10 mx-6 lg:mx-20 max-w-[1536px] flex flex-col items-center">
-      <div className={"text-3xl font-title font-medium mb-8"}>Our Best Sellers</div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Await resolve={products}>
-          {(response) => (
-            <div className="grid gap-10 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {response
-                ? response.products.nodes.map((product) => (
-                    <ProductItem key={product.id} product={product} />
-                  ))
-                : null}
-            </div>
-          )}
-        </Await>
-      </Suspense>
-      <button className={"text-sm font-normal text-light-bg1 font-main my-12 bg-light-main py-4 px-8 transition-all duration-300 hover:scale-105"}>XEM THÊM</button>
-      <br />
+    <div className="mx-6 lg:mx-20 max-w-[1440px] flex flex-col items-center">
+      <div className={"text-3xl font-title font-medium mb-4"}>{title}</div>
+      <div className={"text-base font-main font-normal mb-10 max-w-md text-center tracking-tight"}>{description}</div>
+      <div className="grid gap-10 grid-cols-2 lg:grid-cols-4">
+        {products.map((product) => (
+          <ProductItem key={product.id} product={product} />
+        ))}
+      </div>
+      <Link
+        to={url}
+        className={"text-sm font-normal text-light-bg1 font-main mt-12 bg-light-main py-4 px-8 transition-all duration-300 hover:bg-light-main2"}>XEM THÊM</Link>
     </div>
   );
 }

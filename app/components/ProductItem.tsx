@@ -64,13 +64,13 @@ export function ProductItem({
         />
 
         {/* 🔍 Search icon on top */}
-        <div className={`z-30 absolute bottom-2 right-2 flex justify-center items-center w-8 h-8 bg-light-main text-light-text1 transition-all duration-300 ease-in-out ${isHovering ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
+        <div className={`z-30 absolute bottom-2 right-2 flex justify-center items-center w-8 h-8 bg-light-main text-light-bg1 transition-all duration-300 ease-in-out ${isHovering ? "opacity-100 translate-y-0 shadow" : "opacity-0 translate-y-2"}`}>
           <Search size={20} />
         </div>
       </div>
 
       <div className={"pt-3 flex flex-col justify-center items-center"}>
-        <div className={"font-normal text-base font-title mb-1"}>{product.title}</div>
+        <div className={"font-normal text-base xl:text-lg font-title mb-1"}>{product.title}</div>
 
         <div className={"text-sm font-normal text-light-text2"}>{formatVnd(product.priceRange.minVariantPrice.amount)}₫</div>
         {/*<Money data={product.priceRange.minVariantPrice}/>*/}

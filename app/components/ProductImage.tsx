@@ -1,23 +1,89 @@
-import type {ProductVariantFragment} from 'storefrontapi.generated';
+import type {ProductFragment, ProductVariantFragment} from 'storefrontapi.generated';
 import {Image} from '@shopify/hydrogen';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {useRef, useState} from 'react';
+import 'swiper/css';
+import {Navigation} from 'swiper/modules';
+import {ChevronLeft, ChevronRight} from 'lucide-react';
 
 export function ProductImage({
   image,
+  images
 }: {
-  image: ProductVariantFragment['image'];
+  image: ProductVariantFragment['image'],
+  images: ProductFragment['images']['nodes'];
 }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const swiperRef = useRef<any>(null);
+
+  const imgUrls = images.map(image => image.url);
+
   if (!image) {
     return <div className="product-image" />;
   }
   return (
-    <div className="product-image">
-      <Image
-        alt={image.altText || 'Product Image'}
-        aspectRatio="1/1"
-        data={image}
-        key={image.id}
-        sizes="(min-width: 45em) 50vw, 100vw"
-      />
+    <div className="flex flex-col-reverse gap-4 lg:flex-row lg:gap-12">
+      {/* Images list for desktop */}
+      <div className="hidden lg:flex lg:flex-col gap-4 w-20 overflow-y-auto max-h-[45vw] scrollbar-hidden">
+        {imgUrls.map((url, index) => (
+          <Image
+            key={url}
+            src={url}
+            alt={'Product Thumbnail'}
+            className={`aspect-[3/4] object-cover w-full p-[2px] cursor-pointer border ${currentIndex === index ? "border-light-main" : "border-light-bg1"} transition-all duration-300 ease-in-out`}
+            sizes="100px"
+            onClick={() => {
+              swiperRef.current?.slideTo(index);
+              setCurrentIndex(index);
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Main image */}
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={1}
+        grabCursor={false}
+        className={"relative w-full aspect-[3/4] h-auto group"}
+        onSwiper={(swiper) => swiperRef.current = swiper}
+        onSlideChange={(swiper) => {
+          setCurrentIndex(swiper.activeIndex);
+        }}
+      >
+        {imgUrls.map((url, index) => (
+          <SwiperSlide key={url}>
+            <img src={url} alt="1" className="w-full h-full object-cover" />
+          </SwiperSlide>
+        ))}
+
+        {/* Nav buttons */}
+        <button
+          className="absolute opacity-0 group-hover:opacity-70 transition-all duration-200 ease-in-out p-2 z-10 top-1/2 left-4 -translate-y-1/2 bg-light-bg1 text-light-text1 rounded-full shadow"
+          onClick={() => swiperRef.current?.slidePrev()}
+        >
+          <ChevronLeft size={20} strokeWidth={1.5} />
+        </button>
+        <button
+          className="absolute opacity-0 group-hover:opacity-70 transition-all duration-200 ease-in-out p-2 z-10 top-1/2 right-4 -translate-y-1/2 bg-light-bg1 text-light-text1 rounded-full shadow"
+          onClick={() => swiperRef.current?.slideNext()}
+        >
+          <ChevronRight size={20} strokeWidth={1.5}/>
+        </button>
+        <div className="flex flex-wrap gap-4 w-full px-4 justify-center items-center absolute opacity-100 lg:opacity-0 group-hover:opacity-100 transition-all duration-200 ease-in-out bottom-4 left-1/2 -translate-x-1/2 z-10">
+          {imgUrls.map((url, index) => (
+            <button
+              key={url}
+              className={`w-2 h-2 ${currentIndex === index ? "bg-light-main" : "bg-light-bg1/60"} rounded-full transition-all duration-300 ease-in-out`}
+              onClick={() => {
+                swiperRef.current?.slideTo(index);
+                setCurrentIndex(index);
+              }}
+            >
+            </button>
+          ))}
+        </div>
+      </Swiper>
     </div>
   );
 }

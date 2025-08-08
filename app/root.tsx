@@ -12,12 +12,12 @@ import {
   useRouteLoaderData,
 } from 'react-router';
 import favicon from '~/assets/favicon.svg';
-import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import fontStyles from './styles/fonts.css?url';
 import {PageLayout} from './components/layout/PageLayout';
+import {FOOTER_QUERY, HEADER_QUERY} from '~/custom-queries/customQueries';
 
 export type RootLoader = typeof loader;
 
