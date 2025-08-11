@@ -7,6 +7,8 @@ import type {
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
 import type {ProductFragment} from 'storefrontapi.generated';
+import {Minus, Plus, ShoppingBag} from 'lucide-react';
+import {useState} from "react";
 
 export function ProductForm({
   productOptions,
@@ -17,16 +19,20 @@ export function ProductForm({
 }) {
   const navigate = useNavigate();
   const {open} = useAside();
+
+  const [addQuantity, setAddQuantity] = useState(1);
+
   return (
-    <div className="">
+    <div className="flex flex-col gap-4">
+      {/* Variant selection */}
       {productOptions.map((option) => {
         // If there is only a single value in the option values, don't display the option
         if (option.optionValues.length === 1) return null;
 
         return (
-          <div className="product-options" key={option.name}>
-            <h5>{option.name}</h5>
-            <div className="product-options-grid">
+          <div className="" key={option.name}>
+            <div className={"mb-1"}>{option.name}</div>
+            <div className="flex flex-wrap gap-2">
               {option.optionValues.map((value) => {
                 const {
                   name,
@@ -71,16 +77,8 @@ export function ProductForm({
                   return (
                     <button
                       type="button"
-                      className={`product-options-item${
-                        exists && !selected ? ' link' : ''
-                      }`}
+                      className={`border text-sm py-2 px-3 ${selected ? "text-light-text1 border-light-text1 font-[500]" : "text-light-text2 border-light-bg3"}`}
                       key={option.name + name}
-                      style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
-                        opacity: available ? 1 : 0.3,
-                      }}
                       disabled={!exists}
                       onClick={() => {
                         if (!selected) {
@@ -97,29 +95,62 @@ export function ProductForm({
                 }
               })}
             </div>
-            <br />
           </div>
         );
       })}
-      <AddToCartButton
-        disabled={!selectedVariant || !selectedVariant.availableForSale}
-        onClick={() => {
-          open('cart');
-        }}
-        lines={
-          selectedVariant
-            ? [
+
+      {/* Quantity selection */}
+      <div>
+        <div className={"mb-1"}>Số lượng</div>
+        <div
+          className={`flex justify-between items-center w-fit border text-sm py-3 px-3 text-light-text1 border-light-bg3 font-[500]`}
+        >
+          <button
+            className={"text-light-text2 hover:text-light-text1 transition-all duration-300"}
+            onClick={() => {
+              setAddQuantity(addQuantity - 1);
+            }}
+            disabled={addQuantity === 1}
+          >
+            <Minus size={16} />
+          </button>
+          <div className={"mx-6 text-sm font-[500]"}>{addQuantity}</div>
+          <button
+            className={"text-light-text2 hover:text-light-text1 transition-all duration-300"}
+            onClick={() => {
+              setAddQuantity(addQuantity + 1);
+            }}
+          >
+            <Plus size={16}/>
+          </button>
+        </div>
+      </div>
+
+      {/* Add to cart button */}
+      <div className={"mt-4"}>
+        <AddToCartButton
+          disabled={!selectedVariant || !selectedVariant.availableForSale}
+          onClick={() => {
+            open('cart');
+          }}
+          lines={
+            selectedVariant
+              ? [
                 {
                   merchandiseId: selectedVariant.id,
-                  quantity: 1,
+                  quantity: addQuantity,
                   selectedVariant,
                 },
               ]
-            : []
-        }
-      >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
-      </AddToCartButton>
+              : []
+          }
+        >
+          <div className={"flex gap-3"}>
+            <ShoppingBag />
+            <div>{selectedVariant?.availableForSale ? 'Thêm vào giỏ hàng' : 'Liên hệ'}</div>
+          </div>
+        </AddToCartButton>
+      </div>
     </div>
   );
 }
@@ -134,17 +165,20 @@ function ProductOptionSwatch({
   const image = swatch?.image?.previewImage?.url;
   const color = swatch?.color;
 
-  if (!image && !color) return name;
+  return name;
 
-  return (
-    <div
-      aria-label={name}
-      className="product-option-label-swatch"
-      style={{
-        backgroundColor: color || 'transparent',
-      }}
-    >
-      {!!image && <img src={image} alt={name} />}
-    </div>
-  );
+  /* if the variant has name/color, return it */
+  // if (!image && !color) return name;
+  //
+  // return (
+  //   <div
+  //     aria-label={name}
+  //     className="product-option-label-swatch"
+  //     style={{
+  //       backgroundColor: color || 'transparent',
+  //     }}
+  //   >
+  //     {!!image && <img src={image} alt={name} />}
+  //   </div>
+  // );
 }

@@ -16,11 +16,76 @@
     font-display: swap;
 }
 
-/* Source Sans 3 Variable - Normal */
+/* Source Sans static weights */
+
+/* ExtraLight (200) */
 @font-face {
-    font-family: 'Source Sans 3';
-    src: url('/fonts/source-sans/SourceSans3-VariableFont_wght.woff2') format('woff2');
-    font-weight: 200 900; /* adjust if needed */
+    font-family: 'Source Sans';
+    src: url('/fonts/source-sans/SourceSans3-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Light (300) */
+@font-face {
+    font-family: 'Source Sans';
+    src: url('/fonts/source-sans/SourceSans3-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Regular (400) */
+@font-face {
+    font-family: 'Source Sans';
+    src: url('/fonts/source-sans/SourceSans3-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Medium (500) */
+@font-face {
+    font-family: 'Source Sans';
+    src: url('/fonts/source-sans/SourceSans3-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* SemiBold (600) */
+@font-face {
+    font-family: 'Source Sans';
+    src: url('/fonts/source-sans/SourceSans3-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Bold (700) */
+@font-face {
+    font-family: 'Source Sans';
+    src: url('/fonts/source-sans/SourceSans3-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ExtraBold (800) */
+@font-face {
+    font-family: 'Source Sans';
+    src: url('/fonts/source-sans/SourceSans3-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Black (900) */
+@font-face {
+    font-family: 'Source Sans';
+    src: url('/fonts/source-sans/SourceSans3-Black.woff2') format('woff2');
+    font-weight: 900;
     font-style: normal;
     font-display: swap;
 }

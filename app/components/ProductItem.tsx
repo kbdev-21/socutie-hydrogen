@@ -58,7 +58,7 @@ export function ProductItem({
         <Image
           src={hoverImgUrl}
           alt={product.title}
-          className={`z-10 absolute absolute top-0 left-0 w-full h-auto aspect-[3/4] object-cover`}
+          className={`z-10 absolute top-0 left-0 w-full h-auto aspect-[3/4] object-cover`}
           loading={loading}
           sizes="(min-width: 45em) 400px, 100vw"
         />
@@ -70,7 +70,7 @@ export function ProductItem({
       </div>
 
       <div className={"pt-3 flex flex-col justify-center items-center"}>
-        <div className={"font-normal text-base xl:text-lg font-title mb-1"}>{product.title}</div>
+        <div className={"font-normal text-base font-title mb-1"}>{product.title}</div>
 
         <div className={"text-sm font-normal text-light-text2"}>{formatVnd(product.priceRange.minVariantPrice.amount)}₫</div>
         {/*<Money data={product.priceRange.minVariantPrice}/>*/}

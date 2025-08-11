@@ -144,7 +144,7 @@ export function HeaderMenu({
               to={url}
               onClick={close}
               prefetch="intent"
-              className="h-full flex items-center text-base font-normal tracking-wide transition-colors duration-300 ease-in-out group-hover:text-light-main"
+              className="h-full font-[400] flex items-center text-base tracking-wide transition-colors duration-300 ease-in-out group-hover:text-light-main"
             >
               {item.title.toUpperCase()}
               <span className="absolute left-0 bottom-6 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>

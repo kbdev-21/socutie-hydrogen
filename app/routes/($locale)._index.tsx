@@ -113,8 +113,8 @@ function CollectionAndProductsDisplay({
   const url = `/collections/${handle}`;
   return (
     <div className="mx-6 lg:mx-20 max-w-[1440px] flex flex-col items-center">
-      <div className={"text-3xl font-title font-medium mb-4"}>{title}</div>
-      <div className={"text-base font-main font-normal mb-10 max-w-md text-center tracking-tight"}>{description}</div>
+      <div className={"text-3xl font-title mb-4"}>{title}</div>
+      <div className={"text-base font-main mb-10 max-w-md text-center tracking-tight"}>{description}</div>
       <div className="grid gap-10 grid-cols-2 lg:grid-cols-4">
         {products.map((product) => (
           <ProductItem key={product.id} product={product} />
@@ -122,7 +122,9 @@ function CollectionAndProductsDisplay({
       </div>
       <Link
         to={url}
-        className={"text-sm font-normal text-light-bg1 font-main mt-12 bg-light-main py-4 px-8 transition-all duration-300 hover:bg-light-main2"}>XEM THÊM</Link>
+        className={"shadow-md text-sm font-normal text-light-bg1 font-main mt-12 bg-light-main py-4 px-8 transition-all duration-300 hover:opacity-80"}>
+        XEM THÊM
+      </Link>
     </div>
   );
 }

@@ -7,16 +7,16 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        main: ["Source Sans 3", "sans-serif"],
+        main: ["Source Sans", "sans-serif"],
         logo: ["Rouge Script", "serif"],
         title: ["Tinos", "serif"]
       },
       colors: {
         light: {
-          main: "#f7879e", //e6d57f: beige
+          main: "#f9859c", //e6d57f: beige
           main2: "#fab7c5",
           text1: "#000000",
-          text2: "#4d4d4d",
+          text2: "#666666",
           bg1: "#ffffff",
           bg2: "#e6e6e6",
           bg3: "#cccccc"

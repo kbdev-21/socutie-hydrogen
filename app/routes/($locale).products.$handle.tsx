@@ -103,27 +103,31 @@ export default function Product() {
 
   return (
     <div className={"mt-10 flex flex-col items-center lg:px-20"}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 max-w-[1440px] w-full">
-        <ProductImage image={selectedVariant?.image} images={product.images.nodes} />
-        <div className="product-form px-6 lg:px-0">
-          <h1>{title} qwefqwef</h1>
+      {/* Product detail */}
+      <div className="grid grid-cols-1 items-start gap-6 lg:gap-3 lg:grid-cols-2 max-w-[1280px] w-full">
+        {/* Left side (top on mobile) */}
+        <ProductImage variantImage={selectedVariant?.image} images={product.images.nodes} />
+
+        {/* Right side (bottom on mobile) */}
+        <div className="product-form px-6 lg:px-0 lg:ml-12">
+          {/* Title and price */}
+          <div className={"font-title text-3xl mb-2"}>{title}</div>
           <ProductPrice
             price={selectedVariant?.price}
             compareAtPrice={selectedVariant?.compareAtPrice}
           />
-          <br />
+          <div className="mt-6 mb-6 border-t border-light-bg2" />
+
+          {/* Desription */}
+          <div className={"text-base font-main font-[400] tracking-tight mb-6"}>
+            <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
+          </div>
+
+          {/* Variants and Add to cart button */}
           <ProductForm
             productOptions={productOptions}
             selectedVariant={selectedVariant}
           />
-          <br />
-          <br />
-          <p>
-            <strong>Description</strong>
-          </p>
-          <br />
-          <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-          <br />
         </div>
         <Analytics.ProductView
           data={{
@@ -141,8 +145,10 @@ export default function Product() {
           }}
         />
       </div>
-      <div className={"flex w-full max-w-[1440px] px-6 lg:px-0"}>
-        Co The Ban Se Thich
+
+      {/* Suggestions */}
+      <div className={"flex w-full max-w-[1440px] px-6 lg:px-0 mt-10 text-2xl font-title mb-64"}>
+        Có thể bạn cũng thích
       </div>
     </div>
 

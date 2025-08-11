@@ -1,16 +1,16 @@
 import type {ProductFragment, ProductVariantFragment} from 'storefrontapi.generated';
 import {Image} from '@shopify/hydrogen';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import 'swiper/css';
 import {Navigation} from 'swiper/modules';
 import {ChevronLeft, ChevronRight} from 'lucide-react';
 
 export function ProductImage({
-  image,
+  variantImage,
   images
 }: {
-  image: ProductVariantFragment['image'],
+  variantImage: ProductVariantFragment['image'],
   images: ProductFragment['images']['nodes'];
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -18,19 +18,28 @@ export function ProductImage({
 
   const imgUrls = images.map(image => image.url);
 
-  if (!image) {
+  useEffect(() => {
+    const variantImgIndex = imgUrls.findIndex(url => url === variantImage!.url);
+
+    if(variantImgIndex === -1) return;
+
+    swiperRef.current?.slideTo(variantImgIndex);
+    setCurrentIndex(variantImgIndex);
+  }, [variantImage!.url]);
+
+  if (!variantImage) {
     return <div className="product-image" />;
   }
   return (
-    <div className="flex flex-col-reverse gap-4 lg:flex-row lg:gap-12">
+    <div className="flex flex-col-reverse gap-4 xl:flex-row xl:gap-8">
       {/* Images list for desktop */}
-      <div className="hidden lg:flex lg:flex-col gap-4 w-20 overflow-y-auto max-h-[45vw] scrollbar-hidden">
+      <div className="hidden lg:flex lg:flex-row xl:flex xl:flex-col gap-2 w-16">
         {imgUrls.map((url, index) => (
           <Image
             key={url}
             src={url}
             alt={'Product Thumbnail'}
-            className={`aspect-[3/4] object-cover w-full p-[2px] cursor-pointer border ${currentIndex === index ? "border-light-main" : "border-light-bg1"} transition-all duration-300 ease-in-out`}
+            className={`aspect-[3/4] object-cover w-full p-[2px] cursor-pointer border ${currentIndex === index ? 'border-light-main' : 'border-light-bg1'} transition-all duration-300 ease-in-out`}
             sizes="100px"
             onClick={() => {
               swiperRef.current?.slideTo(index);
@@ -45,8 +54,8 @@ export function ProductImage({
         spaceBetween={0}
         slidesPerView={1}
         grabCursor={false}
-        className={"relative w-full aspect-[3/4] h-auto group"}
-        onSwiper={(swiper) => swiperRef.current = swiper}
+        className={'relative w-full aspect-[3/4] h-auto group'}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
         onSlideChange={(swiper) => {
           setCurrentIndex(swiper.activeIndex);
         }}
@@ -59,28 +68,29 @@ export function ProductImage({
 
         {/* Nav buttons */}
         <button
-          className="absolute opacity-0 group-hover:opacity-70 transition-all duration-200 ease-in-out p-2 z-10 top-1/2 left-4 -translate-y-1/2 bg-light-bg1 text-light-text1 rounded-full shadow"
+          className={`${currentIndex === 0 ? 'hidden' : ''} absolute opacity-0 group-hover:opacity-70 transition-all duration-200 ease-in-out p-2 z-10 top-1/2 left-4 -translate-y-1/2 bg-light-bg1 text-light-text1 rounded-full shadow`}
           onClick={() => swiperRef.current?.slidePrev()}
         >
-          <ChevronLeft size={20} strokeWidth={1.5} />
+          <ChevronLeft size={18} strokeWidth={1.5} />
         </button>
         <button
-          className="absolute opacity-0 group-hover:opacity-70 transition-all duration-200 ease-in-out p-2 z-10 top-1/2 right-4 -translate-y-1/2 bg-light-bg1 text-light-text1 rounded-full shadow"
+          className={`${currentIndex === imgUrls.length - 1 ? 'hidden' : ''} absolute opacity-0 group-hover:opacity-70 transition-all duration-200 ease-in-out p-2 z-10 top-1/2 right-4 -translate-y-1/2 bg-light-bg1 text-light-text1 rounded-full shadow"`}
           onClick={() => swiperRef.current?.slideNext()}
         >
-          <ChevronRight size={20} strokeWidth={1.5}/>
+          <ChevronRight size={18} strokeWidth={1.5} />
         </button>
-        <div className="flex flex-wrap gap-4 w-full px-4 justify-center items-center absolute opacity-100 lg:opacity-0 group-hover:opacity-100 transition-all duration-200 ease-in-out bottom-4 left-1/2 -translate-x-1/2 z-10">
+
+        {/* Index Display */}
+        <div className="flex flex-wrap gap-2 w-full px-4 justify-center items-center absolute opacity-100 lg:opacity-0 group-hover:opacity-100 transition-all duration-200 ease-in-out bottom-4 left-1/2 -translate-x-1/2 z-10">
           {imgUrls.map((url, index) => (
             <button
               key={url}
-              className={`w-2 h-2 ${currentIndex === index ? "bg-light-main" : "bg-light-bg1/60"} rounded-full transition-all duration-300 ease-in-out`}
+              className={`w-2 h-2 ${currentIndex === index ? 'bg-light-main' : 'bg-light-bg1 opacity-60'} rounded-full transition-all duration-300 ease-in-out`}
               onClick={() => {
                 swiperRef.current?.slideTo(index);
                 setCurrentIndex(index);
               }}
-            >
-            </button>
+            ></button>
           ))}
         </div>
       </Swiper>
