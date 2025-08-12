@@ -1,5 +1,15 @@
 import {MENU_FRAGMENT, PRODUCT_SUMMARY_FRAGMENT} from '~/custom-queries/customFragments';
 
+export const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+  query RecommendedProducts ($handle: String!, $country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    productRecommendations(productHandle: $handle) {
+      ...ProductSummary
+    }
+  }
+  ${PRODUCT_SUMMARY_FRAGMENT}
+` as const;
+
 export const BEST_SELLERS_PRODUCTS_QUERY = `#graphql
   query BestSellersProducts ($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {

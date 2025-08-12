@@ -9,7 +9,7 @@ import {
   Meta,
   Scripts,
   ScrollRestoration,
-  useRouteLoaderData,
+  useRouteLoaderData, useLocation,
 } from 'react-router';
 import favicon from '~/assets/favicon.svg';
 import resetStyles from '~/styles/reset.css?url';
@@ -18,6 +18,7 @@ import tailwindCss from './styles/tailwind.css?url';
 import fontStyles from './styles/fonts.css?url';
 import {PageLayout} from './components/layout/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/custom-queries/customQueries';
+import {AnimatePresence} from 'framer-motion';
 
 export type RootLoader = typeof loader;
 
@@ -181,7 +182,13 @@ export function Layout({children}: {children?: React.ReactNode}) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode={"wait"}>
+      <Outlet key={location.pathname}/>
+    </AnimatePresence>
+  );
 }
 
 export function ErrorBoundary() {

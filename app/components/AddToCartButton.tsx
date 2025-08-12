@@ -30,18 +30,21 @@ export function AddToCartButton({
               onClick={onClick}
               disabled={disabled ?? fetcher.state !== 'idle'}
               className={`
+                relative overflow-hidden
                 w-full py-4 flex justify-center items-center
                 text-base text-light-bg1
                 bg-light-main shadow-sm
-                transition-all duration-300 ease-in-out
-                hover:opacity-80
-                disabled:opacity-60 disabled:cursor-not-allowed
+                transition-all duration-200
+                before:absolute before:inset-0
+                before:bg-light-main2 before:translate-x-[-100%]
+                before:transition-transform before:duration-300
+                hover:before:translate-x-0
               `}
             >
               {fetcher.state === "idle"
-                ? children
+                ? <div className={"relative z-10"}>{children}</div>
                 : (
-                  <div className={"flex gap-3"}>
+                  <div className={"relative z-10 flex gap-3"}>
                     <LoaderCircle className={"animate-spin"}/>
                     <div>Đang xử lý</div>
                   </div>

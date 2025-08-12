@@ -8,10 +8,17 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
-import {ProductPrice} from '~/components/ProductPrice';
-import {ProductImage} from '~/components/ProductImage';
-import {ProductForm} from '~/components/ProductForm';
+import {ProductPrice} from '~/components/product-page/ProductPrice';
+import {ProductImage} from '~/components/product-page/ProductImage';
+import {ProductForm} from '~/components/product-page/ProductForm';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {useState} from "react";
+import {RECOMMENDED_PRODUCTS_QUERY} from "~/custom-queries/customQueries";
+import {ProductItem} from "~/components/ProductItem";
+import {ChevronDown} from 'lucide-react';
+import {motion} from 'framer-motion';
+import {FadeInItem, FadeInStagger} from '~/components/framer-motion/FadeInStagger';
+import {FadeInDiv} from '~/components/framer-motion/FadeInDiv';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [
@@ -49,10 +56,13 @@ async function loadCriticalData({
     throw new Error('Expected product handle to be defined');
   }
 
-  const [{product}] = await Promise.all([
+  const [{product}, {productRecommendations}] = await Promise.all([
     storefront.query(PRODUCT_QUERY, {
       variables: {handle, selectedOptions: getSelectedProductOptions(request)},
     }),
+    storefront.query(RECOMMENDED_PRODUCTS_QUERY, {
+      variables: {handle},
+    })
     // Add other queries here, so that they are loaded in parallel
   ]);
 
@@ -65,6 +75,7 @@ async function loadCriticalData({
 
   return {
     product,
+    productRecommendations,
   };
 }
 
@@ -80,8 +91,23 @@ function loadDeferredData({context, params}: LoaderFunctionArgs) {
   return {};
 }
 
+const additionInfoMenu = [
+  {
+    title: "Hướng dẫn sử dụng",
+    content: "Vệ sinh nhẹ bằng khăn ẩm hoặc giặt tay, phơi thoáng mát, bảo quản khô ráo, tránh quá tải và vật sắc nhọn để sản phẩm luôn bền đẹp"
+  },
+  {
+    title: "Chính sách giao hàng",
+    content: "Phí Shipping: miễn phí nội thành TPHCM, 30.000đ toàn quốc\nThời gian giao hàng: 1-5 ngày. Có thể kiểm tra tình trạng giao hàng qua mã đơn hàng"
+  },
+  {
+    title: "Chính sách bảo hành",
+    content: "Đổi trả miễn phí 1 lần nếu không đúng size. Bảo hành 12 tháng"
+  },
+];
+
 export default function Product() {
-  const {product} = useLoaderData<typeof loader>();
+  const {product, productRecommendations } = useLoaderData<typeof loader>();
 
   // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
@@ -102,57 +128,128 @@ export default function Product() {
   const {title, descriptionHtml} = product;
 
   return (
-    <div className={"mt-10 flex flex-col items-center lg:px-20"}>
+    <div className={"lg:mt-10 flex flex-col items-center lg:px-20"}>
       {/* Product detail */}
-      <div className="grid grid-cols-1 items-start gap-6 lg:gap-3 lg:grid-cols-2 max-w-[1280px] w-full">
-        {/* Left side (top on mobile) */}
-        <ProductImage variantImage={selectedVariant?.image} images={product.images.nodes} />
+      <FadeInDiv>
+        <div className="grid grid-cols-1 items-start gap-6 lg:gap-3 lg:grid-cols-2 max-w-[1280px] w-full">
+          {/* Left side (top on mobile) */}
+          <ProductImage variantImage={selectedVariant?.image} images={product.images.nodes} />
 
-        {/* Right side (bottom on mobile) */}
-        <div className="product-form px-6 lg:px-0 lg:ml-12">
-          {/* Title and price */}
-          <div className={"font-title text-3xl mb-2"}>{title}</div>
-          <ProductPrice
-            price={selectedVariant?.price}
-            compareAtPrice={selectedVariant?.compareAtPrice}
-          />
-          <div className="mt-6 mb-6 border-t border-light-bg2" />
+          {/* Right side (bottom on mobile) */}
+          <div className="product-form px-6 lg:px-0 lg:ml-12">
+            {/* Title and price */}
+            <div className={"font-title text-3xl mb-2"}>{title}</div>
+            <ProductPrice
+              price={selectedVariant?.price}
+              compareAtPrice={selectedVariant?.compareAtPrice}
+            />
+            <div className="mt-6 mb-6 border-t border-light-bg2" />
 
-          {/* Desription */}
-          <div className={"text-base font-main font-[400] tracking-tight mb-6"}>
-            <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
+            {/* Variants and Add to cart button */}
+            <ProductForm
+              productOptions={productOptions}
+              selectedVariant={selectedVariant}
+            />
+
+            {/* Desription */}
+            <div className={"mt-8"}>
+              <div
+                className={"text-base font-main font-[400] tracking-tight mt-6 [&_strong]:font-[600] [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6"}
+                dangerouslySetInnerHTML={{__html: descriptionHtml}}
+              />
+            </div>
           </div>
-
-          {/* Variants and Add to cart button */}
-          <ProductForm
-            productOptions={productOptions}
-            selectedVariant={selectedVariant}
+          <Analytics.ProductView
+            data={{
+              products: [
+                {
+                  id: product.id,
+                  title: product.title,
+                  price: selectedVariant?.price.amount || '0',
+                  vendor: product.vendor,
+                  variantId: selectedVariant?.id || '',
+                  variantTitle: selectedVariant?.title || '',
+                  quantity: 1,
+                },
+              ],
+            }}
           />
         </div>
-        <Analytics.ProductView
-          data={{
-            products: [
-              {
-                id: product.id,
-                title: product.title,
-                price: selectedVariant?.price.amount || '0',
-                vendor: product.vendor,
-                variantId: selectedVariant?.id || '',
-                variantTitle: selectedVariant?.title || '',
-                quantity: 1,
-              },
-            ],
-          }}
-        />
-      </div>
+      </FadeInDiv>
+
+
+      {/* Additional info */}
+      <FadeInDiv>
+        <AdditionalInfo/>
+      </FadeInDiv>
 
       {/* Suggestions */}
-      <div className={"flex w-full max-w-[1440px] px-6 lg:px-0 mt-10 text-2xl font-title mb-64"}>
-        Có thể bạn cũng thích
+      <div className="mt-20 mb-6 w-full border-t border-light-bg2" />
+      <div className={"flex justify-center w-full max-w-[1440px] px-6 lg:px-0 mt-10 mb-8 text-3xl font-title"}>
+        <div>Có thể bạn cũng thích</div>
       </div>
+      <FadeInStagger>
+        <div
+          className="px-6 lg:px-0 max-w-[1440px] w-full grid gap-6 lg:gap-8 grid-cols-2 lg:grid-cols-4"
+        >
+          {productRecommendations?.map((product) => (
+            <FadeInItem key={product.id}>
+              <ProductItem product={product} />
+            </FadeInItem>
+          ))}
+        </div>
+      </FadeInStagger>
+
     </div>
 
   );
+
+  function AdditionalInfo() {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    return (
+      <div className={"flex flex-col gap-4 mt-16 w-full max-w-[912px] px-6 lg:px-0"}>
+        <div className={"w-full flex justify-center font-title text-2xl mb-4"}>
+          Hướng Dẫn Mua Hàng
+        </div>
+        {additionInfoMenu.map((item, index) => (
+          <div key={item.title}>
+            <AdditionalInfoItem item={item} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  function AdditionalInfoItem({item}: {item: any}) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+      <>
+        <button
+          className={"flex w-full justify-between items-center p-6 border border-light-bg2 bg-light-bg3 hover:cursor-pointer"}
+          onClick={() => {setIsOpen(!isOpen)}}
+        >
+          <div className={"font-title text-xl"}>
+            {item.title}
+          </div>
+          <div className={`${isOpen ? "rotate-180" : ""} transition-transform duration-300 ease-in-out`}>
+            <ChevronDown size={20} strokeWidth={1.5} />
+          </div>
+        </button>
+        <div
+          className={`
+            overflow-hidden transition-all duration-500 ease-in-out
+            ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}
+            border border-t-0 border-light-bg2 bg-light-bg1
+          `}
+        >
+          <div className="p-6 font-main text-base tracking-tight">
+            {item.content}
+          </div>
+        </div>
+      </>
+    )
+  }
 }
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql

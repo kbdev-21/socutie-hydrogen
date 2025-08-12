@@ -1,4 +1,4 @@
-import type {ProductFragment, ProductVariantFragment} from 'storefrontapi.generated';
+import type {ProductFragment, ProductVariantFragment} from '../../../storefrontapi.generated';
 import {Image} from '@shopify/hydrogen';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {useEffect, useRef, useState} from 'react';

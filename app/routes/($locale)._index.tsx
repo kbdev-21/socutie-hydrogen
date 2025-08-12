@@ -10,6 +10,8 @@ import {
 import {ProductItem} from '~/components/ProductItem';
 import {BEST_SELLERS_PRODUCTS_QUERY, HOMEPAGE_COLLECTIONS_MENU_QUERY} from '~/custom-queries/customQueries';
 import {HeroBanner} from '~/components/custom/HeroBanner';
+import {FadeInItem, FadeInStagger} from "~/components/framer-motion/FadeInStagger";
+import {FadeInDiv} from "~/components/framer-motion/FadeInDiv";
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -113,17 +115,34 @@ function CollectionAndProductsDisplay({
   const url = `/collections/${handle}`;
   return (
     <div className="mx-6 lg:mx-20 max-w-[1440px] flex flex-col items-center">
-      <div className={"text-3xl font-title mb-4"}>{title}</div>
-      <div className={"text-base font-main mb-10 max-w-md text-center tracking-tight"}>{description}</div>
-      <div className="grid gap-10 grid-cols-2 lg:grid-cols-4">
-        {products.map((product) => (
-          <ProductItem key={product.id} product={product} />
-        ))}
-      </div>
+      <FadeInDiv>
+        <div className={"text-3xl text-center font-title mb-4"}>{title}</div>
+        <div className={"text-base font-main mb-10 max-w-md text-center tracking-tight"}>{description}</div>
+      </FadeInDiv>
+      <FadeInStagger>
+        <div className="grid gap-6 lg:gap-8 grid-cols-2 lg:grid-cols-4">
+          {products.map((product) => (
+            <FadeInItem key={product.id}>
+              <ProductItem  product={product} />
+            </FadeInItem>
+          ))}
+        </div>
+      </FadeInStagger>
+
       <Link
         to={url}
-        className={"shadow-md text-sm font-normal text-light-bg1 font-main mt-12 bg-light-main py-4 px-8 transition-all duration-300 hover:opacity-80"}>
-        XEM THÊM
+        className={`
+          relative overflow-hidden
+          shadow-md text-sm font-normal text-light-bg1 font-main
+          mt-12 bg-light-main py-4 px-8
+          transition-all duration-300
+          before:absolute before:inset-0
+          before:bg-light-main2 before:translate-x-[-100%]
+          before:transition-transform before:duration-300
+          hover:before:translate-x-0
+        `}
+      >
+        <div className="relative z-10">XEM THÊM</div>
       </Link>
     </div>
   );
@@ -152,40 +171,40 @@ const FEATURED_COLLECTION_QUERY = `#graphql
   }
 ` as const;
 
-const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-  fragment RecommendedProduct on Product {
-    id
-    title
-    handle
-    priceRange {
-      minVariantPrice {
-        amount
-        currencyCode
-      }
-    }
-    featuredImage {
-      id
-      url
-      altText
-      width
-      height
-    }
-    images(first:10) {
-      nodes {
-        id
-        url
-        altText
-        width
-        height
-      }
-    }
-  }
-  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
-      nodes {
-        ...RecommendedProduct
-      }
-    }
-  }
-` as const;
+// const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+//   fragment RecommendedProduct on Product {
+//     id
+//     title
+//     handle
+//     priceRange {
+//       minVariantPrice {
+//         amount
+//         currencyCode
+//       }
+//     }
+//     featuredImage {
+//       id
+//       url
+//       altText
+//       width
+//       height
+//     }
+//     images(first:10) {
+//       nodes {
+//         id
+//         url
+//         altText
+//         width
+//         height
+//       }
+//     }
+//   }
+//   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
+//     @inContext(country: $country, language: $language) {
+//     products(first: 4, sortKey: UPDATED_AT, reverse: true) {
+//       nodes {
+//         ...RecommendedProduct
+//       }
+//     }
+//   }
+// ` as const;

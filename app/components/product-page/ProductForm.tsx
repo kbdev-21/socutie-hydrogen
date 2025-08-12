@@ -4,9 +4,9 @@ import type {
   Maybe,
   ProductOptionValueSwatch,
 } from '@shopify/hydrogen/storefront-api-types';
-import {AddToCartButton} from './AddToCartButton';
-import {useAside} from './Aside';
-import type {ProductFragment} from 'storefrontapi.generated';
+import {AddToCartButton} from '../AddToCartButton';
+import {useAside} from '../Aside';
+import type {ProductFragment} from '../../../storefrontapi.generated';
 import {Minus, Plus, ShoppingBag} from 'lucide-react';
 import {useState} from "react";
 
@@ -27,7 +27,7 @@ export function ProductForm({
       {/* Variant selection */}
       {productOptions.map((option) => {
         // If there is only a single value in the option values, don't display the option
-        if (option.optionValues.length === 1) return null;
+        //if (option.optionValues.length === 1) return null;
 
         return (
           <div className="" key={option.name}>
@@ -77,7 +77,7 @@ export function ProductForm({
                   return (
                     <button
                       type="button"
-                      className={`border text-sm py-2 px-3 ${selected ? "text-light-text1 border-light-text1 font-[500]" : "text-light-text2 border-light-bg3"}`}
+                      className={`border text-base py-2 px-3 transition-colors duration-200 hover:text-light-text1 hover:border-light-text1 ${selected ? "text-light-text1 border-light-text1" : "text-light-text2 border-light-bg2"}`}
                       key={option.name + name}
                       disabled={!exists}
                       onClick={() => {
@@ -103,10 +103,10 @@ export function ProductForm({
       <div>
         <div className={"mb-1"}>Số lượng</div>
         <div
-          className={`flex justify-between items-center w-fit border text-sm py-3 px-3 text-light-text1 border-light-bg3 font-[500]`}
+          className={`flex justify-between items-center w-fit border text-sm py-3 px-3 text-light-text1 border-light-bg2 font-[500]`}
         >
           <button
-            className={"text-light-text2 hover:text-light-text1 transition-all duration-300"}
+            className={"text-light-text2 hover:text-light-text1 transition-all duration-200"}
             onClick={() => {
               setAddQuantity(addQuantity - 1);
             }}

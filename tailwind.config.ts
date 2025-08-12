@@ -13,13 +13,13 @@ const config: Config = {
       },
       colors: {
         light: {
-          main: "#f9859c", //e6d57f: beige
-          main2: "#fab7c5",
+          main: "#f58a9f", //e6d57f: beige
+          main2: "#f7a1b2",
           text1: "#000000",
           text2: "#666666",
           bg1: "#ffffff",
+          bg3: "#f7f7f7",
           bg2: "#e6e6e6",
-          bg3: "#cccccc"
         },
         dark: {
           main: "#F891A5",
