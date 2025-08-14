@@ -16,7 +16,7 @@ const config: Config = {
           main: "#f58a9f", //e6d57f: beige
           main2: "#f7a1b2",
           text1: "#000000",
-          text2: "#666666",
+          text2: "#333333",
           bg1: "#ffffff",
           bg3: "#f7f7f7",
           bg2: "#e6e6e6",

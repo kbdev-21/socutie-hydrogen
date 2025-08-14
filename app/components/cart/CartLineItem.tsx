@@ -1,11 +1,12 @@
 import type {CartLineUpdateInput} from '@shopify/hydrogen/storefront-api-types';
-import type {CartLayout} from '~/components/CartMain';
+import type {CartLayout} from '~/components/cart/CartMain';
 import {CartForm, Image, type OptimisticCartLine} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
 import {Link} from 'react-router';
-import {ProductPrice} from './product-page/ProductPrice';
-import {useAside} from './Aside';
-import type {CartApiQueryFragment} from 'storefrontapi.generated';
+import {ProductPrice} from '../ProductPrice';
+import {useAside} from '../Aside';
+import type {CartApiQueryFragment} from '../../../storefrontapi.generated';
+import {Minus, Plus, X} from 'lucide-react';
 
 type CartLine = OptimisticCartLine<CartApiQueryFragment>;
 
@@ -30,39 +31,46 @@ export function CartLineItem({
       {image && (
         <Image
           alt={title}
-          aspectRatio="1/1"
+          aspectRatio="3/4"
           data={image}
-          height={100}
           loading="lazy"
           width={100}
         />
       )}
 
-      <div>
-        <Link
-          prefetch="intent"
-          to={lineItemUrl}
-          onClick={() => {
-            if (layout === 'aside') {
-              close();
-            }
-          }}
-        >
-          <p>
-            <strong>{product.title}</strong>
-          </p>
-        </Link>
-        <ProductPrice price={line?.cost?.totalAmount} />
-        <ul>
-          {selectedOptions.map((option) => (
-            <li key={option.name}>
-              <small>
-                {option.name}: {option.value}
-              </small>
-            </li>
-          ))}
-        </ul>
-        <CartLineQuantity line={line} />
+      <div className={"ml-1 w-full flex justify-between"}>
+        {/* Left side */}
+        <div className={"flex flex-col justify-between"}>
+          <div>
+            <Link
+              prefetch="intent"
+              to={lineItemUrl}
+              onClick={() => {
+                if (layout === 'aside') {
+                  close();
+                }
+              }}
+            >
+              <div className={"font-title text-xl"}>{product.title}</div>
+            </Link>
+            <ul>
+              {selectedOptions.map((option) => (
+                <li key={option.name}>
+                  <div className={"text-sm text-light-text2"}>
+                    {option.name}: {option.value}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <CartLineQuantity line={line} />
+        </div>
+
+        {/* Right side */}
+        <div className={"flex flex-col justify-end items-end"}>
+          <ProductPrice price={line?.cost?.totalAmount} />
+        </div>
       </div>
     </li>
   );
@@ -80,30 +88,36 @@ function CartLineQuantity({line}: {line: CartLine}) {
   const nextQuantity = Number((quantity + 1).toFixed(0));
 
   return (
-    <div className="cart-line-quantity">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
-      <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
-        <button
-          aria-label="Decrease quantity"
-          disabled={quantity <= 1 || !!isOptimistic}
-          name="decrease-quantity"
-          value={prevQuantity}
-        >
-          <span>&#8722; </span>
-        </button>
-      </CartLineUpdateButton>
-      &nbsp;
-      <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
-        <button
-          aria-label="Increase quantity"
-          name="increase-quantity"
-          value={nextQuantity}
-          disabled={!!isOptimistic}
-        >
-          <span>&#43;</span>
-        </button>
-      </CartLineUpdateButton>
-      &nbsp;
+    <div className={"flex gap-3 items-center"}>
+      <div className="flex gap-4 py-1 px-2 border border-light-bg2 justify-center items-center">
+        <div className={"mt-1 text-light-text2 hover:text-light-text1 transition-all duration-200"}>
+          <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
+            <button
+              aria-label="Decrease quantity"
+              disabled={quantity <= 1 || !!isOptimistic}
+              name="decrease-quantity"
+              value={prevQuantity}
+            >
+              <Minus size={16}/>
+            </button>
+          </CartLineUpdateButton>
+        </div>
+
+        <div>{quantity}</div>
+
+        <div className={"mt-1 text-light-text2 hover:text-light-text1 transition-all duration-200"}>
+          <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
+            <button
+              aria-label="Increase quantity"
+              name="increase-quantity"
+              value={nextQuantity}
+              disabled={!!isOptimistic}
+            >
+              <Plus size={16}/>
+            </button>
+          </CartLineUpdateButton>
+        </div>
+      </div>
       <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} />
     </div>
   );
@@ -129,7 +143,7 @@ function CartLineRemoveButton({
       inputs={{lineIds}}
     >
       <button disabled={disabled} type="submit">
-        Remove
+        <div className={"text-sm text-light-text2 hover:underline transition-all duration-300"}>Xóa</div>
       </button>
     </CartForm>
   );

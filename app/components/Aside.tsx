@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import {X} from 'lucide-react';
 
 type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
 type AsideContextValue = {
@@ -55,22 +56,31 @@ export function Aside({
   return (
     <div
       aria-modal
-      className={`fixed z-50 overlay ${expanded ? 'expanded' : ''}`}
+      className={`fixed z-50 inset-0 bg-[rgba(0,0,0,0.2)] opacity-0 pointer-events-none 
+       transition-opacity duration-500 
+       ${expanded ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`
+    }
       role="dialog"
     >
+      {/* Empty side */}
       <button
         onClick={close}
         className="cursor-default bg-transparent border-none text-transparent h-full left-0 absolute top-0 w-[100%]"
       >
       </button>
-      <aside className={""}>
+
+      {/* Real aside dialog */}
+      <aside className={`fixed right-0 top-0 h-full w-[90vw] max-w-[500px] bg-white transition-transform duration-500 ease-in-out
+    ${expanded ? "translate-x-0" : "translate-x-full"}`}
+      >
         <header>
-          <h3>{heading}</h3>
-          <button className="close reset" onClick={close} aria-label="Close">
-            &times;
+          <div className={"font-title text-2xl"}>{heading}</div>
+          <button className="transition-all duration-300 text-light-text1 hover:rotate-180" onClick={close} aria-label="Close">
+            <X size={24} strokeWidth={1.5} />
           </button>
         </header>
-        <main>{children}</main>
+        <div className="border-t border-light-bg2" />
+        <div>{children}</div>
       </aside>
     </div>
   );

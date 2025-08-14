@@ -145,9 +145,9 @@ export function ProductForm({
               : []
           }
         >
-          <div className={"flex gap-3"}>
-            <ShoppingBag />
-            <div>{selectedVariant?.availableForSale ? 'Thêm vào giỏ hàng' : 'Liên hệ'}</div>
+          <div className={"flex gap-3 align-center items-center"}>
+            <ShoppingBag strokeWidth={1.5}/>
+            <div className={""}>{selectedVariant?.availableForSale ? 'THÊM VÀO GIỎ HÀNG' : 'LIÊN HỆ'}</div>
           </div>
         </AddToCartButton>
       </div>

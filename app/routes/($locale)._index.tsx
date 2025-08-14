@@ -9,7 +9,7 @@ import {
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
 import {BEST_SELLERS_PRODUCTS_QUERY, HOMEPAGE_COLLECTIONS_MENU_QUERY} from '~/custom-queries/customQueries';
-import {HeroBanner} from '~/components/custom/HeroBanner';
+import {HeroBanner} from '~/components/home/HeroBanner';
 import {FadeInItem, FadeInStagger} from "~/components/framer-motion/FadeInStagger";
 import {FadeInDiv} from "~/components/framer-motion/FadeInDiv";
 
@@ -117,7 +117,7 @@ function CollectionAndProductsDisplay({
     <div className="mx-6 lg:mx-20 max-w-[1440px] flex flex-col items-center">
       <FadeInDiv>
         <div className={"text-3xl text-center font-title mb-4"}>{title}</div>
-        <div className={"text-base font-main mb-10 max-w-md text-center tracking-tight"}>{description}</div>
+        <div className={"text-base text-light-text2 font-main mb-10 max-w-md text-center tracking-tight"}>{description}</div>
       </FadeInDiv>
       <FadeInStagger>
         <div className="grid gap-6 lg:gap-8 grid-cols-2 lg:grid-cols-4">

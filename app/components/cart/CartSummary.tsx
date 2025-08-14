@@ -1,8 +1,10 @@
-import type {CartApiQueryFragment} from 'storefrontapi.generated';
-import type {CartLayout} from '~/components/CartMain';
+import type {CartApiQueryFragment} from '../../../storefrontapi.generated';
+import type {CartLayout} from '~/components/cart/CartMain';
 import {CartForm, Money, type OptimisticCart} from '@shopify/hydrogen';
 import {useRef} from 'react';
-import {FetcherWithComponents} from 'react-router';
+import {FetcherWithComponents, Link} from 'react-router';
+import {formatVnd} from '~/utils/stringUtils';
+import {ArrowRight} from 'lucide-react';
 
 type CartSummaryProps = {
   cart: OptimisticCart<CartApiQueryFragment | null>;
@@ -14,20 +16,19 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
 
   return (
-    <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
+    <div aria-labelledby="cart-summary" className={"flex flex-col gap-4"}>
+      <div className="flex justify-between items-center mb-2">
+        <div className={"font-title text-xl"}>Tổng cộng</div>
+        <div className={"text-lg"}>
           {cart.cost?.subtotalAmount?.amount ? (
-            <Money data={cart.cost?.subtotalAmount} />
+            <div>{formatVnd(cart.cost?.subtotalAmount.amount)} {cart.cost?.subtotalAmount.currencyCode === "VND" ? "₫" : "$"}</div>
           ) : (
             '-'
           )}
-        </dd>
-      </dl>
-      <CartDiscounts discountCodes={cart.discountCodes} />
-      <CartGiftCard giftCardCodes={cart.appliedGiftCards} />
+        </div>
+      </div>
+      {/*<CartDiscounts discountCodes={cart.discountCodes} />*/}
+      {/*<CartGiftCard giftCardCodes={cart.appliedGiftCards} />*/}
       <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
     </div>
   );
@@ -38,7 +39,19 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   return (
     <div>
       <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
+        <div className={`
+          relative overflow-hidden flex gap-2 justify-center items-center
+          shadow-md text-sm font-[400] text-light-bg1 font-main
+          bg-light-main py-4
+          transition-all duration-300
+          before:absolute before:inset-0
+          before:bg-light-main2 before:translate-x-[-100%]
+          before:transition-transform before:duration-300
+          hover:before:translate-x-0
+        `}>
+          <div className="relative z-10">THANH TOÁN</div>
+          <ArrowRight size={20} className="relative z-10"/>
+        </div>
       </a>
       <br />
     </div>

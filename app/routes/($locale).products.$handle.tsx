@@ -8,7 +8,7 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
-import {ProductPrice} from '~/components/product-page/ProductPrice';
+import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/product-page/ProductImage';
 import {ProductForm} from '~/components/product-page/ProductForm';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
@@ -153,8 +153,9 @@ export default function Product() {
 
             {/* Desription */}
             <div className={"mt-8"}>
+              <div className={"font-title text-2xl"}>Mô tả sản phẩm</div>
               <div
-                className={"text-base font-main font-[400] tracking-tight mt-6 [&_strong]:font-[600] [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6"}
+                className={"text-base font-main text-light-text2 font-[400] tracking-tight mt-6 [&_strong]:text-light-text1 [&_strong]:font-[500] [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6"}
                 dangerouslySetInnerHTML={{__html: descriptionHtml}}
               />
             </div>
