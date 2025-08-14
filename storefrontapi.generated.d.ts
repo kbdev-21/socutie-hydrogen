@@ -5,7 +5,7 @@ import type * as StorefrontAPI from '@shopify/hydrogen/storefront-api-types';
 
 export type ProductSummaryFragment = Pick<
   StorefrontAPI.Product,
-  'id' | 'title' | 'handle'
+  'id' | 'title' | 'handle' | 'availableForSale'
 > & {
   options: Array<
     Pick<StorefrontAPI.ProductOption, 'name'> & {
@@ -14,6 +14,9 @@ export type ProductSummaryFragment = Pick<
   >;
   priceRange: {
     minVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+  };
+  compareAtPriceRange: {
+    maxVariantPrice: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
   };
   images: {
     nodes: Array<
@@ -69,7 +72,10 @@ export type RecommendedProductsQueryVariables = StorefrontAPI.Exact<{
 export type RecommendedProductsQuery = {
   productRecommendations?: StorefrontAPI.Maybe<
     Array<
-      Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+      Pick<
+        StorefrontAPI.Product,
+        'id' | 'title' | 'handle' | 'availableForSale'
+      > & {
         options: Array<
           Pick<StorefrontAPI.ProductOption, 'name'> & {
             optionValues: Array<Pick<StorefrontAPI.ProductOptionValue, 'name'>>;
@@ -77,6 +83,12 @@ export type RecommendedProductsQuery = {
         >;
         priceRange: {
           minVariantPrice: Pick<
+            StorefrontAPI.MoneyV2,
+            'amount' | 'currencyCode'
+          >;
+        };
+        compareAtPriceRange: {
+          maxVariantPrice: Pick<
             StorefrontAPI.MoneyV2,
             'amount' | 'currencyCode'
           >;
@@ -102,7 +114,10 @@ export type BestSellersProductsQueryVariables = StorefrontAPI.Exact<{
 export type BestSellersProductsQuery = {
   products: {
     nodes: Array<
-      Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+      Pick<
+        StorefrontAPI.Product,
+        'id' | 'title' | 'handle' | 'availableForSale'
+      > & {
         options: Array<
           Pick<StorefrontAPI.ProductOption, 'name'> & {
             optionValues: Array<Pick<StorefrontAPI.ProductOptionValue, 'name'>>;
@@ -110,6 +125,12 @@ export type BestSellersProductsQuery = {
         >;
         priceRange: {
           minVariantPrice: Pick<
+            StorefrontAPI.MoneyV2,
+            'amount' | 'currencyCode'
+          >;
+        };
+        compareAtPriceRange: {
+          maxVariantPrice: Pick<
             StorefrontAPI.MoneyV2,
             'amount' | 'currencyCode'
           >;
@@ -143,7 +164,10 @@ export type AllProductsQueryVariables = StorefrontAPI.Exact<{
 export type AllProductsQuery = {
   products: {
     nodes: Array<
-      Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+      Pick<
+        StorefrontAPI.Product,
+        'id' | 'title' | 'handle' | 'availableForSale'
+      > & {
         options: Array<
           Pick<StorefrontAPI.ProductOption, 'name'> & {
             optionValues: Array<Pick<StorefrontAPI.ProductOptionValue, 'name'>>;
@@ -151,6 +175,12 @@ export type AllProductsQuery = {
         >;
         priceRange: {
           minVariantPrice: Pick<
+            StorefrontAPI.MoneyV2,
+            'amount' | 'currencyCode'
+          >;
+        };
+        compareAtPriceRange: {
+          maxVariantPrice: Pick<
             StorefrontAPI.MoneyV2,
             'amount' | 'currencyCode'
           >;
@@ -194,7 +224,10 @@ export type CollectionWithProductsQuery = {
     > & {
       products: {
         nodes: Array<
-          Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+          Pick<
+            StorefrontAPI.Product,
+            'id' | 'title' | 'handle' | 'availableForSale'
+          > & {
             options: Array<
               Pick<StorefrontAPI.ProductOption, 'name'> & {
                 optionValues: Array<
@@ -204,6 +237,12 @@ export type CollectionWithProductsQuery = {
             >;
             priceRange: {
               minVariantPrice: Pick<
+                StorefrontAPI.MoneyV2,
+                'amount' | 'currencyCode'
+              >;
+            };
+            compareAtPriceRange: {
+              maxVariantPrice: Pick<
                 StorefrontAPI.MoneyV2,
                 'amount' | 'currencyCode'
               >;
@@ -345,7 +384,10 @@ export type HomepageCollectionsMenuQuery = {
               >;
               products: {
                 nodes: Array<
-                  Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+                  Pick<
+                    StorefrontAPI.Product,
+                    'id' | 'title' | 'handle' | 'availableForSale'
+                  > & {
                     options: Array<
                       Pick<StorefrontAPI.ProductOption, 'name'> & {
                         optionValues: Array<
@@ -355,6 +397,12 @@ export type HomepageCollectionsMenuQuery = {
                     >;
                     priceRange: {
                       minVariantPrice: Pick<
+                        StorefrontAPI.MoneyV2,
+                        'amount' | 'currencyCode'
+                      >;
+                    };
+                    compareAtPriceRange: {
+                      maxVariantPrice: Pick<
                         StorefrontAPI.MoneyV2,
                         'amount' | 'currencyCode'
                       >;
@@ -1452,19 +1500,19 @@ export type StoreRobotsQueryVariables = StorefrontAPI.Exact<{
 export type StoreRobotsQuery = {shop: Pick<StorefrontAPI.Shop, 'id'>};
 
 interface GeneratedQueryTypes {
-  '#graphql\n  query RecommendedProducts ($handle: String!, $country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    productRecommendations(productHandle: $handle) {\n      ...ProductSummary\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query RecommendedProducts ($handle: String!, $country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    productRecommendations(productHandle: $handle) {\n      ...ProductSummary\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    availableForSale\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    compareAtPriceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
     return: RecommendedProductsQuery;
     variables: RecommendedProductsQueryVariables;
   };
-  '#graphql\n  query BestSellersProducts ($country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    products(first: 10, sortKey: UPDATED_AT, reverse: true) {\n      nodes {\n        ...ProductSummary\n      }\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query BestSellersProducts ($country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    products(first: 10, sortKey: UPDATED_AT, reverse: true) {\n      nodes {\n        ...ProductSummary\n      }\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    availableForSale\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    compareAtPriceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
     return: BestSellersProductsQuery;
     variables: BestSellersProductsQueryVariables;
   };
-  '#graphql\n  query AllProducts (\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {\n      nodes {\n        ...ProductSummary\n      }\n      pageInfo {\n        hasPreviousPage\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query AllProducts (\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {\n      nodes {\n        ...ProductSummary\n      }\n      pageInfo {\n        hasPreviousPage\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    availableForSale\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    compareAtPriceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
     return: AllProductsQuery;
     variables: AllProductsQueryVariables;
   };
-  '#graphql\n  query CollectionWithProducts(\n    $handle: String!\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(country: $country, language: $language) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      products(\n        first: $first,\n        last: $last,\n        before: $startCursor,\n        after: $endCursor\n      ) {\n        nodes {\n          ...ProductSummary\n        }\n        pageInfo {\n          hasPreviousPage\n          hasNextPage\n          endCursor\n          startCursor\n        }\n      }\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query CollectionWithProducts(\n    $handle: String!\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(country: $country, language: $language) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      products(\n        first: $first,\n        last: $last,\n        before: $startCursor,\n        after: $endCursor\n      ) {\n        nodes {\n          ...ProductSummary\n        }\n        pageInfo {\n          hasPreviousPage\n          hasNextPage\n          endCursor\n          startCursor\n        }\n      }\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    availableForSale\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    compareAtPriceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
     return: CollectionWithProductsQuery;
     variables: CollectionWithProductsQueryVariables;
   };
@@ -1480,7 +1528,7 @@ interface GeneratedQueryTypes {
     return: MenuQueryQuery;
     variables: MenuQueryQueryVariables;
   };
-  '#graphql\n  query HomepageCollectionsMenu(\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    menu(handle: "home") {\n      id\n      items {\n        id\n        type\n        resource {\n          ... on Collection {\n            id\n            handle\n            title\n            description\n            image {\n              id\n              url\n              width\n              height\n            }\n            products(first: 10) {\n              nodes {\n                ...ProductSummary\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query HomepageCollectionsMenu(\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    menu(handle: "home") {\n      id\n      items {\n        id\n        type\n        resource {\n          ... on Collection {\n            id\n            handle\n            title\n            description\n            image {\n              id\n              url\n              width\n              height\n            }\n            products(first: 10) {\n              nodes {\n                ...ProductSummary\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    availableForSale\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    compareAtPriceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
     return: HomepageCollectionsMenuQuery;
     variables: HomepageCollectionsMenuQueryVariables;
   };

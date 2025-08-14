@@ -6,10 +6,11 @@ import {
   ProductSummaryFragment,
 } from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
-import {formatVnd} from '~/utils/stringUtils';
+import {discountPercentage, formatVnd} from '~/utils/stringUtils';
 import {useState} from "react";
 import {Handbag, Plus, Search} from 'lucide-react';
 import convert from 'color-convert';
+import {ProductPrice} from '~/components/ProductPrice';
 
 export function ProductItem({
   product,
@@ -34,13 +35,10 @@ export function ProductItem({
     '#' + convert.keyword.hex(color.trim().toLowerCase()) || '#000000'
   );
 
-  const [isHovering, setIsHovering] = useState(false);
   return (
 
       <Link
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-        className=""
+        className="group"
         key={product.id}
         prefetch="intent"
         to={variantUrl}
@@ -50,7 +48,7 @@ export function ProductItem({
           <Image
             src={initImgUrl}
             alt={product.title}
-            className={`z-20 relative w-full h-auto aspect-[3/4] object-cover transition-opacity duration-300 ease-in-out ${isHovering ? 'opacity-0' : 'opacity-100'} z-10 relative`}
+            className={`z-20 relative w-full h-auto aspect-[3/4] object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-0 opacity-100 z-10 relative`}
             loading={loading}
             sizes="(min-width: 45em) 400px, 100vw"
           />
@@ -64,17 +62,33 @@ export function ProductItem({
             sizes="(min-width: 45em) 400px, 100vw"
           />
 
-          {/* 🔍 Search icon on top */}
-          <div className={`z-30 absolute bottom-2 right-2 flex justify-center items-center w-8 h-8 bg-light-main text-light-bg1 transition-all duration-300 ease-in-out ${isHovering ? "opacity-100 translate-y-0 shadow" : "opacity-0 translate-y-2"}`}>
+          {/* 🔍 Search icon at bottom */}
+          <div className={`z-30 absolute bottom-2 right-2 flex justify-center items-center w-8 h-8 bg-light-main text-light-bg1 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:translate-y-0 group-hover:shadow-sm opacity-0 translate-y-2`}>
             <Search size={20} />
           </div>
+
+          {/* 🔍 Out of sales on top */}
+          {!product.availableForSale && (
+            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-secondary text-sm text-light-bg1`}>
+              <div>{"Hết hàng".toUpperCase()}</div>
+            </div>
+          )}
+
+          {/* 🔍 Compare at price on top */}
+          {(product.availableForSale && product.priceRange.minVariantPrice.amount < product.compareAtPriceRange.maxVariantPrice.amount) && (
+            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-secondary text-sm text-light-bg1`}>
+              <div>{(`-${discountPercentage(product.priceRange.minVariantPrice.amount, product.compareAtPriceRange.maxVariantPrice.amount)}`).toUpperCase()}</div>
+            </div>
+          )}
+
         </div>
 
         {/* Title and price */}
         <div className={"pt-3 flex flex-col justify-center items-center"}>
           <div className={"font-normal text-center text-base xl:text-lg font-title mb-1"}>{product.title}</div>
 
-          <div className={"text-sm font-normal text-light-text2"}>{formatVnd(product.priceRange.minVariantPrice.amount)}₫</div>
+          <ProductPrice size={"small"} price={product.priceRange.minVariantPrice} compareAtPrice={product.compareAtPriceRange.maxVariantPrice}/>
+          {/*<div className={"text-sm font-normal text-light-text2"}>{formatVnd(product.priceRange.minVariantPrice.amount)}₫</div>*/}
           {/*<Money data={product.priceRange.minVariantPrice}/>*/}
           <ColorOptions/>
         </div>

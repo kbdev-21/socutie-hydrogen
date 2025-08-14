@@ -3,6 +3,7 @@ export const PRODUCT_SUMMARY_FRAGMENT = `#graphql
     id
     title
     handle
+    availableForSale
     options {
       name
       optionValues {
@@ -11,6 +12,12 @@ export const PRODUCT_SUMMARY_FRAGMENT = `#graphql
     }
     priceRange {
       minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    compareAtPriceRange {
+      maxVariantPrice {
         amount
         currencyCode
       }

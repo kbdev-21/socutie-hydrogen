@@ -5,18 +5,18 @@ import {formatVnd} from '~/utils/stringUtils';
 export function ProductPrice({
   price,
   compareAtPrice,
-  additionalClassName = ''
+  size = 'normal'
 }: {
-  price?: MoneyV2;
+  price: MoneyV2;
   compareAtPrice?: MoneyV2 | null;
-  additionalClassName?: string;
+  size?: 'normal' | 'small';
 }) {
   return (
     <div>
-      {compareAtPrice ? (
+      {compareAtPrice && Number(compareAtPrice.amount) > Number(price.amount) ? (
         <SalePriceDisplay/>
       ) : price ? (
-        <div className={`text-lg font-normal text-light-text1 ${additionalClassName}`}>{formatVnd(price.amount)}{price.currencyCode === "VND" ? "₫" : "$"}</div>
+        <div className={`${size === "normal" ? "text-lg" : "text-sm"} font-normal text-light-text1`}>{formatVnd(price.amount)}{price.currencyCode === "VND" ? "₫" : "$"}</div>
       ) : (
         <span>&nbsp;</span>
       )}
@@ -25,9 +25,9 @@ export function ProductPrice({
 
   function SalePriceDisplay() {
     return (
-      <div className="flex gap-2">
-        <div className={`text-base font-normal text-light-text1 ${additionalClassName}`}>{formatVnd(price!.amount)}{price!.currencyCode === "VND" ? "₫" : "$"}</div>
-        <div className={`text-base font-normal text-light-text1 ${additionalClassName}`}>{formatVnd(compareAtPrice!.amount)}{compareAtPrice!.currencyCode === "VND" ? "₫" : "$"}</div>
+      <div className={`flex ${size === "normal" ? "gap-2" : "gap-1"} items-center`}>
+        <div className={`${size === "normal" ? "text-lg" : "text-sm"} font-[500] text-light-secondary`}>{formatVnd(price!.amount)}{price!.currencyCode === "VND" ? "₫" : "$"}</div>
+        <div className={`${size === "normal" ? "text-sm" : "text-sm"} font-normal text-light-text2 line-through decoration-light-text2`}>{formatVnd(compareAtPrice!.amount)}{compareAtPrice!.currencyCode === "VND" ? "₫" : "$"}</div>
       </div>
     )
   }

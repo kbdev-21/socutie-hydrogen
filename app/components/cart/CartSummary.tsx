@@ -21,7 +21,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
         <div className={"font-title text-xl"}>Tổng cộng</div>
         <div className={"text-lg"}>
           {cart.cost?.subtotalAmount?.amount ? (
-            <div>{formatVnd(cart.cost?.subtotalAmount.amount)} {cart.cost?.subtotalAmount.currencyCode === "VND" ? "₫" : "$"}</div>
+            <div>{formatVnd(cart.cost?.subtotalAmount.amount)}{cart.cost?.subtotalAmount.currencyCode === "VND" ? "₫" : "$"}</div>
           ) : (
             '-'
           )}

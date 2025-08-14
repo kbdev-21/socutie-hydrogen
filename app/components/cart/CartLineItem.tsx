@@ -7,6 +7,7 @@ import {ProductPrice} from '../ProductPrice';
 import {useAside} from '../Aside';
 import type {CartApiQueryFragment} from '../../../storefrontapi.generated';
 import {Minus, Plus, X} from 'lucide-react';
+import {formatVnd} from '~/utils/stringUtils';
 
 type CartLine = OptimisticCartLine<CartApiQueryFragment>;
 
@@ -69,7 +70,8 @@ export function CartLineItem({
 
         {/* Right side */}
         <div className={"flex flex-col justify-end items-end"}>
-          <ProductPrice price={line?.cost?.totalAmount} />
+          {/*<ProductPrice price={line?.cost?.totalAmount} compareAtPrice={line?.cost?.compareAtAmountPerQuantity}/>*/}
+          <div className={`text-lg font-normal text-light-text1`}>{formatVnd(line?.cost?.totalAmount.amount)}{line?.cost?.totalAmount.currencyCode === "VND" ? "₫" : "$"}</div>
         </div>
       </div>
     </li>
