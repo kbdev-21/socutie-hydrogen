@@ -17,7 +17,7 @@ export function Footer({
     <Suspense>
       <Await resolve={footerPromise}>
         {(footer) => (
-          <footer className="footer">
+          <footer className="min-w-fit bg-light-main3 h-[200px]">
             {footer?.menu && header.shop.primaryDomain?.url && (
               <FooterMenu
                 menu={footer.menu}
@@ -42,7 +42,7 @@ function FooterMenu({
   publicStoreDomain: string;
 }) {
   return (
-    <nav className="footer-menu" role="navigation">
+    <nav className="footer-menu " role="navigation">
       {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
         if (!item.url) return null;
         // if the url is internal, we strip the domain
@@ -63,9 +63,13 @@ function FooterMenu({
             key={item.id}
             prefetch="intent"
             style={activeLinkStyle}
+
             to={url}
           >
-            {item.title}
+            <div className={"text-light-text1"}>
+              {item.title}
+            </div>
+
           </NavLink>
         );
       })}

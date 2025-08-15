@@ -1,7 +1,7 @@
-import {Suspense} from 'react';
-import {Await, Link, NavLink, useAsyncValue} from 'react-router';
+import {Suspense, useEffect, useState} from 'react';
+import {Await, Link, NavLink, useAsyncValue, useLocation} from 'react-router';
 import {
-  type CartViewPayload,
+  type CartViewPayload, Image,
   useAnalytics,
   useOptimisticCart,
 } from '@shopify/hydrogen';
@@ -35,10 +35,27 @@ export function Header({
   /* shopify nav */
   const {shop, menu} = header;
 
+  const [isAtTop, setIsAtTop] = useState(true);
+  const location = useLocation(); // ✅ gives you current URL info
+
+  const isHomePage = location.pathname === "/";
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsAtTop(window.scrollY === 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // run on mount
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="">
       {/* mobile */}
-      <div className={"flex lg:hidden w-full h-20 px-6 fixed top-0 z-40 bg-light-bg1 border-b border-b-light-bg2"}>
+      <div className={`flex lg:hidden w-full h-20 px-6 fixed top-0 z-40 transition-all duration-500 ease-in-out border-b ${isAtTop && isHomePage ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
         <div className={"flex items-center justify-between relative w-full"}>
           <HeaderMenuMobileToggle />
           <Logo className={"absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"}/>
@@ -47,8 +64,8 @@ export function Header({
       </div>
 
       {/* not-mobile */}
-      <div className={"hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-40 bg-light-bg1 border-b border-b-light-bg2"}>
-        <div className={"flex items-center justify-between w-full max-w-[1440px] h-full"}>
+      <div className={`hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-40 transition-all duration-500 ease-in-out border-b ${isAtTop && isHomePage ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
+        <div className={"flex items-center justify-between w-full max-w-screen-xl h-full"}>
           <div>
             <Logo/>
           </div>
@@ -72,9 +89,17 @@ export function Header({
 
 export function Logo({className = ""}) {
   return (
+
     <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-      <div className={`font-logo font-medium text-[40px] ${className}`}>SoCutie</div>
+      <div className={`font-fancy font-medium text-[40px] ${className}`}>SoCutie</div>
+        {/*<Image*/}
+        {/*  src="/images/logo.png"*/}
+        {/*  alt="logo"*/}
+        {/*  className="h-full w-auto object-contain" // ~48px height fits nicely in 80px header*/}
+        {/*  sizes="100px"*/}
+        {/*/>*/}
     </NavLink>
+
   )
 }
 
@@ -144,7 +169,7 @@ export function HeaderMenu({
               to={url}
               onClick={close}
               prefetch="intent"
-              className="h-full font-[400] flex items-center text-base tracking-wide transition-colors duration-300 ease-in-out group-hover:text-light-main"
+              className="h-full font-[400] flex items-center text-sm tracking-wide transition-colors duration-300 ease-in-out group-hover:text-light-main"
             >
               {item.title.toUpperCase()}
               <span className="absolute left-0 bottom-6 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
@@ -218,7 +243,7 @@ export function HeaderMenuMobile({
               to={url}
               onClick={close}
               prefetch="intent"
-              className="text-base font-normal tracking-wide transition-colors duration-150 ease-in-out group-hover:text-light-main"
+              className="text-sm font-normal tracking-wide transition-colors duration-150 ease-in-out group-hover:text-light-main"
             >
               {item.title.toUpperCase()}
               <span className="absolute left-0 -bottom-2 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 ease-in-out group-hover:scale-x-100"></span>
@@ -238,6 +263,7 @@ function HeaderCtas({
   return (
     <nav className="flex gap-4 md:gap-6" role="navigation">
       <SearchToggle />
+
       <a
         className={"hidden md:flex"}
         href={"https://www.instagram.com/socutie.sg"}

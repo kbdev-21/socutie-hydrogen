@@ -48,7 +48,7 @@ export function ProductItem({
           <Image
             src={initImgUrl}
             alt={product.title}
-            className={`z-20 relative w-full h-auto aspect-[3/4] object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-0 opacity-100 z-10 relative`}
+            className={`z-20 relative w-full h-auto aspect-[3/4] object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-0 opacity-100`}
             loading={loading}
             sizes="(min-width: 45em) 400px, 100vw"
           />
@@ -85,12 +85,13 @@ export function ProductItem({
 
         {/* Title and price */}
         <div className={"pt-3 flex flex-col justify-center items-center"}>
-          <div className={"font-normal text-center text-base xl:text-lg font-title mb-1"}>{product.title}</div>
+          <div className={"font-[500] text-center text-base xl:text-lg font-title mb-1"}>{product.title}</div>
 
           <ProductPrice size={"small"} price={product.priceRange.minVariantPrice} compareAtPrice={product.compareAtPriceRange.maxVariantPrice}/>
           {/*<div className={"text-sm font-normal text-light-text2"}>{formatVnd(product.priceRange.minVariantPrice.amount)}₫</div>*/}
           {/*<Money data={product.priceRange.minVariantPrice}/>*/}
-          <ColorOptions/>
+
+          {/*<ColorOptions/>*/}
         </div>
       </Link>
   );

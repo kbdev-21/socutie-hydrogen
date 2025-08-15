@@ -12,6 +12,7 @@ import {BEST_SELLERS_PRODUCTS_QUERY, HOMEPAGE_COLLECTIONS_MENU_QUERY} from '~/cu
 import {HeroBanner} from '~/components/home/HeroBanner';
 import {FadeInItem, FadeInStagger} from "~/components/framer-motion/FadeInStagger";
 import {FadeInDiv} from "~/components/framer-motion/FadeInDiv";
+import {Instagram} from "lucide-react";
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -77,28 +78,132 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
+
+  const bestSellersCollection = data
+    .homepageCollections
+    .find(c => c!.handle === "best-sellers");
+
   return (
+    // <div className="flex flex-col items-center">
+    //   <HeroBanner/>
+    //   <div className={"h-16"}></div>
+    //   {data.homepageCollections.length > 0 &&
+    //     data.homepageCollections.map((collection, index) => (
+    //       <div key={collection!.id}>
+    //         <CollectionAndProductsDisplay
+    //           title={collection!.title}
+    //           description={collection!.description}
+    //           handle={collection!.handle}
+    //           products={collection!.products.nodes}
+    //         />
+    //         {index < data.homepageCollections.length - 1 && (
+    //           <div className="mt-16 mb-16 border-t border-light-bg2" />
+    //         )}
+    //       </div>
+    //     ))}
+    //   {/*<FeaturedCollection collection={data.featuredCollection} />*/}
+    //   {/*<RecommendedProducts products={data.recommendedProducts} />*/}
+    // </div>
+
     <div className="flex flex-col items-center">
-      <HeroBanner/>
+      <div className={"w-full"}>
+        <HeroBanner/>
+      </div>
+
       <div className={"h-16"}></div>
-      {data.homepageCollections.length > 0 &&
-        data.homepageCollections.map((collection, index) => (
-          <div key={collection!.id}>
-            <CollectionAndProductsDisplay
-              title={collection!.title}
-              description={collection!.description}
-              handle={collection!.handle}
-              products={collection!.products.nodes}
-            />
-            {index < data.homepageCollections.length - 1 && (
-              <div className="mt-16 mb-16 border-t border-light-bg2" />
-            )}
+      <div key={bestSellersCollection!.id}>
+        <CollectionAndProductsDisplay
+          title={bestSellersCollection!.title}
+          description={bestSellersCollection!.description}
+          handle={bestSellersCollection!.handle}
+          products={bestSellersCollection!.products.nodes}
+        />
+      </div>
+
+      <div className={"h-16"}></div>
+
+      <div className={"w-full py-10 px-10 bg-light-main4 flex items-center justify-center flex-col"}>
+        <FadeInDiv>
+          <div className={"text-3xl lg:text-4xl font-fancy text-center tracking-tight lg:tracking-normal"}>
+            Designed and Crafted for Cuties
           </div>
-        ))}
+          <div className={"font-main text-sm mt-4 max-w-screen-md text-center tracking-tight"}>
+            Gửi các cô gái xinh đẹp, chúng mình chăm chút từng chi tiết để mỗi sản phẩm không chỉ là món đồ bạn mặc mà còn gửi gắm sự tự tin và nét duyên dáng riêng của bạn.
+          </div>
+        </FadeInDiv>
+
+      </div>
+
+      <div className={"h-16"}></div>
+
+      <FeedbackDisplay/>
+
+      <div className={"h-16"}></div>
+
       {/*<FeaturedCollection collection={data.featuredCollection} />*/}
       {/*<RecommendedProducts products={data.recommendedProducts} />*/}
     </div>
   );
+}
+
+
+
+function FeedbackDisplay() {
+  const imgList = [
+    "/images/feedback/Rectangle643.png",
+    "/images/feedback/Rectangle 644.png",
+    "/images/feedback/Rectangle643.png",
+    "/images/feedback/Rectangle 645.png",
+    "/images/feedback/Rectangle 646.png",
+    "/images/feedback/Rectangle 647.png",
+    "/images/feedback/Rectangle 648.png",
+    "/images/feedback/Rectangle 649.png",
+    "/images/feedback/Rectangle 650.png",
+    "/images/feedback/Rectangle 647.png"
+  ]
+  return (
+    <div className={"max-w-screen-lg w-full px-10"}>
+      <FadeInDiv>
+        <div className={"text-2xl tracking-tight lg:text-3xl font-[400] text-light-text2 text-center font-title mb-6"}>
+          FEEDBACK
+        </div>
+      </FadeInDiv>
+
+      <FadeInStagger>
+        <div className={"grid gap-6 lg:gap-8 grid-cols-3 lg:grid-cols-5"}>
+          {imgList.splice(0, 10).map((imgSrc, index) => (
+            <FadeInItem key={imgSrc}>
+              <div
+                className={index === 9 ? "hidden lg:block" : ""}
+              >
+                <FeedbackImage src={imgSrc} />
+              </div>
+            </FadeInItem>
+
+          ))}
+        </div>
+      </FadeInStagger>
+    </div>
+  );
+
+  function FeedbackImage({src = ""}) {
+    return (
+      <a
+        className={""}
+        href={"https://www.instagram.com/socutie.sg"}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Image
+          src={src}
+          alt={"feedback-image"}
+          className={"w-full h-auto object-cover aspect-[3/4] transition-all duration-300 hover:cursor-pointer hover:scale-105"}
+          sizes="30vw"
+        />
+
+      </a>
+    )
+  }
 }
 
 function CollectionAndProductsDisplay({
@@ -114,10 +219,10 @@ function CollectionAndProductsDisplay({
 }) {
   const url = `/collections/${handle}`;
   return (
-    <div className="mx-6 lg:mx-20 max-w-[1440px] flex flex-col items-center">
+    <div className="mx-6 lg:mx-20 max-w-screen-xl flex flex-col items-center">
       <FadeInDiv>
-        <div className={"text-3xl text-center font-title mb-4"}>{title}</div>
-        <div className={"text-base text-light-text2 font-main mb-10 max-w-md text-center tracking-tight"}>{description}</div>
+        <div className={"text-2xl tracking-tight lg:text-3xl font-[400] text-light-text2 text-center font-title mb-8"}>MOST PICK BY CUTIE GIRLS</div>
+        {/*<div className={"text-base text-light-text2 font-main mb-10 max-w-md text-center tracking-tight"}>{description}</div>*/}
       </FadeInDiv>
       <FadeInStagger>
         <div className="grid gap-6 lg:gap-8 grid-cols-2 lg:grid-cols-4">
@@ -129,21 +234,21 @@ function CollectionAndProductsDisplay({
         </div>
       </FadeInStagger>
 
-      <Link
-        to={url}
-        className={`
-          relative overflow-hidden
-          shadow-md text-sm font-normal text-light-bg1 font-main
-          mt-12 bg-light-main py-4 px-8
-          transition-all duration-300
-          before:absolute before:inset-0
-          before:bg-light-main2 before:translate-x-[-100%]
-          before:transition-transform before:duration-300
-          hover:before:translate-x-0
-        `}
-      >
-        <div className="relative z-10">XEM THÊM</div>
-      </Link>
+      {/*<Link*/}
+      {/*  to={url}*/}
+      {/*  className={`*/}
+      {/*    relative overflow-hidden*/}
+      {/*    shadow-md text-sm font-normal text-light-bg1 font-main*/}
+      {/*    mt-12 bg-light-main py-4 px-8*/}
+      {/*    transition-all duration-300*/}
+      {/*    before:absolute before:inset-0*/}
+      {/*    before:bg-light-main2 before:translate-x-[-100%]*/}
+      {/*    before:transition-transform before:duration-300*/}
+      {/*    hover:before:translate-x-0*/}
+      {/*  `}*/}
+      {/*>*/}
+      {/*  <div className="relative z-10">XEM THÊM</div>*/}
+      {/*</Link>*/}
     </div>
   );
 }

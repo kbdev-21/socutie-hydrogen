@@ -128,7 +128,7 @@ export default function Product() {
   const {title, descriptionHtml} = product;
 
   return (
-    <div className={"lg:mt-10 flex flex-col items-center lg:px-20"}>
+    <div className={"mt-20 lg:mt-24 flex flex-col items-center lg:px-20"}>
       {/* Product detail */}
       <FadeInDiv>
         <div className="grid grid-cols-1 items-start gap-6 lg:gap-3 lg:grid-cols-2 max-w-[1280px] w-full">
