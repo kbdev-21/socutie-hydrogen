@@ -136,9 +136,9 @@ export default function Product() {
           <ProductImage variantImage={selectedVariant?.image} images={product.images.nodes} />
 
           {/* Right side (bottom on mobile) */}
-          <div className="product-form px-6 lg:px-0 lg:ml-12">
+          <div className="product-form px-6 lg:px-0 lg:ml-12 lg:mt-4">
             {/* Title and price */}
-            <div className={"font-title text-3xl mb-2"}>{title}</div>
+            <div className={"font-[500] font-title text-3xl mb-2"}>{title}</div>
             <ProductPrice
               price={selectedVariant?.price}
               compareAtPrice={selectedVariant?.compareAtPrice}
@@ -155,7 +155,7 @@ export default function Product() {
             <div className={"mt-8"}>
               <div className={"font-title text-2xl"}>Mô tả sản phẩm</div>
               <div
-                className={"text-base font-main text-light-text2 font-[400] tracking-tight mt-6 [&_strong]:text-light-text1 [&_strong]:font-[500] [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6"}
+                className={"text-sm font-main text-light-text1 font-[400] tracking-tight mt-6 [&_strong]:text-light-text1 [&_strong]:font-[500] [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6"}
                 dangerouslySetInnerHTML={{__html: descriptionHtml}}
               />
             </div>
@@ -186,12 +186,12 @@ export default function Product() {
 
       {/* Suggestions */}
       <div className="mt-20 mb-6 w-full border-t border-light-bg2" />
-      <div className={"flex justify-center w-full max-w-[1440px] px-6 lg:px-0 mt-10 mb-8 text-3xl font-title"}>
+      <div className={"flex justify-center w-full max-w-screen-xl text-center px-6 lg:px-0 mt-10 mb-8 text-3xl font-title"}>
         <div>Có thể bạn cũng thích</div>
       </div>
       <FadeInStagger>
         <div
-          className="px-6 lg:px-0 max-w-[1440px] w-full grid gap-6 lg:gap-8 grid-cols-2 lg:grid-cols-4"
+          className="px-6 lg:px-0 max-w-screen-xl w-full grid gap-6 lg:gap-10 grid-cols-2 lg:grid-cols-4"
         >
           {productRecommendations?.map((product) => (
             <FadeInItem key={product.id}>
@@ -209,9 +209,10 @@ export default function Product() {
     const [currentIndex, setCurrentIndex] = useState(0);
     return (
       <div className={"flex flex-col gap-4 mt-16 w-full max-w-[912px] px-6 lg:px-0"}>
-        <div className={"w-full flex justify-center font-title text-2xl mb-4"}>
-          Hướng Dẫn Mua Hàng
+        <div className={"w-full flex justify-center font-title text-2xl mb-4 "}>
+          FAQs
         </div>
+
         {additionInfoMenu.map((item, index) => (
           <div key={item.title}>
             <AdditionalInfoItem item={item} />

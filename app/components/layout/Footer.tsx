@@ -1,6 +1,11 @@
 import {Suspense} from 'react';
 import {Await, NavLink} from 'react-router';
 import type {FooterQuery, HeaderQuery} from '../../../storefrontapi.generated';
+import {Logo} from '~/components/layout/Header';
+import {Clock, Instagram, Mail, Phone} from 'lucide-react';
+import {Image} from '@shopify/hydrogen';
+import {FadeInItem, FadeInStagger} from '~/components/framer-motion/FadeInStagger';
+import {FadeInDiv} from '~/components/framer-motion/FadeInDiv';
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
@@ -17,14 +22,118 @@ export function Footer({
     <Suspense>
       <Await resolve={footerPromise}>
         {(footer) => (
-          <footer className="min-w-fit bg-light-main3 h-[200px]">
-            {footer?.menu && header.shop.primaryDomain?.url && (
-              <FooterMenu
-                menu={footer.menu}
-                primaryDomainUrl={header.shop.primaryDomain.url}
-                publicStoreDomain={publicStoreDomain}
-              />
-            )}
+          <footer className="w-full py-16 bg-light-main3 flex flex-col items-center justify-center px-6 lg:px-20">
+            {/*{footer?.menu && header.shop.primaryDomain?.url && (*/}
+            {/*  <FooterMenu*/}
+            {/*    menu={footer.menu}*/}
+            {/*    primaryDomainUrl={header.shop.primaryDomain.url}*/}
+            {/*    publicStoreDomain={publicStoreDomain}*/}
+            {/*  />*/}
+            {/*)}*/}
+            <FadeInStagger>
+
+
+            <div className={"max-w-screen-xl w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12"}>
+              {/* Brand name, description, media */}
+              <FadeInItem>
+              <div className={"flex flex-col gap-1"}>
+                <Logo width={80} height={80}></Logo>
+                <div className={"text-sm tracking-tight"}>
+                  Designed and crafted with passion in HCM City, Vietnam
+                </div>
+              </div>
+              </FadeInItem>
+
+              {/* Info */}
+              <FadeInItem>
+              <div className={"flex flex-col gap-3"}>
+                <div className={"text-sm font-[600] mb-2"}>
+                  THÔNG TIN
+                </div>
+                <div className={"text-sm"}>
+                  Về SoCutie
+                </div>
+                <div className={"text-sm"}>
+                  Hướng dẫn mua hàng
+                </div>
+                <div className={"text-sm"}>
+                  Chính sách giao hàng
+                </div>
+                <div className={"text-sm"}>
+                  Bảo hành & đổi trả
+                </div>
+              </div>
+                </FadeInItem>
+
+              {/* Contact */}
+              <FadeInItem>
+              <div className={"flex flex-col gap-3"}>
+                <div className={"text-sm font-[600] mb-2"}>
+                  LIÊN HỆ
+                </div>
+                <div className={"flex gap-3"}>
+                  <Phone size={20}/>
+                  <div className={"text-sm"}>
+                    090 951 8441
+                  </div>
+                </div>
+
+                <div className={"flex gap-3"}>
+                  <Mail size={20}/>
+                  <div className={"text-sm"}>
+                    contact@socutie.sg
+                  </div>
+                </div>
+
+                <div className={"flex gap-3"}>
+                  <Clock size={20}/>
+                  <div className={"text-sm"}>
+                    9:00 - 21:00
+                  </div>
+                </div>
+              </div>
+                </FadeInItem>
+
+              {/* Media */}
+              <FadeInItem>
+              <div className={"flex flex-col gap-3"}>
+                <div className={"text-sm font-[600] mb-2"}>
+                  FOLLOW US
+                </div>
+                <div className={"flex gap-4 items-center max-w-screen-md"}>
+                  <a
+                    href={"https://www.instagram.com/socutie.sg"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Instagram className={"text-light-text2"}/>
+                  </a>
+                  <a
+                    href={"https://www.instagram.com/socutie.sg"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      src="/images/tik-tok.png"
+                      alt="hero-banner"
+                      width={20}
+                      height={20}
+                      className="w-5 h-5 object-contain grayscale opacity-80"
+                    />
+                  </a>
+                </div>
+              </div>
+                </FadeInItem>
+            </div>
+
+            <div className={"max-w-screen-xl w-full mt-16 flex justify-center"}>
+              <FadeInDiv>
+                <div className={"text-sm"}>
+                  © {new Date().getFullYear()} SoCutie. All rights reserved.
+                </div>
+              </FadeInDiv>
+            </div>
+            </FadeInStagger>
           </footer>
         )}
       </Await>

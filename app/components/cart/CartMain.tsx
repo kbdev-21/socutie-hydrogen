@@ -22,31 +22,31 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
   // so the user immediately sees feedback when they modify the cart.
   const cart = useOptimisticCart(originalCart);
 
-  const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
+  const linesCount = cart?.lines?.nodes?.length || 0;
   const withDiscount =
     cart &&
     Boolean(cart?.discountCodes?.filter((code) => code.applicable)?.length);
   const cartHasItems = cart?.totalQuantity ? cart.totalQuantity > 0 : false;
 
   return (
-    <div className={`flex flex-col h-[100vh] w-full p-6`}>
-      <CartEmpty hidden={linesCount} layout={layout} />
-      <div className="">
-        <div aria-labelledby="cart-lines">
+    <div className={"relative h-full w-full"}>
+      <div className={`flex flex-col px-6 h-[calc(100vh-230px)]`}>
+        <CartEmpty hidden={linesCount !== 0} layout={layout} />
+        <div aria-labelledby="cart-lines" className="max-h-[calc(100vh-230px)] overflow-y-auto scrollbar-hidden">
           <ul>
             {(cart?.lines?.nodes ?? []).map((line) => (
               <CartLineItem key={line.id} line={line} layout={layout} />
             ))}
           </ul>
         </div>
-        {cartHasItems && (
-          <>
-            <div className="mt-6 mb-6 border-t border-light-bg2" />
-            <CartSummary cart={cart} layout={layout} />
-          </>
-        )}
       </div>
+
+      {cartHasItems && (
+        <CartSummary cart={cart} layout={layout} />
+      )}
+
     </div>
+
   );
 }
 
@@ -59,27 +59,26 @@ function CartEmpty({
   const {close} = useAside();
   return (
     <div className={"h-full"} hidden={hidden}>
-      <div className={"h-full w-full flex gap-6 flex-col justify-center items-center"}>
-        <div className={"rounded-full bg-light-bg3 p-5"}>
-          <ShoppingBag size={32} strokeWidth={1.75}/>
-        </div>
-        <div className={"font-title text-2xl text-center"}>Giỏ hàng của bạn đang trống</div>
-        <div className={"font-main text-base text-light-text2 text-center max-w-[350px]"}>Khám phá ngay bộ sưu tập mới nhất của chúng tôi tại đây</div>
-        <Link className={`
-          relative overflow-hidden flex gap-2 justify-center items-center
-          shadow-md text-sm font-[400] text-light-bg1 font-main
-          bg-light-main py-4 px-8
-          transition-all duration-300
-          before:absolute before:inset-0
-          before:bg-light-main2 before:translate-x-[-100%]
-          before:transition-transform before:duration-300
-          hover:before:translate-x-0
-        `} to="/collections/best-sellers" onClick={close} prefetch="viewport">
-          <div className="relative z-10">OUR NEW ARRIVAL</div>
-          <ArrowRight size={20} className="relative z-10"/>
-        </Link>
-        <div className={"h-[20vh]"}></div>
+    <div className={"h-full w-full flex gap-6 flex-col justify-center items-center"}>
+      <div className={"rounded-full bg-light-bg3 p-5"}>
+        <ShoppingBag size={32} strokeWidth={1.75}/>
       </div>
+      <div className={"font-title text-2xl text-center"}>Giỏ hàng của bạn đang trống</div>
+      <div className={"font-main text-base text-light-text2 text-center max-w-[350px]"}>Khám phá ngay bộ sưu tập mới nhất của chúng tôi tại đây</div>
+      <Link className={`
+         relative overflow-hidden flex gap-2 justify-center items-center
+         shadow-md text-sm font-[400] text-light-bg1 font-main
+         bg-light-main py-4 px-8
+         transition-all duration-300
+         before:absolute before:inset-0
+         before:bg-light-main2 before:translate-x-[-100%]
+         before:transition-transform before:duration-300
+         hover:before:translate-x-0
+       `} to="/collections/best-sellers" onClick={close} prefetch="viewport">
+        <div className="relative z-10">OUR NEW ARRIVAL</div>
+        <ArrowRight size={20} className="relative z-10"/>
+      </Link>
+    </div>
     </div>
   );
 }

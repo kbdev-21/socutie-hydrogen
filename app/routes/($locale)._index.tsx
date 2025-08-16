@@ -122,16 +122,43 @@ export default function Homepage() {
 
       <div className={"h-16"}></div>
 
+      {/* Decoration Div */}
       <div className={"w-full py-10 px-10 bg-light-main4 flex items-center justify-center flex-col"}>
         <FadeInDiv>
           <div className={"text-3xl lg:text-4xl font-fancy text-center tracking-tight lg:tracking-normal"}>
             Designed and Crafted for Cuties
           </div>
-          <div className={"font-main text-sm mt-4 max-w-screen-md text-center tracking-tight"}>
-            Gửi các cô gái xinh đẹp, chúng mình chăm chút từng chi tiết để mỗi sản phẩm không chỉ là món đồ bạn mặc mà còn gửi gắm sự tự tin và nét duyên dáng riêng của bạn.
+        </FadeInDiv>
+        <FadeInDiv>
+          <div className={"font-main text-sm mt-5 max-w-screen-md text-center tracking-tight"}>
+            Gửi các Cuties, chúng mình luôn đồng hành cùng bạn qua từng thiết kế, chăm chút từng chi tiết để mỗi sản phẩm không chỉ là món đồ bạn mặc mà còn là sự gửi gắm của niềm tin, sự tự tin và nét duyên dáng rất riêng.
           </div>
         </FadeInDiv>
+        <FadeInDiv>
+          <div className={"flex gap-4 justify-center items-center mt-6 max-w-screen-md"}>
+            <a
+              href={"https://www.instagram.com/socutie.sg"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Instagram className={"text-light-text2"}/>
+            </a>
+            <a
+              href={"https://www.instagram.com/socutie.sg"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src="/images/tik-tok.png"
+                alt="hero-banner"
+                width={20}
+                height={20}
+                className="w-5 h-5 object-contain grayscale opacity-80"
+              />
+            </a>
 
+          </div>
+        </FadeInDiv>
       </div>
 
       <div className={"h-16"}></div>
@@ -162,10 +189,10 @@ function FeedbackDisplay() {
     "/images/feedback/Rectangle 647.png"
   ]
   return (
-    <div className={"max-w-screen-lg w-full px-10"}>
+    <div className={"max-w-screen-lg w-full px-6 lg:px-20"}>
       <FadeInDiv>
         <div className={"text-2xl tracking-tight lg:text-3xl font-[400] text-light-text2 text-center font-title mb-6"}>
-          FEEDBACK
+          CUTIES FEEDBACK
         </div>
       </FadeInDiv>
 
@@ -221,11 +248,13 @@ function CollectionAndProductsDisplay({
   return (
     <div className="mx-6 lg:mx-20 max-w-screen-xl flex flex-col items-center">
       <FadeInDiv>
-        <div className={"text-2xl tracking-tight lg:text-3xl font-[400] text-light-text2 text-center font-title mb-8"}>MOST PICK BY CUTIE GIRLS</div>
+        <div className={"text-2xl tracking-tight lg:text-3xl font-[400] text-light-text2 text-center font-title mb-8"}>
+          MOST PICK BY CUTIES
+        </div>
         {/*<div className={"text-base text-light-text2 font-main mb-10 max-w-md text-center tracking-tight"}>{description}</div>*/}
       </FadeInDiv>
       <FadeInStagger>
-        <div className="grid gap-6 lg:gap-8 grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 lg:gap-10 grid-cols-2 lg:grid-cols-4">
           {products.map((product) => (
             <FadeInItem key={product.id}>
               <ProductItem  product={product} />

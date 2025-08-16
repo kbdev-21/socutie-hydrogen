@@ -52,7 +52,7 @@ export function CartLineItem({
                 }
               }}
             >
-              <div className={"font-title text-xl"}>{product.title}</div>
+              <div className={"font-title font-medium text-base"}>{product.title}</div>
             </Link>
             <ul>
               {selectedOptions.map((option) => (
@@ -64,14 +64,16 @@ export function CartLineItem({
               ))}
             </ul>
           </div>
-
-          <CartLineQuantity line={line} />
+          <div className={"flex flex-col gap-1"}>
+            <div className={`sm:hidden text-sm font-normal text-light-text1`}>{formatVnd(line?.cost?.totalAmount.amount)}{line?.cost?.totalAmount.currencyCode === "VND" ? "₫" : "$"}</div>
+            <CartLineQuantity line={line} />
+          </div>
         </div>
 
         {/* Right side */}
-        <div className={"flex flex-col justify-end items-end"}>
+        <div className={"hidden sm:flex flex-col justify-end items-end"}>
           {/*<ProductPrice price={line?.cost?.totalAmount} compareAtPrice={line?.cost?.compareAtAmountPerQuantity}/>*/}
-          <div className={`text-lg font-normal text-light-text1`}>{formatVnd(line?.cost?.totalAmount.amount)}{line?.cost?.totalAmount.currencyCode === "VND" ? "₫" : "$"}</div>
+          <div className={`text-base font-normal text-light-text1`}>{formatVnd(line?.cost?.totalAmount.amount)}{line?.cost?.totalAmount.currencyCode === "VND" ? "₫" : "$"}</div>
         </div>
       </div>
     </li>
@@ -105,7 +107,7 @@ function CartLineQuantity({line}: {line: CartLine}) {
           </CartLineUpdateButton>
         </div>
 
-        <div>{quantity}</div>
+        <div className={"text-sm"}>{quantity}</div>
 
         <div className={"mt-1 text-light-text2 hover:text-light-text1 transition-all duration-200"}>
           <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>

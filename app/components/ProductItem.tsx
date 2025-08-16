@@ -44,7 +44,7 @@ export function ProductItem({
         to={variantUrl}
       >
         <div className="relative">
-          {/* 🖼 Initial image */}
+          {/* Initial image */}
           <Image
             src={initImgUrl}
             alt={product.title}
@@ -53,12 +53,12 @@ export function ProductItem({
             sizes="(min-width: 45em) 400px, 100vw"
           />
 
-          {/* 🖼 Hover image */}
+          {/* Hover image */}
           <Image
             src={hoverImgUrl}
             alt={product.title}
             className={`z-10 absolute top-0 left-0 w-full h-auto aspect-[3/4] object-cover`}
-            loading={loading}
+            loading={"lazy"}
             sizes="(min-width: 45em) 400px, 100vw"
           />
 
@@ -69,15 +69,15 @@ export function ProductItem({
 
           {/* 🔍 Out of sales on top */}
           {!product.availableForSale && (
-            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-secondary text-sm text-light-bg1`}>
-              <div>{"Hết hàng".toUpperCase()}</div>
+            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-secondary text-xs text-light-bg1`}>
+              <div>{"SOLD OUT"}</div>
             </div>
           )}
 
           {/* 🔍 Compare at price on top */}
           {(product.availableForSale && product.priceRange.minVariantPrice.amount < product.compareAtPriceRange.maxVariantPrice.amount) && (
-            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-secondary text-sm text-light-bg1`}>
-              <div>{(`-${discountPercentage(product.priceRange.minVariantPrice.amount, product.compareAtPriceRange.maxVariantPrice.amount)}`).toUpperCase()}</div>
+            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-secondary text-xs text-light-bg1`}>
+              <div>{(`${discountPercentage(product.priceRange.minVariantPrice.amount, product.compareAtPriceRange.maxVariantPrice.amount)} OFF`)}</div>
             </div>
           )}
 
@@ -85,7 +85,7 @@ export function ProductItem({
 
         {/* Title and price */}
         <div className={"pt-3 flex flex-col justify-center items-center"}>
-          <div className={"font-[500] text-center text-base xl:text-lg font-title mb-1"}>{product.title}</div>
+          <div className={"font-[500] text-center text-sm lg:text-base font-title mb-1"}>{product.title}</div>
 
           <ProductPrice size={"small"} price={product.priceRange.minVariantPrice} compareAtPrice={product.compareAtPriceRange.maxVariantPrice}/>
           {/*<div className={"text-sm font-normal text-light-text2"}>{formatVnd(product.priceRange.minVariantPrice.amount)}₫</div>*/}

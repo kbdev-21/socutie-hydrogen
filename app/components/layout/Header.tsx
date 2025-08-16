@@ -56,10 +56,16 @@ export function Header({
     <div className="">
       {/* mobile */}
       <div className={`flex lg:hidden w-full h-20 px-6 fixed top-0 z-40 transition-all duration-500 ease-in-out border-b ${isAtTop && isHomePage ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
-        <div className={"flex items-center justify-between relative w-full"}>
-          <HeaderMenuMobileToggle />
-          <Logo className={"absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"}/>
-          <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+        <div className={"flex items-center justify-between w-full"}>
+          <div className={"w-[35%] flex justify-start items-center"}>
+            <HeaderMenuMobileToggle />
+          </div>
+          <div className={"w-[30%] flex justify-center items-center"}>
+            <Logo/>
+          </div>
+          <div className={"w-[35%] flex justify-end items-center"}>
+            <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+          </div>
         </div>
       </div>
 
@@ -87,17 +93,20 @@ export function Header({
   );
 }
 
-export function Logo({className = ""}) {
+export function Logo({width = 62, height = 62}) {
   return (
 
     <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-      <div className={`font-fancy font-medium text-[40px] ${className}`}>SoCutie</div>
-        {/*<Image*/}
-        {/*  src="/images/logo.png"*/}
-        {/*  alt="logo"*/}
-        {/*  className="h-full w-auto object-contain" // ~48px height fits nicely in 80px header*/}
-        {/*  sizes="100px"*/}
-        {/*/>*/}
+      {/*<div className={`font-fancy font-medium text-[40px] ${className}`}>SoCutie</div>*/}
+
+        <Image
+          src="/images/logo.png"
+          alt="hero-banner"
+          width={width}
+          height={height}
+          className="object-contain "
+        />
+
     </NavLink>
 
   )
@@ -264,19 +273,19 @@ function HeaderCtas({
     <nav className="flex gap-4 md:gap-6" role="navigation">
       <SearchToggle />
 
-      <a
-        className={"hidden md:flex"}
-        href={"https://www.instagram.com/socutie.sg"}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <div className="relative group">
-          <Instagram className="transition-colors duration-150 ease-in-out hover:text-light-main" />
-          <span
-            className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-          ></span>
-        </div>
-      </a>
+      {/*<a*/}
+      {/*  className={"hidden md:flex"}*/}
+      {/*  href={"https://www.instagram.com/socutie.sg"}*/}
+      {/*  target="_blank"*/}
+      {/*  rel="noopener noreferrer"*/}
+      {/*>*/}
+      {/*  <div className="relative group">*/}
+      {/*    <Instagram className="transition-colors duration-150 ease-in-out hover:text-light-main" />*/}
+      {/*    <span*/}
+      {/*      className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-300 ease-in-out group-hover:scale-x-100"*/}
+      {/*    ></span>*/}
+      {/*  </div>*/}
+      {/*</a>*/}
 
       {/*<NavLink className={"hidden md:flex"} prefetch="intent" to="/account" style={activeLinkStyle}>*/}
       {/*  <Suspense fallback="Sign in">*/}
@@ -285,6 +294,28 @@ function HeaderCtas({
       {/*    </Await>*/}
       {/*  </Suspense>*/}
       {/*</NavLink>*/}
+
+      {/*<NavLink className={"hidden md:flex"} prefetch="intent" to="https://shopify.com/75618549982/account" style={activeLinkStyle}>*/}
+      {/*  <Suspense fallback="Sign in">*/}
+      {/*    <Await resolve={isLoggedIn} errorElement="Sign in">*/}
+      {/*      <UserRound className={"transition-colors duration-200 hover:text-light-main"}/>*/}
+      {/*    </Await>*/}
+      {/*  </Suspense>*/}
+      {/*</NavLink>*/}
+
+      <a
+        href={"https://shopify.com/75618549982/account"}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={"hidden md:flex"}
+      >
+        <Suspense fallback="Sign in">
+          <Await resolve={isLoggedIn} errorElement="Sign in">
+            <UserRound className={"transition-colors duration-200 hover:text-light-main"}/>
+          </Await>
+        </Suspense>
+      </a>
+
       <CartToggle cart={cart} />
     </nav>
   );
@@ -308,9 +339,6 @@ function SearchToggle() {
     <button className="" onClick={() => open('search')}>
       <div className="relative group">
         <Search className="transition-colors duration-150 ease-in-out hover:text-light-main" />
-        <span
-          className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-        ></span>
       </div>
     </button>
   );
@@ -337,9 +365,6 @@ function CartBadge({count}: {count: number | null}) {
       <div className={"relative"}>
         <div className="relative group">
           <ShoppingCart className="transition-colors duration-150 ease-in-out hover:text-light-main" />
-          <span
-            className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-300 ease-in-out group-hover:scale-x-100"
-          ></span>
         </div>
         {count === null ? <span>&nbsp;</span> : (
           <div className={"absolute -top-1 -right-2 bg-light-main text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center"}>{count}</div>

@@ -1,6 +1,8 @@
 import {type FetcherWithComponents} from 'react-router';
 import {CartForm, type OptimisticCartLineInput} from '@shopify/hydrogen';
 import {Loader2, LoaderCircle, ShoppingBag} from "lucide-react";
+import {useAside} from '~/components/Aside';
+import {useEffect, useState} from 'react';
 
 export function AddToCartButton({
   analytics,
@@ -15,9 +17,23 @@ export function AddToCartButton({
   lines: Array<OptimisticCartLineInput>;
   onClick?: () => void;
 }) {
+  const {open} = useAside();
+
+  const [fetcherState, setFetcherState] = useState("idle");
+  const [fetcherData, setFetcherData] = useState(null);
+
+  useEffect(() => {
+    if (fetcherState === "idle" && fetcherData) {
+      open("cart");
+    }
+  }, [fetcherState, fetcherData, open]);
+
   return (
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
       {(fetcher: FetcherWithComponents<any>) => {
+        if (fetcher.state !== fetcherState) setFetcherState(fetcher.state);
+        if (fetcher.data !== fetcherData) setFetcherData(fetcher.data);
+
         return (
           <>
             <input

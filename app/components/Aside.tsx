@@ -53,6 +53,19 @@ export function Aside({
     return () => abortController.abort();
   }, [close, expanded]);
 
+  // lock screen scrolling when open
+  useEffect(() => {
+    if (expanded) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [expanded]);
+
   return (
     <div
       aria-modal
@@ -73,14 +86,16 @@ export function Aside({
       <aside className={`fixed right-0 top-0 h-full w-[90vw] max-w-[500px] bg-white transition-transform duration-500 ease-in-out
     ${expanded ? "translate-x-0" : "translate-x-full"}`}
       >
-        <header>
+        {/* Header */}
+        <div className={"flex justify-between items-center px-6 h-20"}>
           <div className={"font-title text-2xl"}>{heading}</div>
           <button className="transition-all duration-300 text-light-text1 hover:rotate-180" onClick={close} aria-label="Close">
             <X size={24} strokeWidth={1.5} />
           </button>
-        </header>
+        </div>
+
         <div className="border-t border-light-bg2" />
-        <div>{children}</div>
+        <div className={"h-full"}>{children}</div>
       </aside>
     </div>
   );
