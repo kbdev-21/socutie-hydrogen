@@ -1,14 +1,14 @@
 import {Image} from '@shopify/hydrogen';
 import {FadeInDiv} from '~/components/framer-motion/FadeInDiv';
 
-export function HeroBanner() {
+export function HeroBanner({aspectClass = "aspect-[3/4] lg:aspect-[3/1]"}) {
   return (
     <FadeInDiv offsetY={-20}>
       <div className="relative">
         <Image
           src="/images/big-banner.png"
           alt="hero-banner"
-          className="w-full h-auto object-cover aspect-[3/4] lg:aspect-[21/9]"
+          className={`w-full h-auto object-cover ${aspectClass}`}
           sizes="100vw"
         />
 

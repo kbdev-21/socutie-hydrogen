@@ -14,7 +14,7 @@ import {ProductPrice} from '~/components/ProductPrice';
 
 export function ProductItem({
   product,
-  loading,
+  loading = 'eager',
 }: {
   product: ProductSummaryFragment;
   loading?: 'eager' | 'lazy';
@@ -35,9 +35,12 @@ export function ProductItem({
     '#' + convert.keyword.hex(color.trim().toLowerCase()) || '#000000'
   );
 
-  return (
+  const [isHoveredOnce, setIsHoveredOnce] = useState(false)
 
+  return (
       <Link
+        onMouseEnter={() => setIsHoveredOnce(true)}
+        onTouchStart={() => setIsHoveredOnce(true)}
         className="group"
         key={product.id}
         prefetch="intent"
@@ -50,17 +53,18 @@ export function ProductItem({
             alt={product.title}
             className={`z-20 relative w-full h-auto aspect-[3/4] object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-0 opacity-100`}
             loading={loading}
-            sizes="(min-width: 45em) 400px, 100vw"
+            sizes="(min-width: 1024px) 25vw, 50vw"
           />
 
           {/* Hover image */}
           <Image
             src={hoverImgUrl}
             alt={product.title}
-            className={`z-10 absolute top-0 left-0 w-full h-auto aspect-[3/4] object-cover`}
+            className={`z-10 absolute top-0 left-0 w-full h-auto aspect-[3/4] object-cover ${isHoveredOnce ? "opacity-100" : "opacity-0"}`}
             loading={"lazy"}
-            sizes="(min-width: 45em) 400px, 100vw"
+            sizes="(min-width: 1024px) 25vw, 50vw"
           />
+
 
           {/* 🔍 Search icon at bottom */}
           <div className={`z-30 absolute bottom-2 right-2 flex justify-center items-center w-8 h-8 bg-light-main text-light-bg1 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:translate-y-0 group-hover:shadow-sm opacity-0 translate-y-2`}>

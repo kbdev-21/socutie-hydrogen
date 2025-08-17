@@ -38,7 +38,8 @@ export function Header({
   const [isAtTop, setIsAtTop] = useState(true);
   const location = useLocation(); // ✅ gives you current URL info
 
-  const isHomePage = location.pathname === "/";
+  const isTransparent = location.pathname === "/";
+  // const isTransparent = location.pathname === "/" || location.pathname.includes("/collections/");
 
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export function Header({
   return (
     <div className="">
       {/* mobile */}
-      <div className={`flex lg:hidden w-full h-20 px-6 fixed top-0 z-40 transition-all duration-500 ease-in-out border-b ${isAtTop && isHomePage ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
+      <div className={`flex lg:hidden w-full h-20 px-6 fixed top-0 z-40 transition-all duration-500 ease-in-out border-b ${isAtTop && isTransparent ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
         <div className={"flex items-center justify-between w-full"}>
           <div className={"w-[35%] flex justify-start items-center"}>
             <HeaderMenuMobileToggle />
@@ -70,7 +71,7 @@ export function Header({
       </div>
 
       {/* not-mobile */}
-      <div className={`hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-40 transition-all duration-500 ease-in-out border-b ${isAtTop && isHomePage ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
+      <div className={`hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-40 transition-all duration-500 ease-in-out border-b ${isAtTop && isTransparent ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
         <div className={"flex items-center justify-between w-full max-w-screen-xl h-full"}>
           <div>
             <Logo/>

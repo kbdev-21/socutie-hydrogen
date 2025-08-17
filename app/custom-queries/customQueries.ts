@@ -55,6 +55,8 @@ export const COLLECTION_WITH_PRODUCTS_QUERY = `#graphql
     $last: Int
     $startCursor: String
     $endCursor: String
+    $sortKey: ProductCollectionSortKeys
+    $reverse: Boolean
   ) @inContext(country: $country, language: $language) {
     collection(handle: $handle) {
       id
@@ -66,6 +68,8 @@ export const COLLECTION_WITH_PRODUCTS_QUERY = `#graphql
         last: $last,
         before: $startCursor,
         after: $endCursor
+        sortKey: $sortKey
+        reverse: $reverse
       ) {
         nodes {
           ...ProductSummary

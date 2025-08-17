@@ -1,5 +1,5 @@
 import {Suspense} from 'react';
-import {Await, NavLink} from 'react-router';
+import {Await, NavLink, useLocation} from 'react-router';
 import type {FooterQuery, HeaderQuery} from '../../../storefrontapi.generated';
 import {Logo} from '~/components/layout/Header';
 import {Clock, Instagram, Mail, Phone} from 'lucide-react';
@@ -18,11 +18,13 @@ export function Footer({
   header,
   publicStoreDomain,
 }: FooterProps) {
+  const location = useLocation();
+
   return (
     <Suspense>
       <Await resolve={footerPromise}>
         {(footer) => (
-          <footer className="w-full py-16 bg-light-main3 flex flex-col items-center justify-center px-6 lg:px-20">
+          <footer key={location.pathname} className="w-full py-16 bg-light-main3 flex flex-col items-center justify-center px-6 lg:px-20">
             {/*{footer?.menu && header.shop.primaryDomain?.url && (*/}
             {/*  <FooterMenu*/}
             {/*    menu={footer.menu}*/}

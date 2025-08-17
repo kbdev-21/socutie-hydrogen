@@ -31,7 +31,7 @@ export function ProductForm({
 
         return (
           <div className="" key={option.name}>
-            <div className={"mb-1"}>{option.name}</div>
+            <div className={'mb-1 text-sm'}>{option.name}</div>
             <div className="flex flex-wrap gap-2">
               {option.optionValues.map((value) => {
                 const {
@@ -77,7 +77,7 @@ export function ProductForm({
                   return (
                     <button
                       type="button"
-                      className={`border text-base py-2 px-3 transition-colors duration-200 hover:text-light-text1 hover:border-light-text1 ${selected ? "text-light-text1 border-light-text1" : "text-light-text2 border-light-bg2"}`}
+                      className={`border text-sm py-2 px-4 transition-colors duration-200 hover:text-light-text1 hover:border-light-text1 ${selected ? 'text-light-text1 border-light-text1' : 'text-light-text2 border-light-bg2'}`}
                       key={option.name + name}
                       disabled={!exists}
                       onClick={() => {
@@ -101,12 +101,14 @@ export function ProductForm({
 
       {/* Quantity selection */}
       <div>
-        <div className={"mb-1"}>Số lượng</div>
+        <div className={'mb-1'}>Số lượng</div>
         <div
           className={`flex justify-between items-center w-fit border text-sm py-3 px-3 text-light-text1 border-light-bg2 font-[500]`}
         >
           <button
-            className={"text-light-text2 hover:text-light-text1 transition-all duration-200"}
+            className={
+              'text-light-text2 hover:text-light-text1 transition-all duration-200'
+            }
             onClick={() => {
               setAddQuantity(addQuantity - 1);
             }}
@@ -114,20 +116,26 @@ export function ProductForm({
           >
             <Minus size={16} />
           </button>
-          <div className={"mx-6 text-sm font-[500]"}>{addQuantity}</div>
+          <div className={'mx-6 text-sm font-[500]'}>{addQuantity}</div>
           <button
-            className={"text-light-text2 hover:text-light-text1 transition-all duration-300"}
+            className={
+              'text-light-text2 hover:text-light-text1 transition-all duration-300'
+            }
             onClick={() => {
               setAddQuantity(addQuantity + 1);
             }}
           >
-            <Plus size={16}/>
+            <Plus size={16} />
           </button>
         </div>
       </div>
 
       {/* Add to cart button */}
-      <div className={"mt-4"}>
+      <div className={'mt-4'}>
+        <div className={'flex justify-between mb-2'}>
+          <div className={"text-sm text-light-text2"}>{selectedVariant?.availableForSale ? "Còn hàng" : "Đã hết hàng"}</div>
+          <div className={"text-sm text-light-text2"}>Mã SP: TX-0001-BK</div>
+        </div>
         <AddToCartButton
           disabled={!selectedVariant || !selectedVariant.availableForSale}
           onClick={() => {
@@ -136,18 +144,22 @@ export function ProductForm({
           lines={
             selectedVariant
               ? [
-                {
-                  merchandiseId: selectedVariant.id,
-                  quantity: addQuantity,
-                  selectedVariant,
-                },
-              ]
+                  {
+                    merchandiseId: selectedVariant.id,
+                    quantity: addQuantity,
+                    selectedVariant,
+                  },
+                ]
               : []
           }
         >
-          <div className={"flex gap-3 align-center items-center"}>
-            <ShoppingBag strokeWidth={1.5}/>
-            <div className={""}>{selectedVariant?.availableForSale ? 'THÊM VÀO GIỎ HÀNG' : 'LIÊN HỆ VỚI CHÚNG TÔI'}</div>
+          <div className={'flex gap-3 align-center items-center'}>
+            <ShoppingBag strokeWidth={1.5} />
+            <div className={''}>
+              {selectedVariant?.availableForSale
+                ? 'THÊM VÀO GIỎ HÀNG'
+                : 'LIÊN HỆ VỚI CHÚNG TÔI'}
+            </div>
           </div>
         </AddToCartButton>
       </div>
