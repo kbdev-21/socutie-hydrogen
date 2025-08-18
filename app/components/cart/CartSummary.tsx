@@ -18,7 +18,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
   return (
     <div
       aria-labelledby="cart-summary"
-      className={`flex flex-col gap-4 w-full px-4 bg-light-bg1 border-t border-t-light-bg2 h-[150px] ${layout !== 'page' ? "absolute bottom-20 justify-end" : ""}`}
+      className={`flex flex-col gap-4 w-full px-6 bg-light-bg1 border-t border-t-light-bg2 h-[150px] ${layout !== 'page' ? "absolute bottom-20 justify-end" : ""}`}
     >
       <div className="flex justify-between items-center mb-2">
         <div className={"font-title text-xl font-medium"}>Tổng cộng</div>

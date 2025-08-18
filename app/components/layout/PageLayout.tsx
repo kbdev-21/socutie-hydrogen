@@ -72,13 +72,14 @@ function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
 function SearchAside() {
   const queriesDatalistId = useId();
   return (
-    <Aside type="search" heading="SEARCH">
-      <div className="predictive-search">
+    <Aside type="search" heading="Tìm Kiếm">
+      <div className="predictive-search w-full px-6">
         <br />
         <SearchFormPredictive>
           {({fetchResults, goToSearch, inputRef}) => (
-            <>
+            <div className={"w-full"}>
               <input
+                className={"w-full py-2 transition-all duration-300 border-b-[2px] border-b-light-bg2 focus:border-b-light-text1 outline-none focus:outline-none"}
                 name="q"
                 onChange={fetchResults}
                 onFocus={fetchResults}
@@ -86,10 +87,14 @@ function SearchAside() {
                 ref={inputRef}
                 type="search"
                 list={queriesDatalistId}
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
               />
-              &nbsp;
-              <button onClick={goToSearch}>Search</button>
-            </>
+              {/*&nbsp;*/}
+              {/*<button onClick={goToSearch}>Search</button>*/}
+            </div>
           )}
         </SearchFormPredictive>
 
@@ -98,11 +103,14 @@ function SearchAside() {
             const {articles, collections, pages, products, queries} = items;
 
             if (state === 'loading' && term.current) {
-              return <div>Loading...</div>;
+              return <div className={"mt-8"}>Loading...</div>;
             }
 
             if (!total) {
-              return <SearchResultsPredictive.Empty term={term} />;
+              return (
+                <></>
+                // <SearchResultsPredictive.Empty term={term} />
+              );
             }
 
             return (
@@ -116,32 +124,32 @@ function SearchAside() {
                   closeSearch={closeSearch}
                   term={term}
                 />
-                <SearchResultsPredictive.Collections
-                  collections={collections}
-                  closeSearch={closeSearch}
-                  term={term}
-                />
-                <SearchResultsPredictive.Pages
-                  pages={pages}
-                  closeSearch={closeSearch}
-                  term={term}
-                />
-                <SearchResultsPredictive.Articles
-                  articles={articles}
-                  closeSearch={closeSearch}
-                  term={term}
-                />
-                {term.current && total ? (
-                  <Link
-                    onClick={closeSearch}
-                    to={`${SEARCH_ENDPOINT}?q=${term.current}`}
-                  >
-                    <p>
-                      View all results for <q>{term.current}</q>
-                      &nbsp; →
-                    </p>
-                  </Link>
-                ) : null}
+                {/*<SearchResultsPredictive.Collections*/}
+                {/*  collections={collections}*/}
+                {/*  closeSearch={closeSearch}*/}
+                {/*  term={term}*/}
+                {/*/>*/}
+                {/*<SearchResultsPredictive.Pages*/}
+                {/*  pages={pages}*/}
+                {/*  closeSearch={closeSearch}*/}
+                {/*  term={term}*/}
+                {/*/>*/}
+                {/*<SearchResultsPredictive.Articles*/}
+                {/*  articles={articles}*/}
+                {/*  closeSearch={closeSearch}*/}
+                {/*  term={term}*/}
+                {/*/>*/}
+                {/*{term.current && total ? (*/}
+                {/*  <Link*/}
+                {/*    onClick={closeSearch}*/}
+                {/*    to={`${SEARCH_ENDPOINT}?q=${term.current}`}*/}
+                {/*  >*/}
+                {/*    <p>*/}
+                {/*      View all results for <q>{term.current}</q>*/}
+                {/*      &nbsp; →*/}
+                {/*    </p>*/}
+                {/*  </Link>*/}
+                {/*) : null}*/}
               </>
             );
           }}
@@ -161,7 +169,7 @@ function MobileMenuAside({
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
-      <Aside type="mobile" heading="MENU">
+      <Aside type="mobile" heading="Menu">
         <HeaderMenuMobile
           menu={header.menu}
           viewport="mobile"

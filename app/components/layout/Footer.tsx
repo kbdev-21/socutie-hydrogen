@@ -32,12 +32,10 @@ export function Footer({
             {/*    publicStoreDomain={publicStoreDomain}*/}
             {/*  />*/}
             {/*)}*/}
-            <FadeInStagger>
-
-
+            <FadeInStagger viewportAmount={0.1}>
             <div className={"max-w-screen-xl w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12"}>
               {/* Brand name, description, media */}
-              <FadeInItem>
+              <FadeInItem viewportAmount={0.1}>
               <div className={"flex flex-col gap-1"}>
                 <Logo width={80} height={80}></Logo>
                 <div className={"text-sm tracking-tight"}>

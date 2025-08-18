@@ -91,9 +91,9 @@ function loadDeferredData({context, params}: LoaderFunctionArgs) {
   return {};
 }
 
-const additionInfoMenu = [
+const detailsMenu = [
   {
-    title: "Hướng dẫn sử dụng",
+    title: "Hướng dẫn bảo quản",
     content: "Vệ sinh nhẹ bằng khăn ẩm hoặc giặt tay, phơi thoáng mát, bảo quản khô ráo, tránh quá tải và vật sắc nhọn để sản phẩm luôn bền đẹp"
   },
   {
@@ -101,8 +101,23 @@ const additionInfoMenu = [
     content: "Phí Shipping: miễn phí nội thành TPHCM, 30.000đ toàn quốc\nThời gian giao hàng: 1-5 ngày. Có thể kiểm tra tình trạng giao hàng qua mã đơn hàng"
   },
   {
-    title: "Chính sách bảo hành",
+    title: "Bảo hành & đổi trả",
     content: "Đổi trả miễn phí 1 lần nếu không đúng size. Bảo hành 12 tháng"
+  },
+]
+
+const faqsMenu = [
+  {
+    title: "Mình có thể đặt hàng từ nước ngoài không?",
+    content: "Có! Bạn có thể đặt hàng sang nước ngoài qua website hoặc DM trực tiếp với chúng mình qua Instagram để nhận được sự hỗ trợ chi tiết nhất."
+  },
+  {
+    title: "Sản phẩm mình muốn mua đã hết hàng thì phải làm sao?",
+    content: "Liên hệ với chúng mình qua các nền tảng để nhận được thông tin mới nhất về các đợt re-stock."
+  },
+  {
+    title: "Làm sao để nhận các thông báo ưu đãi từ SoCutie?",
+    content: "Khi tiến hành thanh toán, hãy chọn nhận đăng ký ưu đãi qua email."
   },
 ];
 
@@ -128,17 +143,20 @@ export default function Product() {
   const {title, descriptionHtml} = product;
 
   return (
-    <div className={"mt-20 lg:mt-24 flex flex-col items-center lg:px-20"}>
+    <div className={"mt-20 lg:mt-28 flex flex-col items-center lg:px-20"}>
       {/* Product detail */}
-      <FadeInDiv>
+      <FadeInDiv viewportAmount={0}>
         <div className="grid grid-cols-1 items-start gap-6 lg:gap-3 lg:grid-cols-2 max-w-[1280px] w-full">
           {/* Left side (top on mobile) */}
-          <ProductImage variantImage={selectedVariant?.image} images={product.images.nodes} />
+          <div className="lg:sticky lg:top-28 self-start">
+            <ProductImage variantImage={selectedVariant?.image} images={product.images.nodes} />
+          </div>
 
           {/* Right side (bottom on mobile) */}
-          <div className="product-form px-6 lg:px-0 lg:ml-12 lg:mt-4">
+          <div className="product-form px-6 lg:px-0 lg:ml-12">
             {/* Title and price */}
-            <div className={"font-[500] font-title text-3xl mb-2"}>{title}</div>
+            <div className={"w-fit font-[400] text-sm text-light-text2 mb-2 transition-all duration-300 hover:cursor-pointer hover:text-light-text1"}>SoCutie</div>
+            <div className={"font-[500] text-3xl mb-2"}>{title}</div>
             <ProductPrice
               price={selectedVariant?.price}
               compareAtPrice={selectedVariant?.compareAtPrice}
@@ -151,14 +169,28 @@ export default function Product() {
               selectedVariant={selectedVariant}
             />
 
+            <div className={"h-6"}></div>
+
             {/* Desription */}
-            <div className={"mt-8"}>
-              <div className={"font-title text-2xl"}>Mô tả sản phẩm</div>
+            <div className={""}>
+              <div className={"font-[500] text-lg"}>Mô tả sản phẩm</div>
               <div
-                className={"text-sm font-main text-light-text1 font-[400] tracking-tight mt-6 [&_strong]:text-light-text1 [&_strong]:font-[500] [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6"}
+                className={"text-sm font-main text-light-text1 font-[400] tracking-tight mt-4 [&_strong]:text-light-text1 [&_strong]:font-[500] [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6"}
                 dangerouslySetInnerHTML={{__html: descriptionHtml}}
               />
             </div>
+
+            <div className={"border-t border-t-light-bg2 w-full mt-6"}/>
+
+            {/* Details */}
+            {detailsMenu.map((info, index) => (
+              <>
+                <ProductDetailDisplay key={info.title} item={info}/>
+                <div className={"border-t border-t-light-bg2 w-full"}/>
+              </>
+            ))}
+
+
           </div>
           <Analytics.ProductView
             data={{
@@ -179,21 +211,18 @@ export default function Product() {
       </FadeInDiv>
 
 
-      {/* Additional info */}
+      {/* Recommended products */}
       <FadeInDiv>
-        <AdditionalInfo/>
+        <div className={"mt-24 text-2xl text-light-text2 tracking-tight flex justify-center w-full max-w-screen-xl text-center px-6 lg:px-0 mb-8"}>
+          <div>CÓ THỂ BẠN CŨNG THÍCH</div>
+        </div>
       </FadeInDiv>
 
-      {/* Suggestions */}
-      <div className="mt-20 mb-6 w-full border-t border-light-bg2" />
-      <div className={"flex justify-center w-full max-w-screen-xl text-center px-6 lg:px-0 mt-10 mb-8 text-3xl font-title"}>
-        <div>Có thể bạn cũng thích</div>
-      </div>
       <FadeInStagger>
         <div
           className="px-6 lg:px-0 max-w-screen-xl w-full grid gap-6 lg:gap-10 grid-cols-2 lg:grid-cols-4"
         >
-          {productRecommendations?.map((product) => (
+          {productRecommendations?.slice(0, 4).map((product) => (
             <FadeInItem key={product.id}>
               <ProductItem product={product} />
             </FadeInItem>
@@ -201,37 +230,27 @@ export default function Product() {
         </div>
       </FadeInStagger>
 
-    </div>
+      <div className={"border-t border-t-light-bg2 w-full mt-24"}/>
 
+      {/* FAQs */}
+      <FadeInDiv>
+        <FaqDisplay/>
+      </FadeInDiv>
+
+
+    </div>
   );
 
-  function AdditionalInfo() {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    return (
-      <div className={"flex flex-col gap-4 mt-16 w-full max-w-[912px] px-6 lg:px-0"}>
-        <div className={"w-full flex justify-center font-title text-2xl mb-4 "}>
-          FAQs
-        </div>
-
-        {additionInfoMenu.map((item, index) => (
-          <div key={item.title}>
-            <AdditionalInfoItem item={item} />
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  function AdditionalInfoItem({item}: {item: any}) {
+  function ProductDetailDisplay({item}: {item: any}) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
       <>
         <button
-          className={"flex w-full justify-between items-center p-6 border border-light-bg2 bg-light-bg3 hover:cursor-pointer"}
+          className={"flex w-full justify-between items-center py-5"}
           onClick={() => {setIsOpen(!isOpen)}}
         >
-          <div className={"font-title text-xl"}>
+          <div className={"font-[500] text-lg"}>
             {item.title}
           </div>
           <div className={`${isOpen ? "rotate-180" : ""} transition-transform duration-300 ease-in-out`}>
@@ -242,16 +261,62 @@ export default function Product() {
           className={`
             overflow-hidden transition-all duration-500 ease-in-out
             ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}
-            border border-t-0 border-light-bg2 bg-light-bg1
           `}
         >
-          <div className="p-6 font-main text-base tracking-tight">
+          <div className="text-sm font-main text-light-text1 font-[400] tracking-tight pb-6">
             {item.content}
           </div>
         </div>
       </>
     )
   }
+}
+
+function FaqDisplay() {
+  return (
+    <div className={"flex flex-col gap-4 mt-24 w-full max-w-screen-sm px-6 lg:px-0"}>
+      <div className={"w-full flex justify-center text-2xl mb-4 "}>
+        FAQs
+      </div>
+
+      {faqsMenu.map((item, index) => (
+        <div key={item.title}>
+          <FaqItem item={item} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FaqItem({item}: {item: any}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        className={"flex w-full justify-between items-center p-6 border border-light-bg2 bg-light-bg3 hover:cursor-pointer"}
+        onClick={() => {setIsOpen(!isOpen)}}
+      >
+        <div className={"text-base"}>
+          {item.title}
+        </div>
+        <div className={`${isOpen ? "rotate-180" : ""} transition-transform duration-300 ease-in-out`}>
+          <ChevronDown size={20} strokeWidth={1.5} />
+        </div>
+      </button>
+      <div
+        className={`
+            overflow-hidden transition-all duration-500 ease-in-out
+            ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}
+            border border-t-0 border-light-bg2 bg-light-bg1
+          `}
+      >
+        <div className="p-6 font-main text-sm tracking-tight">
+          {item.content}
+        </div>
+      </div>
+    </>
+  )
 }
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql

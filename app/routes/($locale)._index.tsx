@@ -25,7 +25,8 @@ export async function loader(args: LoaderFunctionArgs) {
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return {...deferredData, ...criticalData};
+  // return {...deferredData, ...criticalData};
+  return {...criticalData};
 }
 
 /**
@@ -63,17 +64,17 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
   //     return null;
   //   });
 
-  const recommendedProducts = context.storefront
-    .query(BEST_SELLERS_PRODUCTS_QUERY)
-    .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
-      console.error(error);
-      return null;
-    });
-
-  return {
-    recommendedProducts,
-  };
+  // const recommendedProducts = context.storefront
+  //   .query(BEST_SELLERS_PRODUCTS_QUERY)
+  //   .catch((error) => {
+  //     // Log query errors, but don't throw them so the page can still render
+  //     console.error(error);
+  //     return null;
+  //   });
+  //
+  // return {
+  //   recommendedProducts,
+  // };
 }
 
 export default function Homepage() {
@@ -198,7 +199,7 @@ function FeedbackDisplay() {
 
       <FadeInStagger>
         <div className={"grid gap-6 lg:gap-8 grid-cols-3 lg:grid-cols-5"}>
-          {imgList.splice(0, 10).map((imgSrc, index) => (
+          {imgList.slice(0, 10).map((imgSrc, index) => (
             <FadeInItem key={imgSrc}>
               <div
                 className={index === 9 ? "hidden lg:block" : ""}
@@ -227,7 +228,6 @@ function FeedbackDisplay() {
           className={"w-full h-auto object-cover aspect-[3/4] transition-all duration-300 hover:cursor-pointer hover:scale-105"}
           sizes="30vw"
         />
-
       </a>
     )
   }
@@ -255,7 +255,7 @@ function CollectionAndProductsDisplay({
       </FadeInDiv>
       <FadeInStagger>
         <div className="grid gap-6 lg:gap-10 grid-cols-2 lg:grid-cols-4">
-          {products.map((product) => (
+          {products.slice(0, 4).map((product) => (
             <FadeInItem key={product.id}>
               <ProductItem  product={product} />
             </FadeInItem>

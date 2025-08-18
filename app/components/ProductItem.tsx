@@ -26,14 +26,14 @@ export function ProductItem({
   const initImgUrl = imgUrlsList.length >= 1 ? imgUrlsList[0] : emptyImgUrl;
   const hoverImgUrl = imgUrlsList.length === 0 ? emptyImgUrl : (imgUrlsList.length >= 2 ? imgUrlsList[1] : initImgUrl);
 
-  //list of all color options
-  const colorOptions = product.options
-    .filter(option => option.name === "Color")
-    .flatMap(option => option.optionValues.map(v => v.name));
-
-  const colorHexs = colorOptions.map(color =>
-    '#' + convert.keyword.hex(color.trim().toLowerCase()) || '#000000'
-  );
+  // //list of all color options
+  // const colorOptions = product.options
+  //   .filter(option => option.name === "Color")
+  //   .flatMap(option => option.optionValues.map(v => v.name));
+  //
+  // const colorHexs = colorOptions.map(color =>
+  //   '#' + convert.keyword.hex(color.trim().toLowerCase()) || '#000000'
+  // );
 
   const [isHoveredOnce, setIsHoveredOnce] = useState(false)
 
@@ -73,14 +73,14 @@ export function ProductItem({
 
           {/* 🔍 Out of sales on top */}
           {!product.availableForSale && (
-            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-secondary text-xs text-light-bg1`}>
+            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-main text-xs text-light-bg1`}>
               <div>{"SOLD OUT"}</div>
             </div>
           )}
 
           {/* 🔍 Compare at price on top */}
           {(product.availableForSale && product.priceRange.minVariantPrice.amount < product.compareAtPriceRange.maxVariantPrice.amount) && (
-            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-secondary text-xs text-light-bg1`}>
+            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-main text-xs text-light-bg1`}>
               <div>{(`${discountPercentage(product.priceRange.minVariantPrice.amount, product.compareAtPriceRange.maxVariantPrice.amount)} OFF`)}</div>
             </div>
           )}
@@ -100,17 +100,17 @@ export function ProductItem({
       </Link>
   );
 
-  function ColorOptions() {
-    return colorHexs.length >= 1 ? (
-      <div className={"flex gap-1 mt-3"}>
-        {colorHexs.map((color, index) => (
-          <div
-            key={index}
-            className={`h-[18px] w-[18px] rounded-full border border-light-bg2`}
-            style={{ backgroundColor: color }}>
-          </div>
-        ))}
-      </div>
-    ) : null;
-  }
+  // function ColorOptions() {
+  //   return colorHexs.length >= 1 ? (
+  //     <div className={"flex gap-1 mt-3"}>
+  //       {colorHexs.map((color, index) => (
+  //         <div
+  //           key={index}
+  //           className={`h-[18px] w-[18px] rounded-full border border-light-bg2`}
+  //           style={{ backgroundColor: color }}>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   ) : null;
+  // }
 }

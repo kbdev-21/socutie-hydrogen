@@ -7,6 +7,7 @@ import {
   type PredictiveSearchReturn,
 } from '~/lib/search';
 import {useAside} from './Aside';
+import {formatVnd} from '~/utils/stringUtils';
 
 type PredictiveSearchItems = PredictiveSearchReturn['result']['items'];
 
@@ -204,8 +205,7 @@ function SearchResultsPredictiveProducts({
 
   return (
     <div className="predictive-search-result" key="products">
-      <h5>Products</h5>
-      <ul>
+      <ul className={"mt-8"}>
         {products.map((product) => {
           const productUrl = urlWithTrackingParams({
             baseUrl: `/products/${product.handle}`,
@@ -222,13 +222,14 @@ function SearchResultsPredictiveProducts({
                   <Image
                     alt={image.altText ?? ''}
                     src={image.url}
-                    width={50}
-                    height={50}
+                    aspectRatio={"3/4"}
+                    width={80}
                   />
                 )}
-                <div>
-                  <p>{product.title}</p>
-                  <small>{price && <Money data={price} />}</small>
+                <div className={"ml-2"}>
+                  <div className={"text-lg font-[500]"}>{product.title}</div>
+                  {/*<small>{price && <Money data={price} />}</small>*/}
+                  <div className={`text-sm font-normal text-light-text1`}>{formatVnd(price?.amount ?? "0")}{price?.currencyCode === "VND" ? "₫" : "$"}</div>
                 </div>
               </Link>
             </li>

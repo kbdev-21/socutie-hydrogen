@@ -38,8 +38,8 @@ export function Header({
   const [isAtTop, setIsAtTop] = useState(true);
   const location = useLocation(); // ✅ gives you current URL info
 
-  const isTransparent = location.pathname === "/";
-  // const isTransparent = location.pathname === "/" || location.pathname.includes("/collections/");
+  const isActiveTransparentOnTop = location.pathname === "/";
+  // const isActiveTransparentOnTop = location.pathname === "/" || location.pathname.includes("/collections/");
 
 
   useEffect(() => {
@@ -55,8 +55,8 @@ export function Header({
 
   return (
     <div className="">
-      {/* mobile */}
-      <div className={`flex lg:hidden w-full h-20 px-6 fixed top-0 z-40 transition-all duration-500 ease-in-out border-b ${isAtTop && isTransparent ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
+      {/* Mobile */}
+      <div className={`flex lg:hidden w-full h-20 px-6 fixed top-0 z-40 transition-all duration-500 ease-in-out ${isAtTop && isActiveTransparentOnTop ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
         <div className={"flex items-center justify-between w-full"}>
           <div className={"w-[35%] flex justify-start items-center"}>
             <HeaderMenuMobileToggle />
@@ -70,8 +70,36 @@ export function Header({
         </div>
       </div>
 
-      {/* not-mobile */}
-      <div className={`hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-40 transition-all duration-500 ease-in-out border-b ${isAtTop && isTransparent ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
+      {/* Sub-header mobile */}
+      <div className={`flex lg:hidden w-full h-12 px-6 fixed top-20 z-40 transition-all duration-500 ease-in-out bg-light-main3 border-b ${isAtTop ? "opacity-0" : "opacity-100"}`}>
+        <div className={"flex items-center justify-around w-full"}>
+          {menu?.items.filter(item => item.title.length <= 12).slice(0, 3).map((item) => {
+            if (!item.url) return null;
+
+            // TODO: break the DRY 4 times, wtf, pls fix later
+            const url =
+              item.url.includes('myshopify.com') ||
+              item.url.includes(publicStoreDomain) ||
+              item.url.includes(header.shop.primaryDomain.url)
+                ? new URL(item.url).pathname
+                : item.url;
+
+            return (
+              <NavLink
+                key={item.id}
+                to={url}
+                prefetch="intent"
+                className="text-sm font-[600] hover:text-light-text2 transition-all duration-300"
+              >
+                {item.title.toUpperCase()}
+              </NavLink>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Desktop */}
+      <div className={`hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-40 transition-all duration-500 ease-in-out border-b ${isAtTop && isActiveTransparentOnTop ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
         <div className={"flex items-center justify-between w-full max-w-screen-xl h-full"}>
           <div>
             <Logo/>
@@ -234,7 +262,7 @@ export function HeaderMenuMobile({
   const {close} = useAside();
 
   return (
-    <nav className={`h-full flex gap-10 flex-col`}>
+    <nav className={`h-full flex gap-6 flex-col p-6`}>
       {(menu || CUSTOM_MENU).items.map((item) => {
         if (!item.url) return null;
 
@@ -253,7 +281,7 @@ export function HeaderMenuMobile({
               to={url}
               onClick={close}
               prefetch="intent"
-              className="text-sm font-normal tracking-wide transition-colors duration-150 ease-in-out group-hover:text-light-main"
+              className="text-sm font-[400] transition-colors duration-150 ease-in-out group-hover:text-light-main"
             >
               {item.title.toUpperCase()}
               <span className="absolute left-0 -bottom-2 h-[1px] w-full origin-left scale-x-0 bg-light-main transition-transform duration-500 ease-in-out group-hover:scale-x-100"></span>

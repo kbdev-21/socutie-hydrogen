@@ -11,7 +11,7 @@ import {ChangeEvent, useEffect, useRef, useState} from 'react';
 import {ChevronDown} from 'lucide-react';
 import {FadeInItem, FadeInStagger} from '~/components/framer-motion/FadeInStagger';
 
-const PRODUCTS_PER_PAGE = 24;
+const PRODUCTS_PER_PAGE = 30;
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
@@ -89,7 +89,7 @@ export default function Collection() {
   const {collection} = useLoaderData<typeof loader>();
   const location = useLocation();
 
-  // TODO: temporary shit, fix later
+  // TODO: cheat and shitty feature, need to fix later
   const productsCountString = collection.products.nodes.length >= PRODUCTS_PER_PAGE ? PRODUCTS_PER_PAGE + "+" : collection.products.nodes.length + "";
 
   return (

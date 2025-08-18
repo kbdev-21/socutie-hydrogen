@@ -131,7 +131,7 @@ export function ProductForm({
       </div>
 
       {/* Add to cart button */}
-      <div className={'mt-4'}>
+      <div className={'mt-2'}>
         <div className={'flex justify-between mb-2'}>
           <div className={"text-sm text-light-text2"}>{selectedVariant?.availableForSale ? "Còn hàng" : "Đã hết hàng"}</div>
           <div className={"text-sm text-light-text2"}>Mã SP: TX-0001-BK</div>
@@ -158,7 +158,7 @@ export function ProductForm({
             <div className={''}>
               {selectedVariant?.availableForSale
                 ? 'THÊM VÀO GIỎ HÀNG'
-                : 'LIÊN HỆ VỚI CHÚNG TÔI'}
+                : 'LIÊN HỆ VỚI CHÚNG MÌNH'}
             </div>
           </div>
         </AddToCartButton>

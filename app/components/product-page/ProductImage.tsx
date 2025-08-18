@@ -40,7 +40,7 @@ export function ProductImage({
             src={url}
             alt={'Product Thumbnail'}
             className={`aspect-[3/4] object-cover w-full p-[2px] cursor-pointer border ${currentIndex === index ? 'border-light-main' : 'border-light-bg1'} transition-all duration-300 ease-in-out`}
-            sizes="(min-width: 1024px) 50vw, 100vw"
+            sizes="100px"
             onClick={() => {
               swiperRef.current?.slideTo(index);
               setCurrentIndex(index);
@@ -62,7 +62,7 @@ export function ProductImage({
       >
         {imgUrls.map((url, index) => (
           <SwiperSlide key={url}>
-            <img sizes={"100px"} src={url} alt="1" className="w-full h-full object-cover" />
+            <img src={url} alt="1" className="w-full h-full object-cover" />
           </SwiperSlide>
         ))}
 
