@@ -224,6 +224,9 @@ export type CollectionWithProductsQuery = {
       StorefrontAPI.Collection,
       'id' | 'handle' | 'title' | 'description'
     > & {
+      image?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'id' | 'url' | 'width' | 'height'>
+      >;
       products: {
         nodes: Array<
           Pick<
@@ -1514,7 +1517,7 @@ interface GeneratedQueryTypes {
     return: AllProductsQuery;
     variables: AllProductsQueryVariables;
   };
-  '#graphql\n  query CollectionWithProducts(\n    $handle: String!\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n    $sortKey: ProductCollectionSortKeys\n    $reverse: Boolean\n  ) @inContext(country: $country, language: $language) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      products(\n        first: $first,\n        last: $last,\n        before: $startCursor,\n        after: $endCursor\n        sortKey: $sortKey\n        reverse: $reverse\n      ) {\n        nodes {\n          ...ProductSummary\n        }\n        pageInfo {\n          hasPreviousPage\n          hasNextPage\n          endCursor\n          startCursor\n        }\n      }\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    availableForSale\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    compareAtPriceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query CollectionWithProducts(\n    $handle: String!\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n    $sortKey: ProductCollectionSortKeys\n    $reverse: Boolean\n  ) @inContext(country: $country, language: $language) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      image {\n        id\n        url\n        width\n        height\n      }\n      products(\n        first: $first,\n        last: $last,\n        before: $startCursor,\n        after: $endCursor\n        sortKey: $sortKey\n        reverse: $reverse\n      ) {\n        nodes {\n          ...ProductSummary\n        }\n        pageInfo {\n          hasPreviousPage\n          hasNextPage\n          endCursor\n          startCursor\n        }\n      }\n    }\n  }\n  #graphql\n  fragment ProductSummary on Product {\n    id\n    title\n    handle\n    availableForSale\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    priceRange {\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    compareAtPriceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    images(first:2) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n': {
     return: CollectionWithProductsQuery;
     variables: CollectionWithProductsQueryVariables;
   };

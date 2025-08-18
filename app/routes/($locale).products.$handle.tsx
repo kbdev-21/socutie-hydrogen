@@ -15,7 +15,7 @@ import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {useState} from "react";
 import {RECOMMENDED_PRODUCTS_QUERY} from "~/custom-queries/customQueries";
 import {ProductItem} from "~/components/ProductItem";
-import {ChevronDown} from 'lucide-react';
+import {ChevronDown, Package, Truck, Undo2} from 'lucide-react';
 import {motion} from 'framer-motion';
 import {FadeInItem, FadeInStagger} from '~/components/framer-motion/FadeInStagger';
 import {FadeInDiv} from '~/components/framer-motion/FadeInDiv';
@@ -143,12 +143,12 @@ export default function Product() {
   const {title, descriptionHtml} = product;
 
   return (
-    <div className={"mt-20 lg:mt-28 flex flex-col items-center lg:px-20"}>
+    <div className={"mt-32 lg:mt-40 flex flex-col items-center lg:px-20"}>
       {/* Product detail */}
       <FadeInDiv viewportAmount={0}>
         <div className="grid grid-cols-1 items-start gap-6 lg:gap-3 lg:grid-cols-2 max-w-[1280px] w-full">
           {/* Left side (top on mobile) */}
-          <div className="lg:sticky lg:top-28 self-start">
+          <div className="lg:sticky lg:top-8 self-start">
             <ProductImage variantImage={selectedVariant?.image} images={product.images.nodes} />
           </div>
 
@@ -168,6 +168,21 @@ export default function Product() {
               productOptions={productOptions}
               selectedVariant={selectedVariant}
             />
+
+            <div className={"flex flex-col gap-3 mt-6"}>
+              <div className={"flex items-center gap-3"}>
+                <Truck strokeWidth={1.75} className={"shrink-0"}/>
+                <div className={"text-sm text-light-text1"}>Giao hàng nhanh chóng trên toàn quốc & quốc tế</div>
+              </div>
+              <div className={"flex items-center gap-3"}>
+                <Undo2 strokeWidth={1.75} className={"shrink-0"}/>
+                <div className={"text-sm text-light-text1"}>Hỗ trợ đổi trả miễn phí trong 7 ngày</div>
+              </div>
+              <div className={"flex items-center gap-3"}>
+                <Package strokeWidth={1.75} className={"shrink-0"}/>
+                <div className={"text-sm text-light-text1"}>Cam kết bảo hành trong vòng 3 tháng</div>
+              </div>
+            </div>
 
             <div className={"h-6"}></div>
 
@@ -263,6 +278,12 @@ export default function Product() {
             ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}
           `}
         >
+          <div className="text-sm font-main text-light-text1 font-[400] tracking-tight pb-6">
+            {item.content}
+          </div>
+          <div className="text-sm font-main text-light-text1 font-[400] tracking-tight pb-6">
+            {item.content}
+          </div>
           <div className="text-sm font-main text-light-text1 font-[400] tracking-tight pb-6">
             {item.content}
           </div>

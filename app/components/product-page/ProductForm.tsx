@@ -154,7 +154,7 @@ export function ProductForm({
           }
         >
           <div className={'flex gap-3 align-center items-center'}>
-            <ShoppingBag strokeWidth={1.5} />
+            <ShoppingBag strokeWidth={1.75} size={20} />
             <div className={''}>
               {selectedVariant?.availableForSale
                 ? 'THÊM VÀO GIỎ HÀNG'

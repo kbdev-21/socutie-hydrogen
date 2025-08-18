@@ -89,13 +89,20 @@ export default function Collection() {
   const {collection} = useLoaderData<typeof loader>();
   const location = useLocation();
 
+  const imgUrl = collection.image;
+
   // TODO: cheat and shitty feature, need to fix later
   const productsCountString = collection.products.nodes.length >= PRODUCTS_PER_PAGE ? PRODUCTS_PER_PAGE + "+" : collection.products.nodes.length + "";
 
   return (
     <div className="w-full flex flex-col items-center">
       {/* Title/Banner */}
-      <div className={"mt-20 px-6 lg:px-20 py-16 w-full flex flex-col items-center justify-center"}>
+      <div className={"w-full"}>
+        {imgUrl ? (<HeroBanner src={imgUrl.url}></HeroBanner>) : (<HeroBanner></HeroBanner>)}
+
+      </div>
+
+      <div className={"px-6 lg:px-20 py-16 w-full flex flex-col items-center justify-center"}>
         <div className={"text-3xl font-[500] text-center"}>
           {collection.title.toUpperCase()}
         </div>

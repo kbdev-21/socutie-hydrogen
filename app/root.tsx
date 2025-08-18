@@ -19,6 +19,7 @@ import fontStyles from './styles/fonts.css?url';
 import {PageLayout} from './components/layout/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/custom-queries/customQueries';
 import {AnimatePresence} from 'framer-motion';
+import {useEffect} from 'react';
 
 export type RootLoader = typeof loader;
 
@@ -183,6 +184,10 @@ export function Layout({children}: {children?: React.ReactNode}) {
 
 export default function App() {
   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <AnimatePresence mode={"wait"}>

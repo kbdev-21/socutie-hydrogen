@@ -63,6 +63,12 @@ export const COLLECTION_WITH_PRODUCTS_QUERY = `#graphql
       handle
       title
       description
+      image {
+        id
+        url
+        width
+        height
+      }
       products(
         first: $first,
         last: $last,

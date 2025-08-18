@@ -61,7 +61,7 @@ export function AddToCartButton({
                 ? <div className={"relative z-10"}>{children}</div>
                 : (
                   <div className={"relative z-10 flex gap-3 items-center justify-center"}>
-                    <LoaderCircle strokeWidth={1.5} className={"animate-spin"}/>
+                    <LoaderCircle strokeWidth={1.75} size={20} className={"animate-spin"}/>
                     <div className={""}>ĐANG XỬ LÝ</div>
                   </div>
                 )

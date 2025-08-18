@@ -1,21 +1,17 @@
-import {Suspense, useEffect, useState} from 'react';
+import {Suspense, useEffect, useRef, useState} from 'react';
 import {Await, Link, NavLink, useAsyncValue, useLocation} from 'react-router';
 import {
-  type CartViewPayload, Image,
+  type CartViewPayload,
+  Image,
   useAnalytics,
   useOptimisticCart,
 } from '@shopify/hydrogen';
-import type {HeaderQuery, CartApiQueryFragment} from '../../../storefrontapi.generated';
+import type {
+  CartApiQueryFragment,
+  HeaderQuery,
+} from '../../../storefrontapi.generated';
 import {useAside} from '~/components/Aside';
-import {
-  ChevronDown,
-  Handbag,
-  Instagram,
-  Menu,
-  Search,
-  ShoppingCart,
-  UserRound,
-} from 'lucide-react';
+import {Globe, Menu, Search, ShoppingCart, UserRound} from 'lucide-react';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -35,54 +31,112 @@ export function Header({
   /* shopify nav */
   const {shop, menu} = header;
 
-  const [isAtTop, setIsAtTop] = useState(true);
   const location = useLocation(); // ✅ gives you current URL info
 
-  const isActiveTransparentOnTop = location.pathname === "/";
-  // const isActiveTransparentOnTop = location.pathname === "/" || location.pathname.includes("/collections/");
+  const [isAtTop, setIsAtTop] = useState(true);
+  const [scrollDir, setScrollDir] = useState<'up' | 'down'>('up');
 
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsAtTop(window.scrollY === 0);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     handleScroll(); // run on mount
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+
+      if (currentY > lastScrollY.current) {
+        setScrollDir('down');
+      } else if (currentY < lastScrollY.current) {
+        setScrollDir('up');
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
 
   return (
     <div className="">
-      {/* Mobile */}
-      <div className={`flex lg:hidden w-full h-20 px-6 fixed top-0 z-40 transition-all duration-500 ease-in-out ${isAtTop && isActiveTransparentOnTop ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
-        <div className={"flex items-center justify-between w-full"}>
-          <div className={"w-[35%] flex justify-start items-center"}>
+      {/* Main header */}
+      <div
+        className={`
+        flex items-center justify-center w-full h-20 px-6 lg:px-20 fixed top-0 z-40 
+        transition-all duration-500 ease-in-out bg-light-bg1
+        ${scrollDir === 'down' ? '-translate-y-32' : 'translate-y-0'}
+        `}
+      >
+        <div className={'flex items-center justify-between w-full max-w-screen-xl'}>
+          <div className={'w-[40%] flex justify-start items-center gap-4 md:gap-6'}>
             <HeaderMenuMobileToggle />
+            <Globe strokeWidth={1.75} className={'transition-colors duration-200 hover:cursor-pointer hover:text-light-main'}/>
           </div>
-          <div className={"w-[30%] flex justify-center items-center"}>
-            <Logo/>
+          <div className={'w-[20%] flex justify-center items-center'}>
+            <Logo />
           </div>
-          <div className={"w-[35%] flex justify-end items-center"}>
+          <div className={'w-[40%] flex justify-end items-center'}>
             <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
           </div>
         </div>
       </div>
 
-      {/* Sub-header mobile */}
-      <div className={`flex lg:hidden w-full h-12 px-6 fixed top-20 z-40 transition-all duration-500 ease-in-out bg-light-main3 border-b ${isAtTop ? "opacity-0" : "opacity-100"}`}>
-        <div className={"flex items-center justify-around w-full"}>
-          {menu?.items.filter(item => item.title.length <= 12).slice(0, 3).map((item) => {
+      {/* Sub header */}
+      <div
+        className={`
+        flex w-full h-12 px-6 fixed top-20 z-40 
+        transition-all duration-500 ease-in-out bg-light-main3 
+        ${scrollDir === 'down' ? '-translate-y-32' : 'translate-y-0'}
+        `}
+      >
+        {/* For mobile */}
+        <div
+          className={
+            'flex md:hidden items-center w-full justify-center gap-[10vw]'
+          }
+        >
+          {menu?.items
+            .filter((item) => item.title.length <= 12)
+            .slice(0, 3)
+            .map((item) => {
+              if (!item.url) return null;
+
+              const url = getRealUrlFromMenuUrl(item.url, publicStoreDomain, header.shop.primaryDomain.url);
+
+              return (
+                <NavLink
+                  key={item.id}
+                  to={url}
+                  prefetch="intent"
+                  className="text-sm font-[600] hover:text-light-text2 transition-all duration-300"
+                >
+                  {item.title.toUpperCase()}
+                </NavLink>
+              );
+            })}
+        </div>
+
+        {/* For desktop */}
+        <div
+          className={
+            'hidden md:flex items-center w-full justify-center gap-12'
+          }
+        >
+          {menu?.items.slice(0, 5).map((item) => {
             if (!item.url) return null;
 
-            // TODO: break the DRY 4 times, wtf, pls fix later
-            const url =
-              item.url.includes('myshopify.com') ||
-              item.url.includes(publicStoreDomain) ||
-              item.url.includes(header.shop.primaryDomain.url)
-                ? new URL(item.url).pathname
-                : item.url;
+            const url = getRealUrlFromMenuUrl(item.url, publicStoreDomain, header.shop.primaryDomain.url);
 
             return (
               <NavLink
@@ -97,50 +151,25 @@ export function Header({
           })}
         </div>
       </div>
-
-      {/* Desktop */}
-      <div className={`hidden lg:flex w-full h-20 px-20 items-center justify-center fixed top-0 z-40 transition-all duration-500 ease-in-out border-b ${isAtTop && isActiveTransparentOnTop ? "bg-light-bg1/0 border-b-light-bg2/0" : "bg-light-bg1 border-b-light-bg2"} hover:bg-light-bg1 hover:border-b-light-bg2`}>
-        <div className={"flex items-center justify-between w-full max-w-screen-xl h-full"}>
-          <div>
-            <Logo/>
-          </div>
-          <div className={'h-full flex items-center justify-center'}>
-            <HeaderMenu
-              menu={menu}
-              viewport="desktop"
-              primaryDomainUrl={header.shop.primaryDomain.url}
-              publicStoreDomain={publicStoreDomain}
-            />
-          </div>
-          <div>
-            <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
-          </div>
-        </div>
-
-      </div>
     </div>
   );
 }
 
 export function Logo({width = 62, height = 62}) {
   return (
-
     <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
       {/*<div className={`font-fancy font-medium text-[40px] ${className}`}>SoCutie</div>*/}
 
-        <Image
-          src="/images/logo.png"
-          alt="hero-banner"
-          width={width}
-          height={height}
-          className="object-contain "
-        />
-
+      <Image
+        src="/images/logo.png"
+        alt="hero-banner"
+        width={width}
+        height={height}
+        className="object-contain "
+      />
     </NavLink>
-
-  )
+  );
 }
-
 
 const CUSTOM_MENU = {
   items: [
@@ -175,11 +204,11 @@ const CUSTOM_MENU = {
 };
 
 export function HeaderMenu({
-                             menu,
-                             primaryDomainUrl,
-                             viewport,
-                             publicStoreDomain,
-                           }: {
+  menu,
+  primaryDomainUrl,
+  viewport,
+  publicStoreDomain,
+}: {
   menu: HeaderProps['header']['menu'];
   primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
   viewport: Viewport;
@@ -192,17 +221,15 @@ export function HeaderMenu({
       {(menu || CUSTOM_MENU).items.map((item) => {
         if (!item.url) return null;
 
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
+        const url = getRealUrlFromMenuUrl(item.url, publicStoreDomain, primaryDomainUrl);
 
         const hasDropdown = item.items && item.items.length > 0;
 
         return (
-          <div key={item.id} className="relative group h-full flex items-center">
+          <div
+            key={item.id}
+            className="relative group h-full flex items-center"
+          >
             <NavLink
               to={url}
               onClick={close}
@@ -214,21 +241,20 @@ export function HeaderMenu({
             </NavLink>
 
             {hasDropdown && (
-              <div className={`
+              <div
+                className={`
                 absolute left-0 top-20 w-48 bg-light-bg1 
                 transition-opacity duration-300 ease-in-out
                 opacity-0 group-hover:opacity-100
                 pointer-events-none group-hover:pointer-events-auto 
                 z-50 py-4 border border-light-bg2
-              `}>
+              `}
+              >
                 {item.items.map((subItem) => {
-                  const subUrl = subItem.url
-                    ? subItem.url.includes('myshopify.com') ||
-                    subItem.url.includes(publicStoreDomain) ||
-                    subItem.url.includes(primaryDomainUrl)
-                      ? new URL(subItem.url).pathname
-                      : subItem.url
-                    : '#';
+                  if (!subItem.url) return null;
+
+                  const subUrl = getRealUrlFromMenuUrl(subItem.url, publicStoreDomain, primaryDomainUrl);
+
                   return (
                     <Link
                       key={subItem.id}
@@ -249,11 +275,11 @@ export function HeaderMenu({
 }
 
 export function HeaderMenuMobile({
-                             menu,
-                             primaryDomainUrl,
-                             viewport,
-                             publicStoreDomain,
-                           }: {
+  menu,
+  primaryDomainUrl,
+  viewport,
+  publicStoreDomain,
+}: {
   menu: HeaderProps['header']['menu'];
   primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
   viewport: Viewport;
@@ -266,12 +292,7 @@ export function HeaderMenuMobile({
       {(menu || CUSTOM_MENU).items.map((item) => {
         if (!item.url) return null;
 
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
+        const url = getRealUrlFromMenuUrl(item.url, publicStoreDomain, primaryDomainUrl);
 
         const hasDropdown = item.items && item.items.length > 0;
 
@@ -293,13 +314,28 @@ export function HeaderMenuMobile({
   );
 }
 
-
 function HeaderCtas({
   isLoggedIn,
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
     <nav className="flex gap-4 md:gap-6" role="navigation">
+      <a
+        className={"hidden md:flex "}
+        href={"https://www.instagram.com/socutie.sg"}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Image
+          src="/images/tie-icon.png"
+          alt="hero-banner"
+          width={26}
+          height={26}
+          className="object-contain"
+        />
+      </a>
+
+
       <SearchToggle />
 
       {/*<a*/}
@@ -332,15 +368,18 @@ function HeaderCtas({
       {/*  </Suspense>*/}
       {/*</NavLink>*/}
 
+      {/* Shopify customer account login */}
       <a
-        href={"https://shopify.com/75618549982/account"}
+        href={'https://shopify.com/75618549982/account'}
         target="_blank"
         rel="noopener noreferrer"
-        className={"hidden md:flex"}
+        className={'hidden md:flex'}
       >
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
-            <UserRound className={"transition-colors duration-200 hover:text-light-main"}/>
+            <UserRound
+              className={'transition-colors duration-200 hover:text-light-main'}
+            />
           </Await>
         </Suspense>
       </a>
@@ -353,11 +392,8 @@ function HeaderCtas({
 function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
-    <button
-      className=""
-      onClick={() => open('mobile')}
-    >
-      <Menu />
+    <button onClick={() => open('mobile')}>
+      <Menu className={'transition-colors duration-200 hover:text-light-main'}/>
     </button>
   );
 }
@@ -391,12 +427,20 @@ function CartBadge({count}: {count: number | null}) {
         } as CartViewPayload);
       }}
     >
-      <div className={"relative"}>
+      <div className={'relative'}>
         <div className="relative group">
           <ShoppingCart className="transition-colors duration-150 ease-in-out hover:text-light-main" />
         </div>
-        {count === null ? <span>&nbsp;</span> : (
-          <div className={"absolute -top-1 -right-2 bg-light-main text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center"}>{count}</div>
+        {count === null ? (
+          <span>&nbsp;</span>
+        ) : (
+          <div
+            className={
+              'absolute -top-1 -right-2 bg-light-main text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center'
+            }
+          >
+            {count}
+          </div>
         )}
       </div>
     </a>
@@ -417,6 +461,18 @@ function CartBanner() {
   const originalCart = useAsyncValue() as CartApiQueryFragment | null;
   const cart = useOptimisticCart(originalCart);
   return <CartBadge count={cart?.totalQuantity ?? 0} />;
+}
+
+function getRealUrlFromMenuUrl(
+  menuUrl: string,
+  publicStoreDomain: string,
+  primaryDomainUrl: string,
+): string {
+  return menuUrl.includes('myshopify.com') ||
+    menuUrl.includes(publicStoreDomain) ||
+    menuUrl.includes(primaryDomainUrl)
+    ? new URL(menuUrl).pathname
+    : menuUrl;
 }
 
 const FALLBACK_HEADER_MENU = {
@@ -470,6 +526,6 @@ function activeLinkStyle({
 }) {
   return {
     //color: isPending ? 'grey' : 'black',
-    color: 'text-light-text1'
+    color: 'text-light-text1',
   };
 }
