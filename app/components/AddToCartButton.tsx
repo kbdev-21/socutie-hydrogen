@@ -2,7 +2,7 @@ import {type FetcherWithComponents} from 'react-router';
 import {CartForm, type OptimisticCartLineInput} from '@shopify/hydrogen';
 import {Loader2, LoaderCircle, ShoppingBag} from "lucide-react";
 import {useAside} from '~/components/Aside';
-import {useEffect, useState} from 'react';
+import {ReactNode, useEffect, useState} from 'react';
 
 export function AddToCartButton({
   analytics,
@@ -12,7 +12,7 @@ export function AddToCartButton({
   onClick,
 }: {
   analytics?: unknown;
-  children: React.ReactNode;
+  children: ReactNode;
   disabled?: boolean;
   lines: Array<OptimisticCartLineInput>;
   onClick?: () => void;
@@ -47,9 +47,9 @@ export function AddToCartButton({
               disabled={disabled ?? fetcher.state !== 'idle'}
               className={`
                 relative overflow-hidden
-                w-full py-4 flex justify-center items-center
-                text-sm font-[400] font-main text-light-bg1
-                bg-light-main shadow-sm
+                w-full py-4 flex justify-center items-center rounded-[4px]
+                text-sm font-[500] font-main text-light-bg1
+                bg-light-main shadow-md
                 transition-all duration-300
                 before:absolute before:inset-0
                 before:bg-light-main2 before:translate-x-[-100%]

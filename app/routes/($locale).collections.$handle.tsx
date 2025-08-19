@@ -103,7 +103,7 @@ export default function Collection() {
       </div>
 
       <div className={"px-6 lg:px-20 py-16 w-full flex flex-col items-center justify-center"}>
-        <div className={"text-3xl font-[500] text-center"}>
+        <div className={"text-2xl lg:text-3xl font-[400] text-center"}>
           {collection.title.toUpperCase()}
         </div>
         {/*<div className={"mt-4 text-sm text-center tracking-tight max-w-[500px]"}>*/}
@@ -210,7 +210,7 @@ export function SortDropdown() {
     <div className="relative" ref={dropdownRef}>
       {/* Selected value */}
       <button
-        className="w-[180px] px-3 py-2 border border-light-bg2 flex justify-between items-center"
+        className="w-[180px] px-3 py-2 border border-light-bg2 flex justify-between items-center rounded-[4px]"
         onClick={() => setOpen((prev) => !prev)}
       >
         <div className={"text-sm font-[500]"}>
@@ -220,7 +220,7 @@ export function SortDropdown() {
       </button>
 
       {/* Dropdown menu */}
-      <div className={`transition-all duration-300 ${open ? "opacity-100" : "opacity-0 pointer-events-none"} absolute flex flex-col w-[180px] left-0 right-0 bg-white border-t-0 border border-light-bg2 z-40`}>
+      <div className={`transition-all rounded-b-[4px] duration-300 ${open ? "opacity-100" : "opacity-0 pointer-events-none"} absolute flex flex-col w-[180px] left-0 right-0 bg-white border-t-0 border border-light-bg2 z-40`}>
         {sortOptions.map((option) => (
           <button
             key={option.value + option.reverse}

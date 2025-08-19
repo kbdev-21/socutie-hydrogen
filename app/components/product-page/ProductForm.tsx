@@ -31,7 +31,7 @@ export function ProductForm({
 
         return (
           <div className="" key={option.name}>
-            <div className={'mb-1 text-sm'}>{option.name}</div>
+            <div className={'mb-2 text-sm '}>{option.name}</div>
             <div className="flex flex-wrap gap-2">
               {option.optionValues.map((value) => {
                 const {
@@ -77,7 +77,7 @@ export function ProductForm({
                   return (
                     <button
                       type="button"
-                      className={`border text-sm py-2 px-4 transition-colors duration-200 hover:text-light-text1 hover:border-light-text1 ${selected ? 'text-light-text1 border-light-text1' : 'text-light-text2 border-light-bg2'}`}
+                      className={`border rounded-[2px] text-sm py-2 px-4 font-[500] transition-colors duration-200 hover:text-light-text1 hover:border-light-text1 ${selected ? 'text-light-text1 border-light-text2' : 'text-light-text3 border-light-bg2'}`}
                       key={option.name + name}
                       disabled={!exists}
                       onClick={() => {
@@ -101,9 +101,9 @@ export function ProductForm({
 
       {/* Quantity selection */}
       <div>
-        <div className={'mb-1'}>Số lượng</div>
+        <div className={'mb-2 text-sm'}>Số lượng</div>
         <div
-          className={`flex justify-between items-center w-fit border text-sm py-3 px-3 text-light-text1 border-light-bg2 font-[500]`}
+          className={`flex justify-between rounded-[4px] items-center w-fit border text-sm py-3 px-3 text-light-text1 border-light-bg2 font-[500]`}
         >
           <button
             className={
@@ -112,11 +112,11 @@ export function ProductForm({
             onClick={() => {
               setAddQuantity(addQuantity - 1);
             }}
-            disabled={addQuantity === 1}
+            disabled={addQuantity <= 1}
           >
             <Minus size={16} />
           </button>
-          <div className={'mx-6 text-sm font-[500]'}>{addQuantity}</div>
+          <div className={'mx-6 text-sm font-[500] w-2 text-center'}>{addQuantity}</div>
           <button
             className={
               'text-light-text2 hover:text-light-text1 transition-all duration-300'
@@ -124,6 +124,7 @@ export function ProductForm({
             onClick={() => {
               setAddQuantity(addQuantity + 1);
             }}
+            disabled={addQuantity >= 9}
           >
             <Plus size={16} />
           </button>
@@ -154,7 +155,7 @@ export function ProductForm({
           }
         >
           <div className={'flex gap-3 align-center items-center'}>
-            <ShoppingBag strokeWidth={1.75} size={20} />
+            <ShoppingBag size={20} />
             <div className={''}>
               {selectedVariant?.availableForSale
                 ? 'THÊM VÀO GIỎ HÀNG'

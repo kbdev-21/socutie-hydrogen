@@ -192,7 +192,7 @@ function FeedbackDisplay() {
   return (
     <div className={"max-w-screen-lg w-full px-6 lg:px-20"}>
       <FadeInDiv>
-        <div className={"text-2xl tracking-tight lg:text-3xl font-[400] text-light-text2 text-center font-title mb-6"}>
+        <div className={"text-2xl tracking-tight lg:text-3xl font-[400] text-light-text1 text-center font-title mb-6"}>
           CUTIES FEEDBACK
         </div>
       </FadeInDiv>
@@ -248,7 +248,7 @@ function CollectionAndProductsDisplay({
   return (
     <div className="mx-6 lg:mx-20 max-w-screen-xl flex flex-col items-center">
       <FadeInDiv>
-        <div className={"text-2xl tracking-tight lg:text-3xl font-[400] text-light-text2 text-center font-title mb-8"}>
+        <div className={"text-2xl tracking-tight lg:text-3xl font-[400] text-light-text1 text-center font-title mb-8"}>
           MOST PICK BY CUTIES
         </div>
         {/*<div className={"text-base text-light-text2 font-main mb-10 max-w-md text-center tracking-tight"}>{description}</div>*/}

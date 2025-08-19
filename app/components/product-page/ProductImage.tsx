@@ -54,6 +54,9 @@ export function ProductImage({
         spaceBetween={0}
         slidesPerView={1}
         grabCursor={false}
+        speed={500}
+        touchRatio={1.5}
+        touchAngle={30}
         className={'relative w-full aspect-[3/4] h-auto group'}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         onSlideChange={(swiper) => {

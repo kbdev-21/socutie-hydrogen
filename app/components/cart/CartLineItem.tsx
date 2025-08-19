@@ -52,7 +52,7 @@ export function CartLineItem({
                 }
               }}
             >
-              <div className={"font-title font-medium text-base"}>{product.title}</div>
+              <div className={"font-[500] text-base"}>{product.title}</div>
             </Link>
             <ul>
               {selectedOptions.map((option) => (
@@ -93,7 +93,7 @@ function CartLineQuantity({line}: {line: CartLine}) {
 
   return (
     <div className={"flex gap-3 items-center"}>
-      <div className="flex gap-4 py-1 px-2 border border-light-bg2 justify-center items-center">
+      <div className="flex gap-4 py-1 px-2 border border-light-bg2 rounded-[4px] justify-center items-center">
         <div className={"mt-1 text-light-text2 hover:text-light-text1 transition-all duration-200"}>
           <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
             <button

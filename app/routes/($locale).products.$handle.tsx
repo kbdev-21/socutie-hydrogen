@@ -169,18 +169,19 @@ export default function Product() {
               selectedVariant={selectedVariant}
             />
 
+            {/* Warranty */}
             <div className={"flex flex-col gap-3 mt-6"}>
               <div className={"flex items-center gap-3"}>
                 <Truck strokeWidth={1.75} className={"shrink-0"}/>
-                <div className={"text-sm text-light-text1"}>Giao hàng nhanh chóng trên toàn quốc & quốc tế</div>
+                <div className={"text-sm "}>Giao hàng nhanh chóng trên toàn quốc & quốc tế</div>
               </div>
               <div className={"flex items-center gap-3"}>
                 <Undo2 strokeWidth={1.75} className={"shrink-0"}/>
-                <div className={"text-sm text-light-text1"}>Hỗ trợ đổi trả miễn phí trong 7 ngày</div>
+                <div className={"text-sm "}>Hỗ trợ đổi trả miễn phí trong 7 ngày</div>
               </div>
               <div className={"flex items-center gap-3"}>
                 <Package strokeWidth={1.75} className={"shrink-0"}/>
-                <div className={"text-sm text-light-text1"}>Cam kết bảo hành trong vòng 3 tháng</div>
+                <div className={"text-sm "}>Cam kết bảo hành trong vòng 3 tháng</div>
               </div>
             </div>
 
@@ -228,7 +229,7 @@ export default function Product() {
 
       {/* Recommended products */}
       <FadeInDiv>
-        <div className={"mt-24 text-2xl text-light-text2 tracking-tight flex justify-center w-full max-w-screen-xl text-center px-6 lg:px-0 mb-8"}>
+        <div className={"mt-24 text-2xl font-[400] tracking-tight flex justify-center w-full max-w-screen-xl text-center px-6 lg:px-0 mb-8"}>
           <div>CÓ THỂ BẠN CŨNG THÍCH</div>
         </div>
       </FadeInDiv>

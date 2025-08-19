@@ -45,7 +45,7 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
       <a href={checkoutUrl} target="_self">
         <div className={`
           relative overflow-hidden flex gap-2 justify-center items-center
-          shadow-md text-sm font-[400] text-light-bg1 font-main
+          shadow-md text-sm font-[500] rounded-[4px] text-light-bg1 font-main
           bg-light-main py-4
           transition-all duration-300
           before:absolute before:inset-0

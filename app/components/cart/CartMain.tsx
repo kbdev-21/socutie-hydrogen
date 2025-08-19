@@ -67,7 +67,7 @@ function CartEmpty({
       <div className={"font-main text-base text-light-text2 text-center max-w-[350px]"}>Khám phá ngay bộ sưu tập mới nhất của chúng tôi tại đây</div>
       <Link className={`
          relative overflow-hidden flex gap-2 justify-center items-center
-         shadow-md text-sm font-[400] text-light-bg1 font-main
+         shadow-md text-sm font-[500] text-light-bg1 font-main rounded-[4px]
          bg-light-main py-4 px-8
          transition-all duration-300
          before:absolute before:inset-0
