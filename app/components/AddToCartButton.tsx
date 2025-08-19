@@ -47,13 +47,14 @@ export function AddToCartButton({
               disabled={disabled ?? fetcher.state !== 'idle'}
               className={`
                 relative overflow-hidden
-                w-full py-4 flex justify-center items-center rounded-[4px]
+                w-full py-4 flex justify-center items-center rounded-[6px]
                 text-sm font-[500] font-main text-light-bg1
-                bg-light-main shadow-md
-                transition-all duration-300
+                bg-light-main border border-light-main
+                transition-all duration-300 ease-in-out
+                hover:text-light-main
                 before:absolute before:inset-0
-                before:bg-light-main2 before:translate-x-[-100%]
-                before:transition-transform before:duration-300
+                before:bg-light-bg1 before:translate-x-[-100%]
+                before:transition-transform before:duration-500 before:ease-in-out
                 hover:before:translate-x-0
               `}
             >
@@ -61,7 +62,7 @@ export function AddToCartButton({
                 ? <div className={"relative z-10"}>{children}</div>
                 : (
                   <div className={"relative z-10 flex gap-3 items-center justify-center"}>
-                    <LoaderCircle strokeWidth={1.75} size={20} className={"animate-spin"}/>
+                    <LoaderCircle size={20} className={"animate-spin"}/>
                     <div className={""}>ĐANG XỬ LÝ</div>
                   </div>
                 )

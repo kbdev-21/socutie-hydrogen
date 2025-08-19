@@ -153,15 +153,16 @@ export default function Product() {
           </div>
 
           {/* Right side (bottom on mobile) */}
-          <div className="product-form px-6 lg:px-0 lg:ml-12">
+          <div className="product-form px-6 lg:px-0 lg:ml-12 lg:sticky lg:top-8 self-start">
             {/* Title and price */}
             <div className={"w-fit font-[400] text-sm text-light-text2 mb-2 transition-all duration-300 hover:cursor-pointer hover:text-light-text1"}>SoCutie</div>
-            <div className={"font-[500] text-3xl mb-2"}>{title}</div>
+            <div className={"font-[700] text-3xl mb-2"}>{title}</div>
             <ProductPrice
               price={selectedVariant?.price}
               compareAtPrice={selectedVariant?.compareAtPrice}
             />
-            <div className="mt-6 mb-6 border-t border-light-bg2" />
+
+            <div className="mt-5 mb-5 border-t border-light-bg2" />
 
             {/* Variants and Add to cart button */}
             <ProductForm
@@ -170,18 +171,18 @@ export default function Product() {
             />
 
             {/* Warranty */}
-            <div className={"flex flex-col gap-3 mt-6"}>
-              <div className={"flex items-center gap-3"}>
-                <Truck strokeWidth={1.75} className={"shrink-0"}/>
-                <div className={"text-sm "}>Giao hàng nhanh chóng trên toàn quốc & quốc tế</div>
+            <div className={"grid grid-cols-3 gap-2 px-2 sm:px-6 mt-6 w-full bg-light-main4 rounded-[6px] py-6"}>
+              <div className={"flex flex-col items-center gap-2"}>
+                <Truck size={32} strokeWidth={1.5} className={"shrink-0"}/>
+                <div className={"text-xs sm:text-sm text-center tracking-tight max-w-32"}>Shipping toàn quốc & quốc tế</div>
               </div>
-              <div className={"flex items-center gap-3"}>
-                <Undo2 strokeWidth={1.75} className={"shrink-0"}/>
-                <div className={"text-sm "}>Hỗ trợ đổi trả miễn phí trong 7 ngày</div>
+              <div className={"flex flex-col items-center gap-2"}>
+                <Undo2 size={32} strokeWidth={1.5} className={"shrink-0"}/>
+                <div className={"text-xs sm:text-sm text-center tracking-tight max-w-32"}>Đổi trả miễn phí 7 ngày</div>
               </div>
-              <div className={"flex items-center gap-3"}>
-                <Package strokeWidth={1.75} className={"shrink-0"}/>
-                <div className={"text-sm "}>Cam kết bảo hành trong vòng 3 tháng</div>
+              <div className={"flex flex-col items-center gap-2"}>
+                <Package size={32} strokeWidth={1.5} className={"shrink-0"}/>
+                <div className={"text-xs sm:text-sm text-center tracking-tight max-w-32"}>Bảo hành trong 30 ngày</div>
               </div>
             </div>
 

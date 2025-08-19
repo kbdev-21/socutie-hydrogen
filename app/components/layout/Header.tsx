@@ -67,6 +67,13 @@ export function Header({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const validTitlesOnMobile = menu?.items
+    .filter((item) => item.title.length <= 10)
+    .slice(0, 3)
+    .map((item) => item.title);
+
+  const maxSubHeaderItems = 5;
+  let countSubHeaderItems = 0;
 
   return (
     <div className="">
@@ -100,41 +107,16 @@ export function Header({
         ${scrollDir === 'down' ? '-translate-y-32' : 'translate-y-0'}
         `}
       >
-        {/* For mobile */}
         <div
           className={
-            'flex md:hidden items-center w-full justify-center gap-[10vw]'
+            'flex items-center w-full justify-center gap-[10vw] md:gap-12'
           }
         >
-          {menu?.items
-            .filter((item) => item.title.length <= 12)
-            .slice(0, 3)
-            .map((item) => {
-              if (!item.url) return null;
-
-              const url = getRealUrlFromMenuUrl(item.url, publicStoreDomain, header.shop.primaryDomain.url);
-
-              return (
-                <NavLink
-                  key={item.id}
-                  to={url}
-                  prefetch="intent"
-                  className="text-sm font-[600] hover:text-light-text2 transition-all duration-300"
-                >
-                  {item.title.toUpperCase()}
-                </NavLink>
-              );
-            })}
-        </div>
-
-        {/* For desktop */}
-        <div
-          className={
-            'hidden md:flex items-center w-full justify-center gap-12'
-          }
-        >
-          {menu?.items.slice(0, 5).map((item) => {
+          {menu?.items.map((item, index) => {
             if (!item.url) return null;
+
+            countSubHeaderItems++;
+            if(countSubHeaderItems > maxSubHeaderItems) return null;
 
             const url = getRealUrlFromMenuUrl(item.url, publicStoreDomain, header.shop.primaryDomain.url);
 
@@ -143,7 +125,7 @@ export function Header({
                 key={item.id}
                 to={url}
                 prefetch="intent"
-                className="text-sm font-[600] hover:text-light-text2 transition-all duration-300"
+                className={`${validTitlesOnMobile?.includes(item.title) ? "block" : "hidden md:block"} text-sm font-[600] hover:text-light-main transition-all duration-300`}
               >
                 {item.title.toUpperCase()}
               </NavLink>
@@ -321,7 +303,7 @@ function HeaderCtas({
   return (
     <nav className="flex gap-4 md:gap-6" role="navigation">
       <a
-        className={"hidden md:flex "}
+        className={"hidden md:flex"}
         href={"https://www.instagram.com/socutie.sg"}
         target="_blank"
         rel="noopener noreferrer"

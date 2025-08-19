@@ -67,20 +67,20 @@ export function ProductItem({
 
 
           {/* 🔍 Search icon at bottom */}
-          <div className={`z-30 rounded-[2px] absolute bottom-2 right-2 flex justify-center items-center w-8 h-8 bg-light-main text-light-bg1 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:translate-y-0 group-hover:shadow-sm opacity-0 translate-y-2`}>
+          <div className={`z-30 absolute bottom-2 right-2 flex justify-center items-center w-8 h-8 bg-light-main text-light-bg1 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:translate-y-0 group-hover:shadow-sm opacity-0 translate-y-2`}>
             <Search size={20} />
           </div>
 
           {/* Sold out badge on top */}
           {!product.availableForSale && (
-            <div className={`z-30 rounded-[2px] py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-main text-xs text-light-bg1`}>
+            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-main text-xs text-light-bg1`}>
               <div>{"SOLD OUT"}</div>
             </div>
           )}
 
           {/* Sales off badge on top */}
           {(product.availableForSale && product.priceRange.minVariantPrice.amount < product.compareAtPriceRange.maxVariantPrice.amount) && (
-            <div className={`z-30 rounded-[2px] py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-main text-xs text-light-bg1`}>
+            <div className={`z-30 py-[2px] px-[6px] absolute top-2 left-2 flex justify-center font-main items-center bg-light-main text-xs text-light-bg1`}>
               <div>{(`${discountPercentage(product.priceRange.minVariantPrice.amount, product.compareAtPriceRange.maxVariantPrice.amount)} OFF`)}</div>
             </div>
           )}

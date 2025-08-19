@@ -29,9 +29,14 @@ export function ProductForm({
         // If there is only a single value in the option values, don't display the option
         //if (option.optionValues.length === 1) return null;
 
+        const currentValueName = option.optionValues.find(value => value.selected)?.name;
+
         return (
           <div className="" key={option.name}>
-            <div className={'mb-2 text-sm '}>{option.name}</div>
+            <div className={'mb-2  flex gap-1'}>
+              <div className={"text-sm"}>{option.name}:</div>
+              <div className={"text-sm font-[500]"}>{currentValueName}</div>
+            </div>
             <div className="flex flex-wrap gap-2">
               {option.optionValues.map((value) => {
                 const {
@@ -77,7 +82,7 @@ export function ProductForm({
                   return (
                     <button
                       type="button"
-                      className={`border rounded-[2px] text-sm py-2 px-4 font-[500] transition-colors duration-200 hover:text-light-text1 hover:border-light-text1 ${selected ? 'text-light-text1 border-light-text2' : 'text-light-text3 border-light-bg2'}`}
+                      className={`border rounded-[4px] text-sm py-2 px-4 font-[400] transition-colors duration-200 hover:text-light-text1 hover:border-light-text1 ${selected ? 'text-light-text1 border-light-text2' : 'text-light-text3 border-light-bg2'}`}
                       key={option.name + name}
                       disabled={!exists}
                       onClick={() => {
@@ -137,6 +142,7 @@ export function ProductForm({
           <div className={"text-sm text-light-text2"}>{selectedVariant?.availableForSale ? "Còn hàng" : "Đã hết hàng"}</div>
           <div className={"text-sm text-light-text2"}>Mã SP: TX-0001-BK</div>
         </div>
+
         <AddToCartButton
           disabled={!selectedVariant || !selectedVariant.availableForSale}
           onClick={() => {
