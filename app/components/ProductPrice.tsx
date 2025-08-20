@@ -16,7 +16,7 @@ export function ProductPrice({
       {compareAtPrice && Number(compareAtPrice.amount) > Number(price.amount) ? (
         <SalePriceDisplay/>
       ) : price ? (
-        <div className={`${size === "normal" ? "text-xl" : "text-sm lg:text-base"} font-normal text-light-text1`}>{formatVnd(price.amount)}{price.currencyCode === "VND" ? "₫" : "$"}</div>
+        <div className={`${size === "normal" ? "text-xl" : "text-sm lg:text-base"} font-[500] text-light-text2`}>{formatVnd(price.amount)}{price.currencyCode === "VND" ? "₫" : "$"}</div>
       ) : (
         <span>&nbsp;</span>
       )}
@@ -27,7 +27,7 @@ export function ProductPrice({
     return (
       <div className={`flex ${size === "normal" ? "gap-3" : "gap-1"} items-center`}>
         <div className={`${size === "normal" ? "text-xl" : "text-sm lg:text-base"} font-[600] text-light-main`}>{formatVnd(price!.amount)}{price!.currencyCode === "VND" ? "₫" : "$"}</div>
-        <div className={`${size === "normal" ? "text-sm" : "text-sm"} font-normal text-light-text2 line-through decoration-light-text2`}>{formatVnd(compareAtPrice!.amount)}{compareAtPrice!.currencyCode === "VND" ? "₫" : "$"}</div>
+        <div className={`text-sm font-normal text-light-text2 line-through decoration-light-text2`}>{formatVnd(compareAtPrice!.amount)}{compareAtPrice!.currencyCode === "VND" ? "₫" : "$"}</div>
       </div>
     )
   }

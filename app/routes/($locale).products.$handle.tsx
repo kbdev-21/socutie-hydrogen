@@ -156,7 +156,7 @@ export default function Product() {
           <div className="product-form px-6 lg:px-0 lg:ml-12 lg:sticky lg:top-8 self-start">
             {/* Title and price */}
             <div className={"w-fit font-[400] text-sm text-light-text2 mb-2 transition-all duration-300 hover:cursor-pointer hover:text-light-text1"}>SoCutie</div>
-            <div className={"font-[700] text-3xl mb-2"}>{title}</div>
+            <div className={"font-[700] font-cute text-3xl mb-2 "}>{title}</div>
             <ProductPrice
               price={selectedVariant?.price}
               compareAtPrice={selectedVariant?.compareAtPrice}
@@ -190,7 +190,7 @@ export default function Product() {
 
             {/* Desription */}
             <div className={""}>
-              <div className={"font-[500] text-lg"}>Mô tả sản phẩm</div>
+              <div className={"font-[600] font-cute text-lg"}>Mô tả sản phẩm</div>
               <div
                 className={"text-sm font-main text-light-text1 font-[400] tracking-tight mt-4 [&_strong]:text-light-text1 [&_strong]:font-[500] [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6"}
                 dangerouslySetInnerHTML={{__html: descriptionHtml}}
@@ -230,8 +230,8 @@ export default function Product() {
 
       {/* Recommended products */}
       <FadeInDiv>
-        <div className={"mt-24 text-2xl font-[400] tracking-tight flex justify-center w-full max-w-screen-xl text-center px-6 lg:px-0 mb-8"}>
-          <div>CÓ THỂ BẠN CŨNG THÍCH</div>
+        <div className={"mt-24 text-2xl font-[500] flex justify-center w-full max-w-screen-xl text-center px-6 lg:px-0 mb-8"}>
+          <div>GỢI Ý CHO BẠN</div>
         </div>
       </FadeInDiv>
 
@@ -267,7 +267,7 @@ export default function Product() {
           className={"flex w-full justify-between items-center py-5"}
           onClick={() => {setIsOpen(!isOpen)}}
         >
-          <div className={"font-[500] text-lg"}>
+          <div className={"font-[600] font-cute text-lg"}>
             {item.title}
           </div>
           <div className={`${isOpen ? "rotate-180" : ""} transition-transform duration-300 ease-in-out`}>

@@ -124,7 +124,7 @@ export default function Homepage() {
       <div className={"h-16"}></div>
 
       {/* Decoration Div */}
-      <div className={"w-full py-10 px-10 bg-light-main4 flex items-center justify-center flex-col"}>
+      <div className={"w-full py-16 px-10 bg-light-main4 flex items-center justify-center flex-col"}>
         <FadeInDiv>
           <div className={"text-3xl lg:text-4xl font-fancy text-center tracking-tight lg:tracking-normal"}>
             Designed and Crafted for Cuties
@@ -192,7 +192,7 @@ function FeedbackDisplay() {
   return (
     <div className={"max-w-screen-lg w-full px-6 lg:px-20"}>
       <FadeInDiv>
-        <div className={"text-2xl tracking-tight lg:text-3xl font-[400] text-light-text1 text-center font-title mb-6"}>
+        <div className={"tracking-tight text-2xl lg:text-3xl font-[500] text-light-text1 text-center font-title mb-8"}>
           CUTIES FEEDBACK
         </div>
       </FadeInDiv>
@@ -248,7 +248,7 @@ function CollectionAndProductsDisplay({
   return (
     <div className="mx-6 lg:mx-20 max-w-screen-xl flex flex-col items-center">
       <FadeInDiv>
-        <div className={"text-2xl tracking-tight lg:text-3xl font-[400] text-light-text1 text-center font-title mb-8"}>
+        <div className={"tracking-tight text-2xl lg:text-3xl font-[500] text-light-text1 text-center font-title mb-8"}>
           MOST PICK BY CUTIES
         </div>
         {/*<div className={"text-base text-light-text2 font-main mb-10 max-w-md text-center tracking-tight"}>{description}</div>*/}

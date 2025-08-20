@@ -47,9 +47,9 @@ export function AddToCartButton({
               disabled={disabled ?? fetcher.state !== 'idle'}
               className={`
                 relative overflow-hidden
-                w-full py-4 flex justify-center items-center rounded-[6px]
-                text-sm font-[500] font-main text-light-bg1
-                bg-light-main border border-light-main
+                w-full py-3 flex justify-center items-center rounded-[6px]
+                text-sm font-[600] font-main text-light-bg1
+                bg-light-main border-2 border-light-main
                 transition-all duration-300 ease-in-out
                 hover:text-light-main
                 before:absolute before:inset-0

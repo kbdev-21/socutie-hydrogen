@@ -89,7 +89,7 @@ export function ProductItem({
 
         {/* Title and price */}
         <div className={"pt-3 flex flex-col justify-center items-center"}>
-          <div className={"font-[500] text-center text-sm lg:text-base font-title mb-1"}>{product.title}</div>
+          <div className={"font-[600] font-cute text-center text-sm lg:text-base font-title mb-1"}>{product.title}</div>
 
           <ProductPrice size={"small"} price={product.priceRange.minVariantPrice} compareAtPrice={product.compareAtPriceRange.maxVariantPrice}/>
           {/*<div className={"text-sm font-normal text-light-text2"}>{formatVnd(product.priceRange.minVariantPrice.amount)}₫</div>*/}

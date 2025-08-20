@@ -1,36 +1,9 @@
-/* Tinos Regular */
-@font-face {
-    font-family: 'Tinos';
-    src: url('/fonts/tinos/Tinos-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* Rouge Script Regular */
-@font-face {
-    font-family: 'Rouge Script';
-    src: url('/fonts/rouge/RougeScript-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* Source Sans static weights */
-
-/* ExtraLight (200) */
-@font-face {
-    font-family: 'Source Sans';
-    src: url('/fonts/source-sans/SourceSans3-ExtraLight.woff2') format('woff2');
-    font-weight: 200;
-    font-style: normal;
-    font-display: swap;
-}
+/* Quicksand static weights */
 
 /* Light (300) */
 @font-face {
-    font-family: 'Source Sans';
-    src: url('/fonts/source-sans/SourceSans3-Light.woff2') format('woff2');
+    font-family: 'Quicksand';
+    src: url('/fonts/Quicksand-Light.woff2') format('woff2');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -38,8 +11,8 @@
 
 /* Regular (400) */
 @font-face {
-    font-family: 'Source Sans';
-    src: url('/fonts/source-sans/SourceSans3-Regular.woff2') format('woff2');
+    font-family: 'Quicksand';
+    src: url('/fonts/Quicksand-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -47,8 +20,8 @@
 
 /* Medium (500) */
 @font-face {
-    font-family: 'Source Sans';
-    src: url('/fonts/source-sans/SourceSans3-Medium.woff2') format('woff2');
+    font-family: 'Quicksand';
+    src: url('/fonts/Quicksand-Medium.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -56,8 +29,8 @@
 
 /* SemiBold (600) */
 @font-face {
-    font-family: 'Source Sans';
-    src: url('/fonts/source-sans/SourceSans3-SemiBold.woff2') format('woff2');
+    font-family: 'Quicksand';
+    src: url('/fonts/Quicksand-SemiBold.woff2') format('woff2');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -65,30 +38,13 @@
 
 /* Bold (700) */
 @font-face {
-    font-family: 'Source Sans';
-    src: url('/fonts/source-sans/SourceSans3-Bold.woff2') format('woff2');
+    font-family: 'Quicksand';
+    src: url('/fonts/Quicksand-Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
 }
 
-/* ExtraBold (800) */
-@font-face {
-    font-family: 'Source Sans';
-    src: url('/fonts/source-sans/SourceSans3-ExtraBold.woff2') format('woff2');
-    font-weight: 800;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* Black (900) */
-@font-face {
-    font-family: 'Source Sans';
-    src: url('/fonts/source-sans/SourceSans3-Black.woff2') format('woff2');
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
 
 /* MonteCarlo Regular */
 @font-face {

@@ -8,6 +8,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         main: ["Montserrat", "sans-serif"],
+        cute: ["Quicksand", "sans-serif"],
         fancy: ["MonteCarlo", "serif"],
         // title: ["Tinos", "serif"]
       },

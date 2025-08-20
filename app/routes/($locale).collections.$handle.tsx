@@ -103,7 +103,7 @@ export default function Collection() {
       </div>
 
       <div className={"px-6 lg:px-20 py-16 w-full flex flex-col items-center justify-center"}>
-        <div className={"text-2xl lg:text-3xl font-[400] text-center"}>
+        <div className={"text-2xl lg:text-3xl font-[500] text-center"}>
           {collection.title.toUpperCase()}
         </div>
         {/*<div className={"mt-4 text-sm text-center tracking-tight max-w-[500px]"}>*/}
