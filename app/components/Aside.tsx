@@ -88,7 +88,7 @@ export function Aside({
       >
         {/* Header */}
         <div className={"flex justify-between items-center px-6 h-20"}>
-          <div className={"font-title text-2xl"}>{heading}</div>
+          <div className={"text-xl font-[500]"}>{heading}</div>
           <button className="transition-all duration-300 text-light-text1 hover:rotate-180" onClick={close} aria-label="Close">
             <X size={24} strokeWidth={1.5} />
           </button>

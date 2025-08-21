@@ -227,7 +227,7 @@ function SearchResultsPredictiveProducts({
                   />
                 )}
                 <div className={"ml-2"}>
-                  <div className={"text-lg font-[500]"}>{product.title}</div>
+                  <div className={"text-lg font-cute font-[600]"}>{product.title}</div>
                   {/*<small>{price && <Money data={price} />}</small>*/}
                   <div className={`text-sm font-normal text-light-text1`}>{formatVnd(price?.amount ?? "0")}{price?.currencyCode === "VND" ? "₫" : "$"}</div>
                 </div>

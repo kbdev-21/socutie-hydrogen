@@ -52,7 +52,7 @@ export function CartLineItem({
                 }
               }}
             >
-              <div className={"font-[500] text-base"}>{product.title}</div>
+              <div className={"font-[600] font-cute text-base"}>{product.title}</div>
             </Link>
             <ul>
               {selectedOptions.map((option) => (

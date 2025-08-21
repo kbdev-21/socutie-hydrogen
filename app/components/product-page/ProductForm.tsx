@@ -82,7 +82,7 @@ export function ProductForm({
                   return (
                     <button
                       type="button"
-                      className={`border rounded-[3px] text-sm py-2 px-4 font-[400] transition-colors duration-200 hover:text-light-text1 hover:border-light-text1 ${selected ? 'text-light-text1 border-light-text2' : 'text-light-text3 border-light-bg2'}`}
+                      className={`border rounded-full text-sm py-2 px-4 font-[400] transition-colors duration-200 hover:text-light-text1 hover:border-light-text1 ${selected ? 'text-light-text1 border-light-text2' : 'text-light-text3 border-light-bg2'}`}
                       key={option.name + name}
                       disabled={!exists}
                       onClick={() => {

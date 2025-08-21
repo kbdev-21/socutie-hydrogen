@@ -85,38 +85,17 @@ export default function Homepage() {
     .find(c => c!.handle === "best-sellers");
 
   return (
-    // <div className="flex flex-col items-center">
-    //   <HeroBanner/>
-    //   <div className={"h-16"}></div>
-    //   {data.homepageCollections.length > 0 &&
-    //     data.homepageCollections.map((collection, index) => (
-    //       <div key={collection!.id}>
-    //         <CollectionAndProductsDisplay
-    //           title={collection!.title}
-    //           description={collection!.description}
-    //           handle={collection!.handle}
-    //           products={collection!.products.nodes}
-    //         />
-    //         {index < data.homepageCollections.length - 1 && (
-    //           <div className="mt-16 mb-16 border-t border-light-bg2" />
-    //         )}
-    //       </div>
-    //     ))}
-    //   {/*<FeaturedCollection collection={data.featuredCollection} />*/}
-    //   {/*<RecommendedProducts products={data.recommendedProducts} />*/}
-    // </div>
-
     <div className="flex flex-col items-center">
+      {/* Hero Banner */}
       <div className={"w-full"}>
         <HeroBanner/>
       </div>
 
       <div className={"h-16"}></div>
+
+      {/* Best Sellers Display */}
       <div key={bestSellersCollection!.id}>
-        <CollectionAndProductsDisplay
-          title={bestSellersCollection!.title}
-          description={bestSellersCollection!.description}
-          handle={bestSellersCollection!.handle}
+        <BestSellersDisplay
           products={bestSellersCollection!.products.nodes}
         />
       </div>
@@ -233,18 +212,12 @@ function FeedbackDisplay() {
   }
 }
 
-function CollectionAndProductsDisplay({
-  title,
-  description,
-  handle,
+function BestSellersDisplay({
   products
 }: {
-  title: string;
-  description: string;
-  handle: string;
   products: ProductSummaryFragment[];
 }) {
-  const url = `/collections/${handle}`;
+  const url = `/collections/best-sellers`;
   return (
     <div className="mx-6 lg:mx-20 max-w-screen-xl flex flex-col items-center">
       <FadeInDiv>

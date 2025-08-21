@@ -63,19 +63,20 @@ function CartEmpty({
       <div className={"rounded-full bg-light-bg3 p-5"}>
         <ShoppingBag size={32} strokeWidth={1.75}/>
       </div>
-      <div className={"font-title text-2xl text-center"}>Giỏ hàng của bạn đang trống</div>
-      <div className={"font-main text-base text-light-text2 text-center max-w-[350px]"}>Khám phá ngay bộ sưu tập mới nhất của chúng tôi tại đây</div>
+      <div className={"text-2xl text-center font-[600] font-cute"}>Giỏ hàng đang trống</div>
+      <div className={"font-main tracking-tight text-base text-light-text2 text-center max-w-[350px]"}>Khám phá ngay những sản phẩm hot nhất của SoCutie tại đây</div>
       <Link className={`
          relative overflow-hidden flex gap-2 justify-center items-center
-         shadow-md text-sm font-[500] text-light-bg1 font-main rounded-[4px]
-         bg-light-main py-4 px-8
-         transition-all duration-300
-         before:absolute before:inset-0
-         before:bg-light-main2 before:translate-x-[-100%]
-         before:transition-transform before:duration-300
-         hover:before:translate-x-0
+          text-sm font-[600] rounded-[4px] text-light-bg1 font-main
+          bg-light-main py-3 px-10 border-2 border-light-main
+          transition-all duration-300 ease-in-out
+          hover:text-light-main
+          before:absolute before:inset-0
+          before:bg-light-bg1 before:translate-x-[-110%]
+          before:transition-transform before:duration-500 before:ease-in-out
+          hover:before:translate-x-0
        `} to="/collections/best-sellers" onClick={close} prefetch="viewport">
-        <div className="relative z-10">OUR NEW ARRIVAL</div>
+        <div className="relative z-10">OUR BEST SELLERS</div>
         <ArrowRight size={20} className="relative z-10"/>
       </Link>
     </div>

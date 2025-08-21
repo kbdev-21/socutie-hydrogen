@@ -45,12 +45,13 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
       <a href={checkoutUrl} target="_self">
         <div className={`
           relative overflow-hidden flex gap-2 justify-center items-center
-          shadow-md text-sm font-[500] rounded-[4px] text-light-bg1 font-main
-          bg-light-main py-4
-          transition-all duration-300
+          text-sm font-[600] rounded-[6px] text-light-bg1 font-main
+          bg-light-main py-3 border-2 border-light-main
+          transition-all duration-300 ease-in-out
+          hover:text-light-main
           before:absolute before:inset-0
-          before:bg-light-main2 before:translate-x-[-100%]
-          before:transition-transform before:duration-300
+          before:bg-light-bg1 before:translate-x-[-100%]
+          before:transition-transform before:duration-500 before:ease-in-out
           hover:before:translate-x-0
         `}>
           <div className="relative z-10">THANH TOÁN</div>
